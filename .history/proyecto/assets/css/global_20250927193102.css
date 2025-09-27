@@ -1,0 +1,71 @@
+/*En global.css van los estilos de elementos que se repiten en mas de una pagina ej: header*/
+
+/* Colores */
+:root {
+    --primary-color: #37415C;
+    --background: #151A23;
+    --text-light: #FFFFFF;
+    --terciary-29: #FF8C29;
+    --terciary-500: #FF8C29;
+    --accent-color:#FF9838;
+}
+
+/* Header */
+.main-header {
+    background-color: var(--primary-color);
+    height: 25px;
+    position: relative;
+    padding: 1 px;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 95%;
+    margin: 0 auto;
+}
+
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 100%;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    background: #576C95;
+    border-radius: 12px;
+    padding: 0 6px;
+    height: 18px;
+}
+
+.search-form input {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    padding: 0 6px;
+    width: 180px;
+    height: 100%;
+    font-size: 0.85rem;
+}
+.main-header img {
+    height: 22px; 
+    width: auto; 
+}
+
+.menu-toggle, .cart-button, .user-profile, .crown-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 18px;
+    width: 18px;
+    padding: 0;
+    font-size: 12px;
+    font-color: var(--text-light);
+}
+
+/* ensure nav-container fills header height so items are vertically centered */
+.nav-container { height: 100%; }

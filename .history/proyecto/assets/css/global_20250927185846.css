@@ -1,0 +1,58 @@
+/*En global.css van los estilos de elementos que se repiten en mas de una pagina ej: header*/
+
+/* Colores */
+:root {
+    --primary-color: #37415C;
+    --background: #151A23;
+    --text-light: #FFFFFF;
+    --terciary-29: #FF8C29;
+    --terciary-500: #FF8C29;
+    --accent-color:#FF9838;
+}
+
+/* Header */
+.main-header {
+    background-color: var(--primary-color);
+    
+    padding: 1rem;
+    position: relative;  
+    z-index: auto;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+    height: 10%;
+    margin: 0 auto;
+}
+
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: 10%;
+
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    height: 10%;
+}
+
+.search-form input {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    padding: 0.5rem;
+    width: 300px;
+}
+.main-header img {
+    height: 60px; /* Altura deseada */
+    width: auto;  /* Mantiene la proporción */
+}

@@ -1,0 +1,80 @@
+/* Page-specific variables (can override global) */
+:root {
+    --card-background: #21262D;
+}
+
+/* Secciones de juegos */
+.game-categories {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.game-categories > section {
+    margin-bottom: 3rem;
+}
+
+/* Horizontal one-line carousels (no vertical scroll to see first image). Each item keeps a fixed height; thumbnails lower. */
+.games-grid {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    overflow-y: hidden; /* ensure no vertical scroll */
+    padding-bottom: 8px;
+    margin-top: 1rem;
+}
+
+.games-grid::-webkit-scrollbar { height: 8px }
+.games-grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 8px }
+
+.games-grid .game-card { min-width: 220px; flex: 0 0 auto }
+
+@media (max-width: 1200px) {
+    .games-grid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 992px) {
+    .games-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+    .games-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+    .games-grid { grid-template-columns: 1fr; }
+}
+
+/* Tarjetas de juegos */
+.game-card {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.game-card:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.3); }
+
+.game-card img { width:100%; height:200px; object-fit:cover; transition: transform .3s ease }
+.game-card:hover img { transform:scale(1.05) }
+
+.game-card-content {
+    padding: 1rem;
+    background: linear-gradient(to top, var(--card-background) 70%, transparent);
+    position: absolute; bottom:0; left:0; right:0;
+}
+
+.game-card h3 { color:var(--text-light); font-size:1.1rem; margin-bottom:.5rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+.game-info { display:flex; justify-content:space-between; align-items:center; font-size:.9rem; color:var(--section-title) }
+.rating { color:var(--primary-color) }
+.platforms { font-size:.8rem; opacity:.7 }
+
+/* Featured game */
+.featured-game { width:100%; height:500px; background-size:cover; background-position:center; border-radius:0; margin-bottom:2rem; position:relative }
+.featured-game::before { content:''; position:absolute; inset:0; background: linear-gradient(to right, rgba(0,0,0,0.8) 30%, transparent) }
+.featured-content { position:absolute; left:5%; bottom:10%; max-width:600px; color:var(--text-light); padding:2rem }
+.featured-content h1 { font-size:3rem; margin-bottom:1rem; text-shadow:2px 2px 4px rgba(0,0,0,.5) }
+.featured-content .description { font-size:1.1rem; line-height:1.6; margin-top:1rem; opacity:.9 }
+
+/* Sección títulos */
+section h2 { font-size:1.8rem; margin-bottom:1.5rem; color:var(--section-title); font-weight:600; display:flex; align-items:center; gap:1rem }
+section h2::after { content:''; flex:1; height:1px; background:linear-gradient(to right, var(--section-title) 0%, transparent 100%); opacity:.2 }
+
