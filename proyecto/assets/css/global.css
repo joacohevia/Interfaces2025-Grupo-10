@@ -1,36 +1,63 @@
-/*En global.css van los estilos de elementos que se repiten en mas de una pagina ej: header*/
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 
 /* Colores */
 :root {
     --primary-color: #37415C;
     --background: #151A23;
-    --text-light: #FFFFFF;
+    --text-light: #ebe1e1;
     --terciary-29: #FF8C29;
     --terciary-500: #FF8C29;
     --accent-color:#FF9838;
 }
 
+/* Tipografias */
+:root {
+    --soft-font: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    --gamer-font: 'Orbitron', sans-serif;
+}
+
+
+
+body {
+    background-color: var(--background);
+}
+
 /* Header */
 .main-header {
     background-color: var(--primary-color);
-    height: 25px;
+    height: 2.3rem;
     position: relative;
-    padding: 1 px;
+    padding: 1px;
+    display: flex;
+    align-items: center;
 }
 
 .nav-container {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 95%;
-    margin: 0 auto;
+    
 }
 
 .nav-left, .nav-right {
+    width: 19%;
     display: flex;
+    justify-content: space-evenly;
     align-items: center;
-    gap: 20px;
-    height: 60%;
+    
+}
+
+
+
+.nav-right img, .nav-left img {
+    height: 22px; 
+    width: auto; 
+}
+
+#logo {
+    height: 32px;
+    width: auto;
 }
 
 .search-form {
@@ -52,10 +79,9 @@
     height: 100%;
     font-size: 10px;
 }
-.main-header img {
-    height: 22px; 
-    width: auto; 
-}
+
+
+
 .menu-toggle, .premium-button, .user-profile, .search{
     display: inline-flex;
     align-items: center;
@@ -65,4 +91,38 @@
     background: none;
     border: none;
 }
-.nav-container { height: 100%; }
+
+.search > img {
+    height: 100%;
+}
+
+
+@media (width > 768px) {
+
+    .nav-container{
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+    
+    .nav-left, .nav-right {
+        justify-content: space-between;
+    }
+
+
+    .nav-right {
+        width: 6.5%;
+    } 
+
+    .nav-left {
+        width: 8.5%;
+    }
+
+    .nav-center {
+        width: 60%;
+    }
+
+    .search-form {
+        justify-content: space-between;
+    }
+
+}
