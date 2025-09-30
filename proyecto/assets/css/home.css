@@ -12,7 +12,9 @@ h3, .game-title {
 
 .trending {
     height: 10rem;
-    background-color: var(--primary-color);
+    border: solid;
+    border-color: rgba(0, 0, 0, 0.178);
+    border-width: 2px;
 }
 
 .card {
@@ -30,11 +32,32 @@ h3, .game-title {
 
 
 
+.trending > img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+
+/*DESKTOP*/
 @media (width >= 768px) {
+
+    .trending {
+        height: 30rem;
+        width: 90%;
+    }
 
     .game-list {
         flex-direction: row;
         flex-wrap: wrap;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }
 
