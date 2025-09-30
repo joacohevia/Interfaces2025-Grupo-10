@@ -7,7 +7,7 @@
     --text-light: #ebe1e1;
     --terciary-29: #FF8C29;
     --terciary-500: #FF8C29;
-    --accent-color:#FF9838;
+    --accent-color: #FF9838;
 }
 
 /* Tipografias */
@@ -37,25 +37,27 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
+
 }
 
-.nav-left, .nav-right {
+.nav-left,
+.nav-right {
     width: 19%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    
+
 }
 
 
 
-.nav-right img, .nav-left img {
-    height: 22px; 
-    width: auto; 
+.nav-right img,
+.nav-left img {
+    height: 22px;
+    width: auto;
 }
 
-#logo {
+.logo {
     height: 32px;
     width: auto;
 }
@@ -82,7 +84,7 @@ body {
 
 
 
-.menu-toggle, .premium-button, .user-profile, .search{
+.menu-toggle, .premium-button, .user-profile, .search {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -97,21 +99,80 @@ body {
 }
 
 
+footer {
+    background-color: var(--primary-color);
+    height: 20rem;
+    
+}
+
+
+footer * {
+    color: var(--text-light);
+    margin-top: 3%
+}
+
+.ftr-mark {
+    display: flex;
+    justify-content: center;
+}
+
+#ftr-logo {
+    height: 7rem;
+    width: 8rem;
+}
+
+#mark-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#mark-text * {
+    margin: 0;
+    font-family: var(--gamer-font);
+}
+
+
+.ftr-articles-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.ftr-article {
+    display: flex;
+    flex-direction: column;
+}
+
+.ftr-article * {
+    font-family: var(--soft-font);
+    font-weight: lighter;
+}
+
+.ftr-article > h5 {
+    margin-bottom: 2.5px;
+}
+
+.ftr-article > a {
+    font-size: x-small;
+}
+
+
 @media (width > 768px) {
 
-    .nav-container{
+    .nav-container {
         margin-left: 2%;
         margin-right: 2%;
     }
-    
-    .nav-left, .nav-right {
+
+    .nav-left,
+    .nav-right {
         justify-content: space-between;
     }
 
 
     .nav-right {
         width: 6.5%;
-    } 
+    }
 
     .nav-left {
         width: 8.5%;
@@ -124,5 +185,8 @@ body {
     .search-form {
         justify-content: space-between;
     }
+
+
+
 
 }
