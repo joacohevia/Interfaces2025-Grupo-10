@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego - GameZone</title>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/juego.css">
+</head>
+<body>
+    <!-- Header compartido -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-left">
+                <button class="burger-menu" id="burgerMenu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <div class="logo">
+                    <img src="../assets/gameZone.png" alt="GameZone Logo">
+                    <span>GameZone</span>
+                </div>
+            </div>
+            <div class="nav-center">
+                <div class="search-container">
+                    <input type="text" placeholder="Buscar juegos..." class="search-input">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="nav-right">
+                <button class="user-menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </button>
+                <button class="home-btn" onclick="window.location.href='index.html'">Inicio</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Contenido del Juego -->
+    <main class="game-main">
+        <div class="game-container">
+            <div class="game-header">
+                <button class="back-btn" onclick="window.location.href='index.html'">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5m7-7l-7 7 7 7"/>
+                    </svg>
+                    Volver
+                </button>
+                <h1 id="gameTitle">Nombre del Juego</h1>
+            </div>
+            
+            <div class="game-content">
+                <div class="game-info">
+                    <div class="game-image">
+                        <img id="gameImage" src="" alt="Game Cover">
+                    </div>
+                    <div class="game-details">
+                        <div class="game-rating">
+                            <span class="rating-label">Rating:</span>
+                            <div class="rating-stars" id="gameRating">
+                                <!-- Las estrellas se generarán dinámicamente -->
+                            </div>
+                            <span class="rating-number" id="ratingNumber">0.0</span>
+                        </div>
+                        <div class="game-platforms">
+                            <span class="platforms-label">Plataformas:</span>
+                            <div class="platforms-list" id="gamePlatforms">
+                                <!-- Las plataformas se generarán dinámicamente -->
+                            </div>
+                        </div>
+                        <div class="game-genres">
+                            <span class="genres-label">Géneros:</span>
+                            <div class="genres-list" id="gameGenres">
+                                <!-- Los géneros se generarán dinámicamente -->
+                            </div>
+                        </div>
+                        <div class="game-release">
+                            <span class="release-label">Fecha de Lanzamiento:</span>
+                            <span id="gameReleaseDate">-</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-description">
+                    <h3>Descripción</h3>
+                    <div class="description-content" id="gameDescription">
+                        <!-- La descripción se cargará dinámicamente -->
+                    </div>
+                </div>
+                
+                <div class="game-actions">
+                    <button class="play-button">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5,3 19,12 5,21"/>
+                        </svg>
+                        JUGAR AHORA
+                    </button>
+                    <button class="favorite-button">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                        Agregar a Favoritos
+                    </button>
+                    <button class="share-button">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                            <polyline points="16,6 12,2 8,6"/>
+                            <line x1="12" y1="2" x2="12" y2="15"/>
+                        </svg>
+                        Compartir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer compartido -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <img src="../assets/gameZone.png" alt="GameZone Logo">
+                    <span>GameZone</span>
+                </div>
+                <p>Donde jugás con nosotros</p>
+            </div>
+            
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>🎯 Soporte</h4>
+                    <ul>
+                        <li><a href="#">Centro de Ayuda</a></li>
+                        <li><a href="#">Programa de Desarrollador</a></li>
+                        <li><a href="#">Contactanos</a></li>
+                        <li><a href="#">Reportar Errores</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>👥 Comunidad</h4>
+                    <ul>
+                        <li><a href="#">Foro de Jugadores</a></li>
+                        <li><a href="#">Políticas de privacidad</a></li>
+                        <li><a href="#">Términos de servicio</a></li>
+                        <li><a href="#">Únete a nosotros</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>🎮 Login</h4>
+                    <ul>
+                        <li><a href="#">Registrar credenciales</a></li>
+                        <li><a href="#">Recuperar contraseña</a></li>
+                        <li><a href="#">Cambiar configuración</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>🎲 Juegos</h4>
+                    <ul>
+                        <li><a href="#">Catálogo completo</a></li>
+                        <li><a href="#">Noticias Especializadas</a></li>
+                        <li><a href="#">Guías recomendadas</a></li>
+                        <li><a href="#">Juegos recomendados</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>📢 Publica tu juego</h4>
+                    <ul>
+                        <li><a href="#">Venta promoción de distribuidores</a></li>
+                        <li><a href="#">Recibe promoción de Agregators</a></li>
+                        <li><a href="#">Herramientas para desarrolladores</a></li>
+                        <li><a href="#">Únete al equipo comercial</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.703.099.12.112.225.085.347-.09.383-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.751-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24c6.624 0 11.99-5.367 11.99-12.013C24.007 5.367 18.641.001.017.001z"/>
+                        </svg>
+                    </a>
+                </div>
+                <p>&copy; 2025 GameZone. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/juego.js"></script>
+</body>
+</html>
