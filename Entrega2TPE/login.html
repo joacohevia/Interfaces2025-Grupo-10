@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:700&display=swap">
+</head>
+<body>
+    <div class="gridContainer">
+
+        
+
+        <main>
+            <div class="login-container">
+                <form class="login-form" id="login-form" action="" method="get">
+                    <h2>Iniciar Sesion</h2>
+                    <div id="message-login" aria-live="polite"></div>
+                        
+                        <div class="form-group">
+                        <label for="inputMail" class="label-nombre">Email</label>
+                        <input id="inputMail" name="email" type="email" autocomplete="email" required />
+                        </div>
+
+                        <div class="form-group">
+                        <label for="inputPass" class="label-nombre">Contraseña</label>
+                        <input id="inputPass" name="password" type="password" autocomplete="current-password" required />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit">Iniciar Session</button>
+                    <div class="container-login-redes">
+                        <div class="redes-soc">
+                        <div class="divisor-redes">
+                            <div class="line-card-form"></div>
+                            <span>O INGRESE CON</span>
+                            <div class="line-card-form"></div>
+                        </div>
+                        <div class="icons-redes">
+                            <a id="btn-facebook" class="box-facebook" href="../Entrega2TPE/home.html" aria-label="Ingresar con Facebook">
+                            <img class="img-redes" src="./icons/facebook.png" alt="Facebook" />
+                            </a>
+                            <a id="btn-google" class="box-google" href="../Entrega2TPE/home.html" aria-label="Ingresar con Google">
+                            <img class="img-redes" src="./icons/google.png" alt="Google" />
+                            </a>
+                            <a id="btn-Instagram" class="box-Instagram" href="../Entrega2TPE/home.html" aria-label="Ingresar con Instagram">
+                            <img class="img-redes" src="./icons/instagram.png" alt="Instagram" />
+                            </a> 
+                        </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="text-redes">
+                    <a href="#"><span>No puedo iniciar sesión</span></a>
+                    <a href="./registrer.html"><span>Crear una cuenta</span></a>
+                </div>
+
+            </div>
+        </main>
+
+     
+    </div>
+</body>
+  <script src="js/login.js"></script>
+</html>
