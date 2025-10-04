@@ -518,12 +518,7 @@ function setupScreenshotCarousel() {
     const screenshots = document.querySelectorAll('.screenshot');
     const totalScreenshots = screenshots.length;
     
-    console.log('TOTAL SCREENSHOTS ENCONTRADAS:', totalScreenshots);
-    
-    if (totalScreenshots === 0) {
-        console.log('NO SE ENCONTRARON SCREENSHOTS');
-        return;
-    }
+    if (totalScreenshots === 0) return;
     
     let currentIndex = Math.floor(totalScreenshots / 2); // Empezar en el medio
     
@@ -558,25 +553,39 @@ function setupScreenshotCarousel() {
     
     let hoverTimeout = null;
     
-    // AGREGAR EVENTOS A TODAS LAS IMÁGENES
+    // Event listeners para clicks en screenshots
     screenshots.forEach((screenshot, index) => {
-        console.log('AGREGANDO EVENTOS A IMAGEN', index);
-        
-        // CLICK DIRECTO
-        screenshot.addEventListener('click', function() {
-            console.log('CLICK EN IMAGEN', index);
+        // Click inmediato
+        screenshot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (hoverTimeout) {
+                clearTimeout(hoverTimeout);
+                hoverTimeout = null;
+            }
             currentIndex = index;
             updateCarousel();
         });
         
-        // HOVER SIMPLE
-        screenshot.addEventListener('mouseenter', function() {
-            console.log('MOUSE ENTER EN IMAGEN', index);
-            setTimeout(() => {
-                console.log('EJECUTANDO CAMBIO A IMAGEN', index);
-                currentIndex = index;
-                updateCarousel();
-            }, 2000);
+        // Hover con delay
+        screenshot.addEventListener('mouseenter', (e) => {
+            if (hoverTimeout) {
+                clearTimeout(hoverTimeout);
+            }
+            
+            if (index !== currentIndex) {
+                hoverTimeout = setTimeout(() => {
+                    currentIndex = index;
+                    updateCarousel();
+                }, 1500); // 1.5 segundos
+            }
+        });
+        
+        // Cancelar hover al salir
+        screenshot.addEventListener('mouseleave', (e) => {
+            if (hoverTimeout) {
+                clearTimeout(hoverTimeout);
+                hoverTimeout = null;
+            }
         });
     });
     

@@ -518,12 +518,7 @@ function setupScreenshotCarousel() {
     const screenshots = document.querySelectorAll('.screenshot');
     const totalScreenshots = screenshots.length;
     
-    console.log('TOTAL SCREENSHOTS ENCONTRADAS:', totalScreenshots);
-    
-    if (totalScreenshots === 0) {
-        console.log('NO SE ENCONTRARON SCREENSHOTS');
-        return;
-    }
+    if (totalScreenshots === 0) return;
     
     let currentIndex = Math.floor(totalScreenshots / 2); // Empezar en el medio
     
@@ -558,25 +553,42 @@ function setupScreenshotCarousel() {
     
     let hoverTimeout = null;
     
-    // AGREGAR EVENTOS A TODAS LAS IMÁGENES
+    // Event listeners para clicks en screenshots
     screenshots.forEach((screenshot, index) => {
-        console.log('AGREGANDO EVENTOS A IMAGEN', index);
-        
-        // CLICK DIRECTO
-        screenshot.addEventListener('click', function() {
-            console.log('CLICK EN IMAGEN', index);
-            currentIndex = index;
-            updateCarousel();
+        screenshot.addEventListener('click', () => {
+            // Limpiar timeout si hay click directo (navegación rápida)
+            if (hoverTimeout) {
+                clearTimeout(hoverTimeout);
+                hoverTimeout = null;
+            }
+            
+            if (screenshot.classList.contains('next')) {
+                nextSlide();
+            } else if (screenshot.classList.contains('prev')) {
+                prevSlide();
+            }
         });
         
-        // HOVER SIMPLE
-        screenshot.addEventListener('mouseenter', function() {
-            console.log('MOUSE ENTER EN IMAGEN', index);
-            setTimeout(() => {
-                console.log('EJECUTANDO CAMBIO A IMAGEN', index);
-                currentIndex = index;
-                updateCarousel();
-            }, 2000);
+        // Navegación automática en hover para screenshots adyacentes (más lenta)
+        screenshot.addEventListener('mouseenter', () => {
+            if (screenshot.classList.contains('next') || screenshot.classList.contains('prev')) {
+                // Delay de 1.5 segundos para hover
+                hoverTimeout = setTimeout(() => {
+                    if (screenshot.classList.contains('next')) {
+                        nextSlide();
+                    } else if (screenshot.classList.contains('prev')) {
+                        prevSlide();
+                    }
+                }, 1500);
+            }
+        });
+        
+        // Limpiar timeout cuando sale el mouse
+        screenshot.addEventListener('mouseleave', () => {
+            if (hoverTimeout) {
+                clearTimeout(hoverTimeout);
+                hoverTimeout = null;
+            }
         });
     });
     

@@ -576,7 +576,7 @@ function setupScreenshotCarousel() {
                 console.log('EJECUTANDO CAMBIO A IMAGEN', index);
                 currentIndex = index;
                 updateCarousel();
-            }, 2000);
+            }, 1000);
         });
     });
     

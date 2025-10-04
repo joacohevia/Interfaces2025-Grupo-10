@@ -518,12 +518,7 @@ function setupScreenshotCarousel() {
     const screenshots = document.querySelectorAll('.screenshot');
     const totalScreenshots = screenshots.length;
     
-    console.log('TOTAL SCREENSHOTS ENCONTRADAS:', totalScreenshots);
-    
-    if (totalScreenshots === 0) {
-        console.log('NO SE ENCONTRARON SCREENSHOTS');
-        return;
-    }
+    if (totalScreenshots === 0) return;
     
     let currentIndex = Math.floor(totalScreenshots / 2); // Empezar en el medio
     
@@ -558,25 +553,48 @@ function setupScreenshotCarousel() {
     
     let hoverTimeout = null;
     
-    // AGREGAR EVENTOS A TODAS LAS IMÁGENES
+    // Event listeners para clicks en screenshots
     screenshots.forEach((screenshot, index) => {
-        console.log('AGREGANDO EVENTOS A IMAGEN', index);
-        
-        // CLICK DIRECTO
-        screenshot.addEventListener('click', function() {
-            console.log('CLICK EN IMAGEN', index);
+        screenshot.addEventListener('click', () => {
+            // Limpiar timeout si hay click directo (navegación rápida)
+            if (hoverTimeout) {
+                clearTimeout(hoverTimeout);
+                hoverTimeout = null;
+            }
+            
+            // Navegar directamente al índice clickeado
             currentIndex = index;
             updateCarousel();
         });
         
-        // HOVER SIMPLE
-        screenshot.addEventListener('mouseenter', function() {
-            console.log('MOUSE ENTER EN IMAGEN', index);
-            setTimeout(() => {
-                console.log('EJECUTANDO CAMBIO A IMAGEN', index);
-                currentIndex = index;
-                updateCarousel();
-            }, 2000);
+        // Navegación automática en hover para todas las screenshots (más lenta)
+        screenshot.addEventListener('mouseenter', () => {
+            console.log('Mouse enter en imagen', index); // Debug
+            // Limpiar cualquier timeout anterior
+            if (hoverTimeout) {
+                clearTimeout(hoverTimeout);
+            }
+            
+            // Solo activar hover si no es la imagen activa
+            if (index !== currentIndex) {
+                console.log('Iniciando timeout para navegar a', index); // Debug
+                // Delay de 2 segundos para hover (más lento que antes pero no demasiado)
+                hoverTimeout = setTimeout(() => {
+                    console.log('Navegando a', index); // Debug
+                    currentIndex = index;
+                    updateCarousel();
+                    hoverTimeout = null;
+                }, 2000);
+            }
+        });
+        
+        // Limpiar timeout cuando sale el mouse
+        screenshot.addEventListener('mouseleave', () => {
+            console.log('Mouse leave en imagen', index); // Debug
+            if (hoverTimeout) {
+                clearTimeout(hoverTimeout);
+                hoverTimeout = null;
+            }
         });
     });
     

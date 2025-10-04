@@ -14,9 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Manejadores para el menú de usuario
     setupUserMenu();
-    
-    // Configurar carousel de screenshots
-    setupScreenshotCarousel();
 });
 
 function setupPreviewInteractions() {
@@ -518,12 +515,7 @@ function setupScreenshotCarousel() {
     const screenshots = document.querySelectorAll('.screenshot');
     const totalScreenshots = screenshots.length;
     
-    console.log('TOTAL SCREENSHOTS ENCONTRADAS:', totalScreenshots);
-    
-    if (totalScreenshots === 0) {
-        console.log('NO SE ENCONTRARON SCREENSHOTS');
-        return;
-    }
+    if (totalScreenshots === 0) return;
     
     let currentIndex = Math.floor(totalScreenshots / 2); // Empezar en el medio
     
@@ -556,27 +548,14 @@ function setupScreenshotCarousel() {
         updateCarousel();
     }
     
-    let hoverTimeout = null;
-    
-    // AGREGAR EVENTOS A TODAS LAS IMÁGENES
+    // Event listeners para clicks en screenshots
     screenshots.forEach((screenshot, index) => {
-        console.log('AGREGANDO EVENTOS A IMAGEN', index);
-        
-        // CLICK DIRECTO
-        screenshot.addEventListener('click', function() {
-            console.log('CLICK EN IMAGEN', index);
-            currentIndex = index;
-            updateCarousel();
-        });
-        
-        // HOVER SIMPLE
-        screenshot.addEventListener('mouseenter', function() {
-            console.log('MOUSE ENTER EN IMAGEN', index);
-            setTimeout(() => {
-                console.log('EJECUTANDO CAMBIO A IMAGEN', index);
-                currentIndex = index;
-                updateCarousel();
-            }, 2000);
+        screenshot.addEventListener('click', () => {
+            if (screenshot.classList.contains('next')) {
+                nextSlide();
+            } else if (screenshot.classList.contains('prev')) {
+                prevSlide();
+            }
         });
     });
     
@@ -588,18 +567,6 @@ function setupScreenshotCarousel() {
             nextSlide();
         }
     });
-    
-    // Controles de navegación
-    const prevNavBtn = document.getElementById('prevNav');
-    const nextNavBtn = document.getElementById('nextNav');
-    
-    if (prevNavBtn) {
-        prevNavBtn.addEventListener('click', prevSlide);
-    }
-    
-    if (nextNavBtn) {
-        nextNavBtn.addEventListener('click', nextSlide);
-    }
     
     // Auto-play opcional (comentado por defecto)
     // setInterval(nextSlide, 5000);

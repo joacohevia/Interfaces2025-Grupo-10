@@ -179,8 +179,8 @@
     cursor: pointer;
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transform: scale(0.7) translateX(0) translateY(2rem);
-    opacity: 0.3;
-    pointer-events: auto;
+    opacity: 0;
+    pointer-events: none;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     z-index: 1;
 }
@@ -306,7 +306,7 @@
     border-radius: 50%;
     width: 50px;
     height: 50px;
-    color: black;
+    color: white;
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 4;

@@ -161,12 +161,11 @@
     background: rgba(255, 255, 255, 0.1);
     border-radius: 32px;
     margin: 2rem 0;
-    padding: 1.5rem 1rem;
+    padding: 2rem 1rem;
     width: 100%;
     overflow: hidden;
     position: relative;
-    height: 18rem;
-    gap: 2rem;
+    height: 22rem;
 }
 
 .screenshot {
@@ -175,19 +174,19 @@
     border-radius: 35px;
     overflow: hidden;
     background: rgba(255, 255, 255, 0.1);
-    position: absolute;
+    position: relative;
     cursor: pointer;
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    transform: scale(0.7) translateX(0) translateY(2rem);
-    opacity: 0.3;
-    pointer-events: auto;
+    transform: scale(0.7) translateY(2rem);
+    opacity: 0.4;
+    pointer-events: none;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     z-index: 1;
 }
 
 /* Screenshot activo (centro) */
 .screenshot.active {
-    transform: scale(1) translateX(0) translateY(0);
+    transform: scale(1) translateY(0);
     opacity: 1;
     pointer-events: auto;
     z-index: 3;
@@ -195,36 +194,12 @@
 }
 
 /* Screenshots adyacentes (prev/next) */
-.screenshot.prev {
-    transform: scale(0.85) translateX(-20rem) translateY(1rem);
-    opacity: 0.7;
-    pointer-events: auto;
-    z-index: 2;
-}
-
+.screenshot.prev,
 .screenshot.next {
-    transform: scale(0.85) translateX(20rem) translateY(1rem);
+    transform: scale(0.85) translateY(1rem);
     opacity: 0.7;
     pointer-events: auto;
     z-index: 2;
-}
-
-/* Efectos hover para navegación */
-.screenshot.prev:hover {
-    transform: scale(0.9) translateX(-18rem) translateY(0.5rem);
-    opacity: 0.9;
-    box-shadow: 0 15px 40px rgba(255, 140, 41, 0.3);
-}
-
-.screenshot.next:hover {
-    transform: scale(0.9) translateX(18rem) translateY(0.5rem);
-    opacity: 0.9;
-    box-shadow: 0 15px 40px rgba(255, 140, 41, 0.3);
-}
-
-.screenshot.active:hover {
-    transform: scale(1.05) translateX(0) translateY(-0.5rem);
-    box-shadow: 0 25px 70px rgba(255, 140, 41, 0.5);
 }
 
 .screenshot > img {
@@ -294,41 +269,6 @@
     width: 100%;
     background: rgba(255, 140, 41, 0.3);
     filter: blur(12px);
-}
-
-/* Controles de navegación del carousel */
-.carousel-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 140, 41, 0.9);
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    color: black;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 25px rgba(255, 140, 41, 0.3);
-}
-
-.carousel-nav:hover {
-    background: #E67E22;
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 12px 35px rgba(230, 126, 34, 0.5);
-}
-
-.prev-nav {
-    left: 2rem;
-}
-
-.next-nav {
-    right: 2rem;
 }
 
 .game-description {
