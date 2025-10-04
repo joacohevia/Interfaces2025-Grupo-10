@@ -22,34 +22,20 @@ function setupEventListeners() {
                 closeBurgerMenu();
             }
         });
+        
+        // Event listeners para las categorías
+        const dropdownItems = burgerDropdown.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const category = this.dataset.category;
+                filterGamesByCategory(category);
+                closeBurgerMenu();
+            });
+        });
     }
 
-    // Menú de usuario
-    const userMenu = document.getElementById('userMenu');
-    const userDropdown = document.getElementById('userDropdown');
-    
-    if (userMenu && userDropdown) {
-        userMenu.addEventListener('click', function(e) {
-            e.stopPropagation();
-            toggleUserMenu();
-        });
-        
-        // Cerrar menú de usuario al hacer clic fuera
-        document.addEventListener('click', function(e) {
-            if (!userMenu.contains(e.target) && !userDropdown.contains(e.target)) {
-                closeUserMenu();
-            }
-        });
-    }
-    
-    // Event listener para cerrar sesión
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = './login.html';
-        });
-    }
+    //FALTA PARA CORONA Y FALTA PARA USER
 }
 
 // Cargar juegos desde el archivo JSON
@@ -93,9 +79,6 @@ async function loadGames() {
         }
         
         console.log(`Cargados ${games.length} juegos exitosamente`);
-        
-        // Guardar datos globalmente para filtrado
-        window.currentGamesData = games;
         
         // Distribuir juegos por categorías
         displayGames(games);
@@ -447,6 +430,7 @@ function closeActivatedPopup() {
 
 // Funciones del menú burger
 function toggleBurgerMenu() {
+    const burgerMenu = document.getElementById('burgerMenu');
     const burgerDropdown = document.getElementById('burgerDropdown');
     
     if (burgerDropdown.classList.contains('show')) {
@@ -457,33 +441,52 @@ function toggleBurgerMenu() {
 }
 
 function openBurgerMenu() {
+    const burgerMenu = document.getElementById('burgerMenu');
     const burgerDropdown = document.getElementById('burgerDropdown');
+    
+    burgerMenu.classList.add('active');
     burgerDropdown.classList.add('show');
 }
 
 function closeBurgerMenu() {
+    const burgerMenu = document.getElementById('burgerMenu');
     const burgerDropdown = document.getElementById('burgerDropdown');
+    
+    burgerMenu.classList.remove('active');
     burgerDropdown.classList.remove('show');
 }
 
-// Funciones del menú de usuario
-function toggleUserMenu() {
-    const userDropdown = document.getElementById('userDropdown');
+// Filtrar juegos por categoría
+function filterGamesByCategory(category) {
+    console.log(`Filtrando juegos por categoría: ${category}`);
     
-    if (userDropdown.classList.contains('show')) {
-        closeUserMenu();
+    // Obtener todos los juegos
+    const gameCards = document.querySelectorAll('.game-card');
+    const sectionTitles = document.querySelectorAll('.carousel-section h2');
+    
+    if (category === 'todos') {
+        // Mostrar todos los juegos
+        gameCards.forEach(card => {
+            card.style.display = 'block';
+        });
+        sectionTitles.forEach(title => {
+            title.textContent = title.textContent.replace(' - Filtrado por categoría', '');
+        });
     } else {
-        openUserMenu();
+        // Filtrar por categoría específica
+        gameCards.forEach(card => {
+            const gameCategory = card.dataset.category;
+            if (gameCategory && gameCategory.toLowerCase() === category.toLowerCase()) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        
+        // Actualizar título de sección
+        sectionTitles.forEach(title => {
+            const originalText = title.textContent.replace(' - Filtrado por categoría', '');
+            title.textContent = `${originalText} - Filtrado por ${category}`;
+        });
     }
 }
-
-function openUserMenu() {
-    const userDropdown = document.getElementById('userDropdown');
-    userDropdown.classList.add('show');
-}
-
-function closeUserMenu() {
-    const userDropdown = document.getElementById('userDropdown');
-    userDropdown.classList.remove('show');
-}
-

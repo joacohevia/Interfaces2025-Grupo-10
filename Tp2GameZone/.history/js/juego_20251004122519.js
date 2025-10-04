@@ -11,9 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Manejadores para el menú burger
     setupBurgerMenu();
-    
-    // Manejadores para el menú de usuario
-    setupUserMenu();
 });
 
 function setupPreviewInteractions() {
@@ -415,97 +412,4 @@ function shareToSocialMedia(platform) {
     if (shareUrl) {
         window.open(shareUrl, '_blank', 'width=600,height=400');
     }
-}
-
-// Configurar menú burger
-function setupBurgerMenu() {
-    // Menú hamburguesa
-    const burgerMenu = document.getElementById('burgerMenu');
-    const burgerDropdown = document.getElementById('burgerDropdown');
-    
-    if (burgerMenu && burgerDropdown) {
-        burgerMenu.addEventListener('click', function(e) {
-            e.stopPropagation();
-            toggleBurgerMenu();
-        });
-        
-        // Cerrar menú al hacer clic fuera
-        document.addEventListener('click', function(e) {
-            if (!burgerMenu.contains(e.target) && !burgerDropdown.contains(e.target)) {
-                closeBurgerMenu();
-            }
-        });
-    }
-}
-
-// Funciones del menú burger
-function toggleBurgerMenu() {
-    const burgerDropdown = document.getElementById('burgerDropdown');
-    
-    if (burgerDropdown.classList.contains('show')) {
-        closeBurgerMenu();
-    } else {
-        openBurgerMenu();
-    }
-}
-
-function openBurgerMenu() {
-    const burgerDropdown = document.getElementById('burgerDropdown');
-    burgerDropdown.classList.add('show');
-}
-
-function closeBurgerMenu() {
-    const burgerDropdown = document.getElementById('burgerDropdown');
-    burgerDropdown.classList.remove('show');
-}
-
-// Configurar menú de usuario
-function setupUserMenu() {
-    // Menú de usuario
-    const userMenu = document.getElementById('userMenu');
-    const userDropdown = document.getElementById('userDropdown');
-    
-    if (userMenu && userDropdown) {
-        userMenu.addEventListener('click', function(e) {
-            e.stopPropagation();
-            toggleUserMenu();
-        });
-        
-        // Cerrar menú de usuario al hacer clic fuera
-        document.addEventListener('click', function(e) {
-            if (!userMenu.contains(e.target) && !userDropdown.contains(e.target)) {
-                closeUserMenu();
-            }
-        });
-    }
-    
-    // Event listener para cerrar sesión
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = './login.html';
-        });
-    }
-}
-
-// Funciones del menú de usuario
-function toggleUserMenu() {
-    const userDropdown = document.getElementById('userDropdown');
-    
-    if (userDropdown.classList.contains('show')) {
-        closeUserMenu();
-    } else {
-        openUserMenu();
-    }
-}
-
-function openUserMenu() {
-    const userDropdown = document.getElementById('userDropdown');
-    userDropdown.classList.add('show');
-}
-
-function closeUserMenu() {
-    const userDropdown = document.getElementById('userDropdown');
-    userDropdown.classList.remove('show');
 }

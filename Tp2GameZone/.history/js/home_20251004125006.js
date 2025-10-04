@@ -24,32 +24,7 @@ function setupEventListeners() {
         });
     }
 
-    // Menú de usuario
-    const userMenu = document.getElementById('userMenu');
-    const userDropdown = document.getElementById('userDropdown');
-    
-    if (userMenu && userDropdown) {
-        userMenu.addEventListener('click', function(e) {
-            e.stopPropagation();
-            toggleUserMenu();
-        });
-        
-        // Cerrar menú de usuario al hacer clic fuera
-        document.addEventListener('click', function(e) {
-            if (!userMenu.contains(e.target) && !userDropdown.contains(e.target)) {
-                closeUserMenu();
-            }
-        });
-    }
-    
-    // Event listener para cerrar sesión
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = './login.html';
-        });
-    }
+    //FALTA PARA CORONA Y FALTA PARA USER
 }
 
 // Cargar juegos desde el archivo JSON
@@ -464,26 +439,5 @@ function openBurgerMenu() {
 function closeBurgerMenu() {
     const burgerDropdown = document.getElementById('burgerDropdown');
     burgerDropdown.classList.remove('show');
-}
-
-// Funciones del menú de usuario
-function toggleUserMenu() {
-    const userDropdown = document.getElementById('userDropdown');
-    
-    if (userDropdown.classList.contains('show')) {
-        closeUserMenu();
-    } else {
-        openUserMenu();
-    }
-}
-
-function openUserMenu() {
-    const userDropdown = document.getElementById('userDropdown');
-    userDropdown.classList.add('show');
-}
-
-function closeUserMenu() {
-    const userDropdown = document.getElementById('userDropdown');
-    userDropdown.classList.remove('show');
 }
 

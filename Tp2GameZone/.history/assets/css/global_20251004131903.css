@@ -641,8 +641,10 @@ body {
 }
 
 .user-avatar {
-    width: 80px;
-    height: 80px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #FF8C29;
     padding: 12px;
 }
 

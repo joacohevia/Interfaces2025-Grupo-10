@@ -38,7 +38,6 @@ body {
 /* Header*/
 .header {
     background: #37415C;
-    position: relative;
 }
 
 .navbar {
@@ -594,96 +593,50 @@ body {
 .burger-menu {
     background: none;
     border: none;
-    color: #FF8C29;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 4px;
-}
-
-.burger-menu svg {
-    stroke: #FF8C29;
-}
-
-/* User Menu Dropdown */
-.user-dropdown {
-    position: absolute;
-    top: 100%;
-    right: 1rem;
-    background: #4A5568;
-    border-radius: 12px;
-    min-width: 220px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-    overflow: hidden;
-}
-
-.user-dropdown.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.user-dropdown-content {
-    padding: 1rem 0;
-}
-
-.user-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    margin-bottom: 0.5rem;
-}
-
-.user-avatar {
-    width: 80px;
-    height: 80px;
-    padding: 12px;
-}
-
-.user-dropdown-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 1rem;
     color: #ffffff;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
-
-.user-dropdown-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #E2E8F0;
-}
-
-.user-dropdown-item img {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-}
-
-.user-dropdown-item span {
-    font-family: 'Orbitron', sans-serif;
-}
-
-/* User menu button states */
-.user-menu {
-    background: none;
-    border: none;
     cursor: pointer;
     padding: 0.5rem;
     border-radius: 4px;
     transition: background-color 0.2s ease;
 }
 
-.user-menu:hover {
+.burger-menu:hover {
     background: rgba(255, 255, 255, 0.1);
 }
 
+.burger-menu.active svg {
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+}
+
+/* Sección de juegos filtrados */
+.filtered-section {
+    padding: 2rem 0;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.clear-filter-btn {
+    background: #FF8C29;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 1rem auto;
+    display: block;
+}
+
+.clear-filter-btn:hover {
+    background: #E67E22;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 140, 41, 0.3);
+}

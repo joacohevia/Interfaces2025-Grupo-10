@@ -478,15 +478,6 @@ function setupUserMenu() {
             }
         });
     }
-    
-    // Event listener para cerrar sesión
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = './login.html';
-        });
-    }
 }
 
 // Funciones del menú de usuario

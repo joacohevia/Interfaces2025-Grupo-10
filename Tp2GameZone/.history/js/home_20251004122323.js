@@ -22,34 +22,20 @@ function setupEventListeners() {
                 closeBurgerMenu();
             }
         });
+        
+        // Event listeners para las categorías
+        const dropdownItems = burgerDropdown.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const category = this.dataset.category;
+                filterGamesByCategory(category);
+                closeBurgerMenu();
+            });
+        });
     }
 
-    // Menú de usuario
-    const userMenu = document.getElementById('userMenu');
-    const userDropdown = document.getElementById('userDropdown');
-    
-    if (userMenu && userDropdown) {
-        userMenu.addEventListener('click', function(e) {
-            e.stopPropagation();
-            toggleUserMenu();
-        });
-        
-        // Cerrar menú de usuario al hacer clic fuera
-        document.addEventListener('click', function(e) {
-            if (!userMenu.contains(e.target) && !userDropdown.contains(e.target)) {
-                closeUserMenu();
-            }
-        });
-    }
-    
-    // Event listener para cerrar sesión
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = './login.html';
-        });
-    }
+    //FALTA PARA CORONA Y FALTA PARA USER
 }
 
 // Cargar juegos desde el archivo JSON
@@ -93,9 +79,6 @@ async function loadGames() {
         }
         
         console.log(`Cargados ${games.length} juegos exitosamente`);
-        
-        // Guardar datos globalmente para filtrado
-        window.currentGamesData = games;
         
         // Distribuir juegos por categorías
         displayGames(games);
@@ -444,46 +427,3 @@ function showActivatedPopup() {
 function closeActivatedPopup() {
     document.getElementById('activatedPopup').style.display = 'none';
 }
-
-// Funciones del menú burger
-function toggleBurgerMenu() {
-    const burgerDropdown = document.getElementById('burgerDropdown');
-    
-    if (burgerDropdown.classList.contains('show')) {
-        closeBurgerMenu();
-    } else {
-        openBurgerMenu();
-    }
-}
-
-function openBurgerMenu() {
-    const burgerDropdown = document.getElementById('burgerDropdown');
-    burgerDropdown.classList.add('show');
-}
-
-function closeBurgerMenu() {
-    const burgerDropdown = document.getElementById('burgerDropdown');
-    burgerDropdown.classList.remove('show');
-}
-
-// Funciones del menú de usuario
-function toggleUserMenu() {
-    const userDropdown = document.getElementById('userDropdown');
-    
-    if (userDropdown.classList.contains('show')) {
-        closeUserMenu();
-    } else {
-        openUserMenu();
-    }
-}
-
-function openUserMenu() {
-    const userDropdown = document.getElementById('userDropdown');
-    userDropdown.classList.add('show');
-}
-
-function closeUserMenu() {
-    const userDropdown = document.getElementById('userDropdown');
-    userDropdown.classList.remove('show');
-}
-

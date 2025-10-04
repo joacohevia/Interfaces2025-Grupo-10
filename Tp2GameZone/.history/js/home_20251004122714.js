@@ -22,34 +22,20 @@ function setupEventListeners() {
                 closeBurgerMenu();
             }
         });
+        
+        // Event listeners para las categorías
+        const dropdownItems = burgerDropdown.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const category = this.dataset.category;
+                filterGamesByCategory(category);
+                closeBurgerMenu();
+            });
+        });
     }
 
-    // Menú de usuario
-    const userMenu = document.getElementById('userMenu');
-    const userDropdown = document.getElementById('userDropdown');
-    
-    if (userMenu && userDropdown) {
-        userMenu.addEventListener('click', function(e) {
-            e.stopPropagation();
-            toggleUserMenu();
-        });
-        
-        // Cerrar menú de usuario al hacer clic fuera
-        document.addEventListener('click', function(e) {
-            if (!userMenu.contains(e.target) && !userDropdown.contains(e.target)) {
-                closeUserMenu();
-            }
-        });
-    }
-    
-    // Event listener para cerrar sesión
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = './login.html';
-        });
-    }
+    //FALTA PARA CORONA Y FALTA PARA USER
 }
 
 // Cargar juegos desde el archivo JSON
@@ -93,9 +79,6 @@ async function loadGames() {
         }
         
         console.log(`Cargados ${games.length} juegos exitosamente`);
-        
-        // Guardar datos globalmente para filtrado
-        window.currentGamesData = games;
         
         // Distribuir juegos por categorías
         displayGames(games);
@@ -447,6 +430,7 @@ function closeActivatedPopup() {
 
 // Funciones del menú burger
 function toggleBurgerMenu() {
+    const burgerMenu = document.getElementById('burgerMenu');
     const burgerDropdown = document.getElementById('burgerDropdown');
     
     if (burgerDropdown.classList.contains('show')) {
@@ -457,33 +441,114 @@ function toggleBurgerMenu() {
 }
 
 function openBurgerMenu() {
+    const burgerMenu = document.getElementById('burgerMenu');
     const burgerDropdown = document.getElementById('burgerDropdown');
+    
+    burgerMenu.classList.add('active');
     burgerDropdown.classList.add('show');
 }
 
 function closeBurgerMenu() {
+    const burgerMenu = document.getElementById('burgerMenu');
     const burgerDropdown = document.getElementById('burgerDropdown');
+    
+    burgerMenu.classList.remove('active');
     burgerDropdown.classList.remove('show');
 }
 
-// Funciones del menú de usuario
-function toggleUserMenu() {
-    const userDropdown = document.getElementById('userDropdown');
+// Mapeo de categorías en español a géneros en inglés
+const categoryMapping = {
+    'accion': ['Action', 'Fighting', 'Shooter'],
+    'aventura': ['Adventure', 'RPG'],
+    'carreras': ['Racing', 'Sports'],
+    'clasicos': ['Arcade', 'Classic'],
+    'cocina': ['Simulation', 'Family'],
+    'deportes': ['Sports', 'Racing'],
+    'escape': ['Puzzle', 'Adventure'],
+    'estrategia': ['Strategy'],
+    'guerra': ['Action', 'Shooter', 'Strategy'],
+    'habilidad': ['Puzzle', 'Platformer'],
+    'infantiles': ['Family', 'Educational'],
+    'multijugador': ['Multiplayer', 'MMO', 'MMORPG'],
+    'plataformas': ['Platformer', 'Action'],
+    'puzzle': ['Puzzle'],
+    'terror': ['Horror']
+};
+
+// Filtrar juegos por categoría
+async function filterGamesByCategory(category) {
+    console.log(`Filtrando juegos por categoría: ${category}`);
     
-    if (userDropdown.classList.contains('show')) {
-        closeUserMenu();
-    } else {
-        openUserMenu();
+    if (category === 'todos') {
+        // Recargar todos los juegos
+        await loadGames();
+        return;
     }
+    
+    // Obtener géneros correspondientes a la categoría
+    const genres = categoryMapping[category] || [];
+    
+    if (genres.length === 0) {
+        console.log(`No se encontraron géneros para la categoría: ${category}`);
+        return;
+    }
+    
+    // Filtrar los juegos cargados
+    const gamesData = window.currentGamesData || [];
+    const filteredGames = gamesData.filter(game => {
+        if (!game.genres || !Array.isArray(game.genres)) return false;
+        
+        return game.genres.some(gameGenre => 
+            genres.some(filterGenre => 
+                gameGenre.name.toLowerCase().includes(filterGenre.toLowerCase()) ||
+                filterGenre.toLowerCase().includes(gameGenre.name.toLowerCase())
+            )
+        );
+    });
+    
+    console.log(`Juegos filtrados: ${filteredGames.length} de ${gamesData.length} total`);
+    
+    // Mostrar juegos filtrados
+    displayFilteredGames(filteredGames, category);
 }
 
-function openUserMenu() {
-    const userDropdown = document.getElementById('userDropdown');
-    userDropdown.classList.add('show');
+// Mostrar juegos filtrados
+function displayFilteredGames(filteredGames, categoryName) {
+    // Limpiar carruseles existentes
+    const carousels = document.querySelectorAll('.carousel-section');
+    carousels.forEach(carousel => carousel.remove());
+    
+    // Crear nueva sección filtrada
+    const mainContent = document.querySelector('.main-content');
+    const heroSection = document.querySelector('.hero-section');
+    
+    const filteredSection = document.createElement('section');
+    filteredSection.className = 'carousel-section filtered-section';
+    filteredSection.innerHTML = `
+        <div class="container">
+            <h2>Juegos de ${categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</h2>
+            <div class="games-grid" id="filteredGamesGrid">
+            </div>
+            <button class="clear-filter-btn" onclick="clearFilter()">Ver todos los juegos</button>
+        </div>
+    `;
+    
+    // Insertar después del hero
+    heroSection.insertAdjacentElement('afterend', filteredSection);
+    
+    // Mostrar juegos filtrados
+    const gamesGrid = document.getElementById('filteredGamesGrid');
+    filteredGames.forEach(game => {
+        const gameCard = createGameCard(game);
+        gamesGrid.appendChild(gameCard);
+    });
 }
 
-function closeUserMenu() {
-    const userDropdown = document.getElementById('userDropdown');
-    userDropdown.classList.remove('show');
+// Limpiar filtro y mostrar todos los juegos
+async function clearFilter() {
+    const filteredSection = document.querySelector('.filtered-section');
+    if (filteredSection) {
+        filteredSection.remove();
+    }
+    await loadGames();
 }
-
