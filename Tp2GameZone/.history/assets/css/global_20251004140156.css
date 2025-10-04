@@ -151,6 +151,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
+    
     width: 250px;
     height: 250px;
     background-image: url('../img/izquierdaFooter.png');
@@ -159,7 +160,6 @@ body {
     background-position: top left;
     z-index: 1;
     pointer-events: none;
-    margin-top: 14rem;
 }
 
 .footer::after {
@@ -220,7 +220,7 @@ body {
 .footer-links {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+    gap: 2rem;
     margin-bottom: 1rem;
 }
 
@@ -260,7 +260,7 @@ body {
 .social-links {
     display: flex;
     justify-content: center;
-    gap: 0rem;
+    gap: 1rem;
 }
 
 .social-link {

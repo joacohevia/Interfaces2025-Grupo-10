@@ -159,7 +159,6 @@ body {
     background-position: top left;
     z-index: 1;
     pointer-events: none;
-    margin-top: 14rem;
 }
 
 .footer::after {
@@ -172,7 +171,7 @@ body {
     background-image: url('../img/derechaFooter.png');
     background-repeat: no-repeat;
     background-size: contain;
-    background-position: top right;
+    background-position: bottom right;
     z-index: 1;
     pointer-events: none;
 }
@@ -220,7 +219,7 @@ body {
 .footer-links {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+    gap: 2rem;
     margin-bottom: 1rem;
 }
 
@@ -260,7 +259,7 @@ body {
 .social-links {
     display: flex;
     justify-content: center;
-    gap: 0rem;
+    gap: 1rem;
 }
 
 .social-link {

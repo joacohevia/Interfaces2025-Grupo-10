@@ -159,7 +159,7 @@ body {
     background-position: top left;
     z-index: 1;
     pointer-events: none;
-    margin-top: 14rem;
+    margin-top: 16em;
 }
 
 .footer::after {
@@ -220,7 +220,7 @@ body {
 .footer-links {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+    gap: 2rem;
     margin-bottom: 1rem;
 }
 
@@ -260,7 +260,7 @@ body {
 .social-links {
     display: flex;
     justify-content: center;
-    gap: 0rem;
+    gap: 1rem;
 }
 
 .social-link {

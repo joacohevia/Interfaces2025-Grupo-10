@@ -184,6 +184,28 @@ input[type="text"].success {
     opacity: 1;
 }
 
+/* 
+.login-button {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #00d4ff 0%, #0047ff 100%);
+    background-color: #FFA552;
+    border: none;
+    border-radius: 8px;
+    color: #0C0C0C;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    } 
+*/
+
+/* .login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+} */
+
+
 /* From Uiverse.io by adamgiebl */ 
 .login-button {
  background-color: #FFA552;
@@ -235,6 +257,8 @@ input[type="text"].success {
 .login-button:active {
   transform: scale(0.9);
 }
+
+
 
 
 .text-ingresa{

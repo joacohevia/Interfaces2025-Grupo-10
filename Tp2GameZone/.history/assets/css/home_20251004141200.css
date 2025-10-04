@@ -237,3 +237,57 @@
     text-overflow: ellipsis;
     text-align: left;
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    .game-card.featured {
+        width: 100%;
+        max-width: 350px;
+        height: 200px;
+    }
+    
+    .games-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+    
+    .games-categories {
+        padding: 1rem;
+    }
+    
+    .game-overlay h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 1.5rem;
+    }
+    
+    .games-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .game-card.featured {
+        height: 180px;
+    }
+    
+    .game-overlay {
+        padding: 1rem;
+    }
+    
+    .game-overlay h2 {
+        font-size: 1.2rem;
+    }
+    
+    .play-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
