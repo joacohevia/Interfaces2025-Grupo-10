@@ -133,6 +133,13 @@ body {
     color: #FF8C29;
     cursor: pointer;
     padding: 0.5rem;
+    width: auto;
+}
+
+.premium-btn img {
+    width: 24px;
+    height: 18px;
+    object-fit: contain;
 }
 
 /* Footer*/
@@ -466,11 +473,7 @@ body {
         height: 16px;
     }
     
-    .premium-btn img {
-        width: 20px;
-        height: 15px;
-    }
-    
+    .premium-btn img,
     .user-menu img {
         width: 18px;
         height: 18px;

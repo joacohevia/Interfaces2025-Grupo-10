@@ -133,6 +133,7 @@ body {
     color: #FF8C29;
     cursor: pointer;
     padding: 0.5rem;
+    width: 100%;
 }
 
 /* Footer*/
@@ -158,7 +159,7 @@ body {
     background-position: top left;
     z-index: 1;
     pointer-events: none;
-    margin-top: 14.2rem;
+    margin-top: 14rem;
 }
 
 .footer::after {
@@ -213,7 +214,7 @@ body {
     color: #ffffff;
     font-size: 0.9rem;
     margin: 0;
-    text-align: center;
+    margin-left: 70px;
 }
 
 .footer-links {
@@ -342,164 +343,87 @@ body {
         max-width: 250px;
     }
     
-    /* Ocultar imágenes del footer cuando se achica la pantalla */
     .footer::before,
     .footer::after {
-        display: none;
-    }
-}
-
-@media (max-width: 900px) {
-    .navbar {
-        padding: 0.8rem 1.5rem;
-    }
-    
-    .nav-center {
-        margin: 0 1rem;
-    }
-    
-    .search-container {
-        max-width: 300px;
+        width: 200px;
+        height: 200px;
     }
 }
 
 @media (max-width: 768px) {
-    /* HEADER ESTABLE SIN MOVIMIENTO */
     .navbar {
         padding: 1rem;
-        flex-direction: column;
-        gap: 1rem;
+        flex-wrap: wrap;
     }
     
-    /* Primera fila: logo a la izquierda, botones a la derecha */
-    .nav-left {
-        width: 100%;
-        justify-content: flex-start;
-        gap: 1rem;
-        flex: none;
-    }
-    
-    .nav-right {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        gap: 0.5rem;
-        width: auto;
-    }
-    
-    /* Segunda fila: buscador completo */
     .nav-center {
+        order: 3;
         width: 100%;
-        margin: 0;
-        order: 2;
+        margin: 1rem 0 0 0;
     }
     
     .search-container {
         max-width: 100%;
-        width: 100%;
     }
     
-    /* FOOTER - Logo siempre centrado */
+    .nav-right {
+        gap: 0.5rem;
+    }
+    
+    .premium-btn,
+    .user-menu {
+        padding: 0.5rem;
+    }
+    
     .footer-content {
         padding: 0 1rem;
-        text-align: center;
-    }
-    
-    .footer-brand {
-        text-align: center;
-        margin-bottom: 2rem;
     }
     
     .footer-links {
         grid-template-columns: repeat(2, 1fr);
-        gap: 2rem 3rem;
-        max-width: 500px;
-        margin: 0 auto;
-        text-align: left;
-        justify-content: center;
-        justify-items: center;
     }
     
     .footer-bottom {
         flex-direction: column;
         text-align: center;
-        gap: 1rem;
     }
 }
 
 @media (max-width: 480px) {
-    /* HEADER MÓVIL ESTABLE */
     .navbar {
-        padding: 0.75rem;
-        gap: 0.75rem;
-    }
-    
-    .nav-left {
-        gap: 0.8rem;
-    }
-    
-    .nav-right {
-        top: 0.75rem;
-        right: 0.75rem;
-        gap: 0.4rem;
-    }
-    
-    .burger-menu svg {
-        width: 22px;
-        height: 22px;
+        padding: 0.5rem 1rem;
     }
     
     .logo img {
-        width: 35px;
-        height: 35px;
+        width: 30px;
+        height: 30px;
+    }
+    
+    .logo span {
+        font-size: 1.2rem;
     }
     
     .search-input {
-        font-size: 0.85rem;
-        padding: 0.5rem 0.8rem;
-        padding-right: 2.2rem;
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
     }
     
-    .search-icon {
-        right: 0.8rem;
-        width: 16px;
-        height: 16px;
-    }
-    
-    .premium-btn img {
-        width: 20px;
-        height: 15px;
-    }
-    
+    .premium-btn img,
     .user-menu img {
-        width: 18px;
-        height: 18px;
-    }
-    
-    /* FOOTER MÓVIL - Logo centrado */
-    .footer-content {
-        padding: 0 0.75rem;
-    }
-    
-    .footer-brand {
-        text-align: center;
-        margin-bottom: 1.5rem;
-    }
-    
-    .footer-logo {
-        font-size: 1.8rem;
+        width: 20px;
+        height: 20px;
     }
     
     .footer-links {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
-        max-width: 280px;
-        margin: 0 auto;
-        text-align: center;
     }
     
-    .footer-column {
-        text-align: center;
+    .footer-brand {
+        margin-bottom: 1.5rem;
+    }
+    
+    .footer-logo {
+        font-size: 2rem;
     }
 }
 

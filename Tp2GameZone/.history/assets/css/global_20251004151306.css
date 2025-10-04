@@ -48,12 +48,15 @@ body {
     padding: 0.7rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .nav-left, .nav-right {
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex-shrink: 0;
 }
 
 .nav-center {
@@ -61,7 +64,8 @@ body {
     display: flex;
     justify-content: center;
     max-width: 500px;
-    margin: 0 2rem;
+    margin: 0 1rem;
+    min-width: 0;
 }
 
 .burger-menu {
@@ -133,6 +137,7 @@ body {
     color: #FF8C29;
     cursor: pointer;
     padding: 0.5rem;
+    width: 100%;
 }
 
 /* Footer*/
@@ -158,7 +163,7 @@ body {
     background-position: top left;
     z-index: 1;
     pointer-events: none;
-    margin-top: 14.2rem;
+    margin-top: 14rem;
 }
 
 .footer::after {
@@ -213,7 +218,7 @@ body {
     color: #ffffff;
     font-size: 0.9rem;
     margin: 0;
-    text-align: center;
+    margin-left: 70px;
 }
 
 .footer-links {
@@ -332,30 +337,14 @@ body {
     transform: translateY(-2px);
 }
 
-/* Responsive Header y Footer - NO tocar desktop 1200px+ */
-@media (max-width: 1199px) {
+/* Responsive Header y Footer */
+@media (max-width: 1200px) {
     .navbar {
         padding: 1rem 1.5rem;
     }
     
-    .search-container {
-        max-width: 250px;
-    }
-    
-    /* Ocultar imágenes del footer cuando se achica la pantalla */
-    .footer::before,
-    .footer::after {
-        display: none;
-    }
-}
-
-@media (max-width: 900px) {
-    .navbar {
-        padding: 0.8rem 1.5rem;
-    }
-    
     .nav-center {
-        margin: 0 1rem;
+        margin: 0 0.5rem;
     }
     
     .search-container {
@@ -363,35 +352,42 @@ body {
     }
 }
 
-@media (max-width: 768px) {
-    /* HEADER ESTABLE SIN MOVIMIENTO */
+@media (max-width: 900px) {
     .navbar {
         padding: 1rem;
-        flex-direction: column;
-        gap: 1rem;
     }
     
-    /* Primera fila: logo a la izquierda, botones a la derecha */
-    .nav-left {
-        width: 100%;
-        justify-content: flex-start;
-        gap: 1rem;
-        flex: none;
-    }
-    
-    .nav-right {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        gap: 0.5rem;
-        width: auto;
-    }
-    
-    /* Segunda fila: buscador completo */
     .nav-center {
+        margin: 0 0.5rem;
+    }
+    
+    .search-container {
+        max-width: 200px;
+    }
+    
+    .search-input {
+        font-size: 0.8rem;
+        padding: 0.6rem 0.8rem;
+        padding-right: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.8rem 1rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .nav-left {
+        flex-shrink: 0;
+    }
+    
+    .nav-center {
+        order: 3;
         width: 100%;
-        margin: 0;
-        order: 2;
+        margin: 0.8rem 0 0 0;
+        justify-content: stretch;
     }
     
     .search-container {
@@ -399,59 +395,53 @@ body {
         width: 100%;
     }
     
-    /* FOOTER - Logo siempre centrado */
-    .footer-content {
-        padding: 0 1rem;
-        text-align: center;
+    .nav-right {
+        gap: 0.5rem;
+        flex-shrink: 0;
     }
     
-    .footer-brand {
-        text-align: center;
-        margin-bottom: 2rem;
+    .premium-btn,
+    .user-menu {
+        padding: 0.4rem;
+    }
+    
+    .footer-content {
+        padding: 0 1rem;
     }
     
     .footer-links {
         grid-template-columns: repeat(2, 1fr);
-        gap: 2rem 3rem;
-        max-width: 500px;
-        margin: 0 auto;
-        text-align: left;
-        justify-content: center;
-        justify-items: center;
+        gap: 2rem 1rem;
     }
     
     .footer-bottom {
         flex-direction: column;
         text-align: center;
-        gap: 1rem;
+        gap: 0.5rem;
     }
 }
 
 @media (max-width: 480px) {
-    /* HEADER MÓVIL ESTABLE */
     .navbar {
-        padding: 0.75rem;
-        gap: 0.75rem;
+        padding: 0.6rem 0.8rem;
     }
     
     .nav-left {
-        gap: 0.8rem;
-    }
-    
-    .nav-right {
-        top: 0.75rem;
-        right: 0.75rem;
-        gap: 0.4rem;
+        gap: 0.5rem;
     }
     
     .burger-menu svg {
-        width: 22px;
-        height: 22px;
+        width: 24px;
+        height: 24px;
     }
     
     .logo img {
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .nav-right {
+        gap: 0.3rem;
     }
     
     .search-input {
@@ -466,40 +456,23 @@ body {
         height: 16px;
     }
     
-    .premium-btn img {
-        width: 20px;
-        height: 15px;
-    }
-    
+    .premium-btn img,
     .user-menu img {
-        width: 18px;
-        height: 18px;
-    }
-    
-    /* FOOTER MÓVIL - Logo centrado */
-    .footer-content {
-        padding: 0 0.75rem;
-    }
-    
-    .footer-brand {
-        text-align: center;
-        margin-bottom: 1.5rem;
-    }
-    
-    .footer-logo {
-        font-size: 1.8rem;
+        width: 20px;
+        height: 20px;
     }
     
     .footer-links {
         grid-template-columns: 1fr;
         gap: 1.5rem;
-        max-width: 280px;
-        margin: 0 auto;
-        text-align: center;
     }
     
-    .footer-column {
-        text-align: center;
+    .footer-brand {
+        margin-bottom: 1.5rem;
+    }
+    
+    .footer-logo {
+        font-size: 1.8rem;
     }
 }
 

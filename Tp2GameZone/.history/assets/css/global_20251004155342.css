@@ -133,6 +133,13 @@ body {
     color: #FF8C29;
     cursor: pointer;
     padding: 0.5rem;
+    width: 100%;
+}
+
+.premium-btn img {
+    width: 24px;
+    height: 18px;
+    object-fit: contain;
 }
 
 /* Footer*/

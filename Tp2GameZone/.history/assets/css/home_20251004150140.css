@@ -157,7 +157,7 @@
 }
 
 .category-section {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 .category-section h1 {
@@ -240,9 +240,8 @@
 
 /* RESPONSIVE SOLO PARA HOME */
 /* Regla principal: máximo UNA fila por categoría - si no entran todas las cards, no se muestran */
-/* DESKTOP 1200px+ = SIN CAMBIOS - 4 columnas completas */
 
-@media (max-width: 1199px) {
+@media (max-width: 1400px) {
     .games-categories {
         padding: 0 1.5rem;
     }
