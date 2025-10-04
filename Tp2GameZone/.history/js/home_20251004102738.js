@@ -288,7 +288,6 @@ function createGameCard(game) {
         <div class="game-info">
             <div class="game-title">${game.name}</div>
         </div>
-    `;
 
     // Solo agregar redirección si es Peg Solitaire
     if (game.name === 'Peg Solitaire') {
@@ -297,6 +296,16 @@ function createGameCard(game) {
             window.location.href = 'juego.html';
         });
     }
+    `;
+
+    // Agregar event listener para redirección específica
+    gameCard.addEventListener('click', function() {
+        if (game.name === 'Peg Solitaire') {
+            window.location.href = 'juegos.html';
+        } else {
+            window.location.href = 'juego.html';
+        }
+    });
 
     return gameCard;
 }
