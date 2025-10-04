@@ -67,8 +67,8 @@ body.loaded #loader {
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    padding: 20px 20px 20px 20px;
+    align-items: center;
+    padding: 20px;
     /* color de img fondo*/
     background-color: rgba(0, 0, 0, 0.6); /* Ajustá el 0.5 para más o menos oscuridad */
     z-index: -1;/* indica que el elemento debe estar atras de otros elementos */
@@ -210,7 +210,7 @@ input[type="text"].success {
 .login-button {
  background-color: #FFA552;
   width: 100%;
-  padding: 15px;
+  padding: 12px;
   font-size: 16px;
   border: none;/*elimina borde por defecto*/
   border-radius: 32px;
@@ -277,13 +277,13 @@ input[type="text"].success {
   margin: 0 12px;
 }
 .social-login {
-    margin-top: 30px;
+    margin-top: 20px;
     text-align: center;
 }
 
 .social-login p {
     color: #ffffff;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     font-size: 14px;
 }
 
@@ -317,7 +317,7 @@ input[type="text"].success {
 }
 
 .register-link {
-    margin-top: 25px;
+    margin-top: 15px;
     text-align: center;
 }
 

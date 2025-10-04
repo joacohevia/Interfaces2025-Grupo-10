@@ -68,7 +68,7 @@ body.loaded #loader {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 20px 20px 20px 20px;
+    padding: 100px 20px 20px 20px;
     /* color de img fondo*/
     background-color: rgba(0, 0, 0, 0.6); /* Ajustá el 0.5 para más o menos oscuridad */
     z-index: -1;/* indica que el elemento debe estar atras de otros elementos */
