@@ -143,10 +143,6 @@
     opacity: 1;
 }
 
-.play-btn img {
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8));
-}
-
 /* Categorías de Juegos */
 .games-categories {
     width: 100%;
@@ -209,7 +205,6 @@
     z-index: 10;
     object-fit: contain;
     pointer-events: none;
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8));
 }
 
 .game-card-small img {
@@ -290,4 +285,3 @@
         font-size: 0.9rem;
     }
 }
-

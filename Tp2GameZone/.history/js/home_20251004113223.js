@@ -321,7 +321,7 @@ function showPremiumPopup() {
             <div class="premium-popup">
                 <button class="popup-close" onclick="closePremiumPopup()">&times;</button>
                     <button class="activate-btn" onclick="activatePremium(this)">Activar</button>
-                    <p class="later" onclick="closePremiumPopup()">Más tarde</p>
+                    <p class="later">Más tarde</p>
                 </div>
             </div>
         `;
@@ -382,28 +382,4 @@ function createSuccessWaves(button) {
             }, 1000);
         }, i * 200);
     }
-}
-
-// Función para mostrar popup de activación exitosa
-function showActivatedPopup() {
-    // Crear el popup de activación si no existe
-    if (!document.getElementById('activatedPopup')) {
-        const popup = document.createElement('div');
-        popup.id = 'activatedPopup';
-        popup.className = 'activated-popup-overlay';
-        popup.innerHTML = `
-            <div class="activated-popup">
-                <button class="popup-close" onclick="closeActivatedPopup()">&times;</button>
-            </div>
-        `;
-        document.body.appendChild(popup);
-    }
-    
-    // Mostrar el popup
-    document.getElementById('activatedPopup').style.display = 'flex';
-}
-
-// Función para cerrar popup de activación
-function closeActivatedPopup() {
-    document.getElementById('activatedPopup').style.display = 'none';
 }

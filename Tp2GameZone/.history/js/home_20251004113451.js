@@ -321,7 +321,7 @@ function showPremiumPopup() {
             <div class="premium-popup">
                 <button class="popup-close" onclick="closePremiumPopup()">&times;</button>
                     <button class="activate-btn" onclick="activatePremium(this)">Activar</button>
-                    <p class="later" onclick="closePremiumPopup()">Más tarde</p>
+                    <p class="later">Más tarde</p>
                 </div>
             </div>
         `;

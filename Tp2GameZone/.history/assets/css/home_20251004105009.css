@@ -143,10 +143,6 @@
     opacity: 1;
 }
 
-.play-btn img {
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8));
-}
-
 /* Categorías de Juegos */
 .games-categories {
     width: 100%;
@@ -200,16 +196,18 @@
 }
 
 /* Ícono Premium */
-.card-image-container .premium-icon {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 28px;
-    height: 28px;
-    z-index: 10;
-    object-fit: contain;
-    pointer-events: none;
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8));
+.premium-icon {
+    position: absolute !important;
+    top: 8px !important;
+    right: 8px !important;
+    width: 32px !important;
+    height: 32px !important;
+    z-index: 999 !important;
+    object-fit: contain !important;
+    pointer-events: none !important;
+    border-radius: 50% !important;
+    background: rgba(0, 0, 0, 0.3) !important;
+    padding: 4px !important;
 }
 
 .game-card-small img {
@@ -290,4 +288,3 @@
         font-size: 0.9rem;
     }
 }
-

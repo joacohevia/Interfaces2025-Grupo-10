@@ -291,119 +291,13 @@ function createGameCard(game) {
         </div>
     `;
 
-    // Agregar eventos de click según el tipo de juego
+    // Solo agregar redirección si es Peg Solitaire
     if (game.name === 'Peg Solitaire') {
-        // Peg Solitaire: redirige a juego.html
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
             window.location.href = 'juego.html';
         });
-    } else if (game.esPremium) {
-        // Juegos premium: mostrar popup
-        gameCard.style.cursor = 'pointer';
-        gameCard.addEventListener('click', function() {
-            showPremiumPopup();
-        });
     }
-    // Juegos gratuitos (esPremium: false): sin evento de click
 
     return gameCard;
-}
-
-// Función para mostrar popup premium
-function showPremiumPopup() {
-    // Crear el popup si no existe
-    if (!document.getElementById('premiumPopup')) {
-        const popup = document.createElement('div');
-        popup.id = 'premiumPopup';
-        popup.className = 'premium-popup-overlay';
-        popup.innerHTML = `
-            <div class="premium-popup">
-                <button class="popup-close" onclick="closePremiumPopup()">&times;</button>
-                    <button class="activate-btn" onclick="activatePremium(this)">Activar</button>
-                    <p class="later" onclick="closePremiumPopup()">Más tarde</p>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(popup);
-    }
-    
-    // Mostrar el popup
-    document.getElementById('premiumPopup').style.display = 'flex';
-}
-
-// Función para cerrar popup premium
-function closePremiumPopup() {
-    document.getElementById('premiumPopup').style.display = 'none';
-}
-
-// Función para activar premium con animación
-function activatePremium(button) {
-    // Agregar clase de animación
-    button.classList.add('purchasing');
-    
-    // Cambiar texto temporalmente
-    const originalText = button.innerHTML;
-    button.innerHTML = 'Procesando...';
-    
-    // Después de la animación, abrir segundo popup
-    setTimeout(() => {
-        // Cerrar primer popup
-        closePremiumPopup();
-        
-        // Restaurar estado original del botón
-        button.classList.remove('purchasing');
-        button.innerHTML = originalText;
-        
-        // Abrir popup de activación exitosa
-        showActivatedPopup();
-    }, 1500);
-}
-
-// Función para crear ondas de éxito
-function createSuccessWaves(button) {
-    const buttonRect = button.getBoundingClientRect();
-    const centerX = buttonRect.left + buttonRect.width / 2;
-    const centerY = buttonRect.top + buttonRect.height / 2;
-    
-    for (let i = 0; i < 3; i++) {
-        setTimeout(() => {
-            const wave = document.createElement('div');
-            wave.className = 'success-wave';
-            wave.style.left = centerX + 'px';
-            wave.style.top = centerY + 'px';
-            document.body.appendChild(wave);
-            
-            // Remover la onda después de la animación
-            setTimeout(() => {
-                if (wave.parentNode) {
-                    wave.parentNode.removeChild(wave);
-                }
-            }, 1000);
-        }, i * 200);
-    }
-}
-
-// Función para mostrar popup de activación exitosa
-function showActivatedPopup() {
-    // Crear el popup de activación si no existe
-    if (!document.getElementById('activatedPopup')) {
-        const popup = document.createElement('div');
-        popup.id = 'activatedPopup';
-        popup.className = 'activated-popup-overlay';
-        popup.innerHTML = `
-            <div class="activated-popup">
-                <button class="popup-close" onclick="closeActivatedPopup()">&times;</button>
-            </div>
-        `;
-        document.body.appendChild(popup);
-    }
-    
-    // Mostrar el popup
-    document.getElementById('activatedPopup').style.display = 'flex';
-}
-
-// Función para cerrar popup de activación
-function closeActivatedPopup() {
-    document.getElementById('activatedPopup').style.display = 'none';
 }
