@@ -242,10 +242,6 @@ input[type="number"]::-webkit-inner-spin-button {
     transform: scale(0.9);
 }
 
-.btn-registro.success:before {
-    background-color: #16a34a
-}
-
 
 
 /* Animación de éxito */
@@ -270,44 +266,113 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .success-modal {
     background: linear-gradient(135deg, #37415C 0%, #475779 100%);
-    border-radius: 20px;
-    padding: 3rem 2rem;
+    border: 2px solid #FFA552;
+    border-radius: 25px;
+    padding: 0;
     text-align: center;
-    max-width: 400px;
+    max-width: 420px;
     width: 90%;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    transform: translateY(50px) scale(0.9);
-    transition: all 0.4s ease;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+    transform: translateY(100px) scale(0.8) rotateX(15deg);
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    position: relative;
 }
 
 .success-overlay.show .success-modal {
-    transform: translateY(0) scale(1);
+    transform: translateY(0) scale(1) rotateX(0deg);
 }
 
+.success-content {
+    padding: 3rem 2rem;
+    position: relative;
+    z-index: 2;
+}
 
+.celebration-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.particula {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: caer linear infinite;
+}
+
+@keyframes caer {
+    0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(400px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Animaciones mejoradas para el modal */
+.success-modal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 165, 82, 0.3), transparent);
+    animation: brillo 2s ease-in-out 0.5s infinite;
+}
+
+@keyframes brillo {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
 
 .success-modal h2 {
-    color: #ffffff;
-    font-size: 2rem;
+    color: #FFA552;
+    font-size: 2.2rem;
     margin-bottom: 1rem;
-    animation: fadeInUp 0.5s ease-out 0.2s both;
+    animation: tituloEntrada 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.4s both;
+    text-shadow: 0 2px 10px rgba(255, 165, 82, 0.3);
 }
 
 .success-modal p {
     color: #ffffff;
     font-size: 1.1rem;
     margin-bottom: 2rem;
-    animation: fadeInUp 0.5s ease-out 0.4s both;
+    animation: textoEntrada 0.6s ease-out 0.7s both;
 }
 
-@keyframes fadeInUp {
+@keyframes tituloEntrada {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px) scale(0.8);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes textoEntrada {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
     }
 }
 
@@ -316,12 +381,24 @@ input[type="number"]::-webkit-inner-spin-button {
     color: #0C0C0C;
     border: none;
     border-radius: 32px;
-    padding: 12px 30px;
+    padding: 14px 35px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
-    animation: fadeInUp 0.5s ease-out 0.6s both;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: botonEntrada 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s both;
+    box-shadow: 0 4px 15px rgba(255, 165, 82, 0.4);
+}
+
+@keyframes botonEntrada {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .btn-continuar:hover {

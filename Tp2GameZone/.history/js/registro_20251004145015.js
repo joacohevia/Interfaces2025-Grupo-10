@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             btnRegistro.innerHTML = '✓ ¡Registro Exitoso!';
             btnRegistro.style.transform = 'scale(1.1)';
-            btnRegistro.classList.add('success');
+            btnRegistro.style.setProperty('background', 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)', 'important');
         }, 800);
         
         setTimeout(() => {

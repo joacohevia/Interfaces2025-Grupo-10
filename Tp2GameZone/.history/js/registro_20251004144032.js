@@ -13,14 +13,14 @@ document.addEventListener('DOMContentLoaded', function() {
     function mostrarAnimacionExito() {
         // Animación de éxito en el botón
         btnRegistro.innerHTML = 'Registrando...';
-        btnRegistro.style.setProperty('background', 'linear-gradient(135deg, #FFA552 0%, #FF8A33 100%)', 'important');
+        btnRegistro.style.background = 'linear-gradient(135deg, #4CAF50 0%, #45a049 100%)';
         btnRegistro.style.transform = 'scale(0.95)';
         btnRegistro.style.transition = 'all 0.3s ease';
         
         setTimeout(() => {
             btnRegistro.innerHTML = '✓ ¡Registro Exitoso!';
             btnRegistro.style.transform = 'scale(1.1)';
-            btnRegistro.classList.add('success');
+            btnRegistro.style.background = 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)';
         }, 800);
         
         setTimeout(() => {

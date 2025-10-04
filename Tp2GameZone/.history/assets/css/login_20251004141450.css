@@ -10,6 +10,59 @@ body {
     background-repeat: no-repeat; /* Evita que se repita */
     background-attachment: fixed; /* Mantiene el fondo estático al hacer scroll */
 }
+
+/*___________LOADER___________*/
+#loader {
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    position: fixed; /* Fija el loader en la pantalla, no se mueve con el scroll */
+    top: 0; /* Lo posiciona desde el borde superior */
+    left: 0; /* Lo posiciona desde el borde izquierdo */
+    width: 100%;
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.9); /* Fondo negro semi-transparente */
+    color: #37415C; /* color text */
+    z-index: 9999; /* encima de lo demas*/
+}
+.loader-container {
+    position: absolute; /* Posiciona el contenedor dentro del loader */
+    top: 50%; /* Lo mueve al 50% desde arriba */
+    left: 50%; /* Lo mueve al 50% desde la izquierda */
+    z-index: 999;
+}
+.porcentaje {
+    margin-top: 0; 
+    text-align: center; 
+    font-size: 14px; 
+}
+.spinner {
+    border: 8px solid rgba(255, 255, 255, 0.3); /* Borde gris claro alrededor */
+    border-top: 8px solid white; /* Borde superior blanco para crear efecto de giro */
+    border-radius: 50%; /* Lo convierte en un círculo */
+    width: 50px; /* Ancho del spinner */
+    height: 50px; /* Alto del spinner */
+    animation: spin 1s infinite; /* Aplica animación de giro continua cada 1 segundo */
+    margin-bottom: 5px; /* Espacio debajo del spinner */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.186); /* Sombra suave alrededor */
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0deg); /* Comienza sin rotación */
+    }
+    100% {
+        transform: rotate(360deg); /* Termina con una vuelta completa */
+    }
+}
+
+
+/* Ocultar el loader una vez cargado */
+body.loaded #loader {
+    display: none;
+}
+
+/*___________FIN LOADER___________*/
 .login-container {
     min-height: 100vh;
     display: flex;

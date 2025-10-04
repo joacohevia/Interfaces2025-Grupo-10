@@ -242,10 +242,6 @@ input[type="number"]::-webkit-inner-spin-button {
     transform: scale(0.9);
 }
 
-.btn-registro.success:before {
-    background-color: #16a34a
-}
-
 
 
 /* Animación de éxito */
@@ -294,7 +290,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .success-modal p {
-    color: #ffffff;
+    color: #B8B8B8;
     font-size: 1.1rem;
     margin-bottom: 2rem;
     animation: fadeInUp 0.5s ease-out 0.4s both;
