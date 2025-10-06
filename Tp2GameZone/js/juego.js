@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function setupStartScreen() {
-    const startButton = document.getElementById('startButton');
+    const startButton = document.getElementById('startButton'); ///no esta en el html
     const startScreen = document.getElementById('startScreen');
     const gameContent = document.getElementById('gameContent');
 
@@ -539,6 +539,8 @@ function setupScreenshotCarousel() {
                 screenshot.classList.add('next');
             }
         });
+
+
     }
     
     function goToSlide(index) {
@@ -570,14 +572,14 @@ function setupScreenshotCarousel() {
         });
         
         // HOVER SIMPLE
-        screenshot.addEventListener('mouseenter', function() {
+        /*screenshot.addEventListener('mouseenter', function() {
             console.log('MOUSE ENTER EN IMAGEN', index);
             setTimeout(() => {
                 console.log('EJECUTANDO CAMBIO A IMAGEN', index);
                 currentIndex = index;
                 updateCarousel();
             }, 2000);
-        });
+        });*/
     });
     
     // Navegación con teclado
@@ -606,6 +608,8 @@ function setupScreenshotCarousel() {
     
     // Inicializar carousel
     updateCarousel();
+
+    
 }
 
 // Agregar setup del carousel al DOMContentLoaded

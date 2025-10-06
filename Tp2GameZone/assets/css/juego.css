@@ -169,6 +169,7 @@
     gap: 2rem;
 }
 
+
 .screenshot {
     height: 15rem;
     width: 15rem;
@@ -705,14 +706,5 @@
 .modal-close:hover {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.1);
-}
-
-.screenshot {
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.screenshot:hover {
-    transform: scale(1.05);
 }
 
