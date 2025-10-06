@@ -20,6 +20,7 @@
 
 .hero-content {
     max-width: 1280px;
+    max-height: 200px;
     width: 100%;
     margin: 0 auto;
     padding: 0rem;
@@ -291,7 +292,7 @@
     }
     
     .carousel-image-container {
-        aspect-ratio: 16 / 5;
+        aspect-ratio: 16 / 7;
     }
     
     .carousel-title {
@@ -333,7 +334,7 @@
     }
     
     .carousel-image-container {
-        aspect-ratio: 16 / 7;
+        aspect-ratio: 16 / 9;
     }
     
     .carousel-title {
@@ -415,6 +416,7 @@
   overflow: hidden;
 }
 
+/* Renombrado de game-image a carousel-image para evitar conflictos */
 .carousel-image {
   position: absolute;
   top: 0;

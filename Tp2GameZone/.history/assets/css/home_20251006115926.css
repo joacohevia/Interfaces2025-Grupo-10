@@ -410,11 +410,12 @@
 
 .carousel-image-container {
   position: relative;
-  aspect-ratio: 16 / 6;
+  aspect-ratio: 16 / 4.5;
   border-radius: 1rem;
   overflow: hidden;
 }
 
+/* Renombrado de game-image a carousel-image para evitar conflictos */
 .carousel-image {
   position: absolute;
   top: 0;

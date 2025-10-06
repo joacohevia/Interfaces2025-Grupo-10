@@ -364,27 +364,35 @@ body {
 }
 
 @media (max-width: 768px) {
-    /* HEADER ESTABLE SIN MOVIMIENTO */
+    /* HEADER RESPONSIVE CON DOS FILAS */
     .navbar {
         padding: 1rem;
         flex-direction: column;
         gap: 1rem;
+        align-items: stretch;
     }
     
-    /* Primera fila: logo a la izquierda, botones a la derecha */
-    .nav-left {
+    /* Primera fila: contenedor que incluye nav-left y nav-right */
+    .navbar > *:not(.nav-center) {
+        display: flex;
         width: 100%;
-        justify-content: flex-start;
+        justify-content: space-between;
+        align-items: center;
+        order: 1;
+    }
+    
+    .nav-left {
+        display: flex;
+        align-items: center;
         gap: 1rem;
-        flex: none;
+        flex: 1;
     }
     
     .nav-right {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
+        display: flex;
+        align-items: center;
         gap: 0.5rem;
-        width: auto;
+        position: static;
     }
     
     /* Segunda fila: buscador completo */
@@ -392,6 +400,7 @@ body {
         width: 100%;
         margin: 0;
         order: 2;
+        flex: none;
     }
     
     .search-container {

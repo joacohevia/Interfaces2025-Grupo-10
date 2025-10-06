@@ -19,15 +19,15 @@
 }  
 
 .hero-content {
-    max-width: 1280px;
+    max-width: 1300px;
     width: 100%;
     margin: 0 auto;
-    padding: 0rem;
+    padding: 0 1rem;
     text-align: left;
 }
 
 .hero-content h1 {
-    font-size: 1rem;
+    font-size: 1.2rem;
     margin-bottom: 0.5rem;
     background: #ffffff;
     background-clip: text;
@@ -114,8 +114,8 @@
 }
 
 .featured-game h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-size: 1rem;
+    font-weight: bold;
     background: #ffffff;
     background-clip: text;
     -webkit-background-clip: text;
@@ -282,7 +282,7 @@
 
 @media (max-width: 768px) {
     .main-content {
-        margin-top: 2.5rem;
+        margin-top: 1rem;
         margin-bottom: 2rem;
     }
     
@@ -291,16 +291,21 @@
     }
     
     .carousel-image-container {
-        aspect-ratio: 16 / 5;
+        aspect-ratio: 16 / 9;
     }
     
     .carousel-title {
         font-size: 1rem;
     }
     
+    .play-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
     .play-icon img {
-        width: 40px;
-        height: 40px;
+        width: 20px;
+        height: 20px;
     }
     
     .games-categories {
@@ -333,7 +338,7 @@
     }
     
     .carousel-image-container {
-        aspect-ratio: 16 / 7;
+        aspect-ratio: 16 / 10;
     }
     
     .carousel-title {
@@ -341,9 +346,14 @@
         padding: 0 0.5rem;
     }
     
+    .play-icon {
+        width: 45px;
+        height: 45px;
+    }
+    
     .play-icon img {
-        width: 36px;
-        height: 36px;
+        width: 18px;
+        height: 18px;
     }
     
     .games-categories {
@@ -410,11 +420,12 @@
 
 .carousel-image-container {
   position: relative;
-  aspect-ratio: 16 / 6;
+  aspect-ratio: 16 / 8;
   border-radius: 1rem;
   overflow: hidden;
 }
 
+/* Renombrado de game-image a carousel-image para evitar conflictos */
 .carousel-image {
   position: absolute;
   top: 0;
@@ -449,26 +460,26 @@
 }
 
 .play-icon {
-  background: none;
-  border: none;
-  padding: 0.75rem 2rem;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #FFA552 0%, #FF8A33 100%);
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  transform: scale(0.8);
-  opacity: 0;
+  justify-content: center;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 165, 82, 0.4);
 }
 
-.carousel-image-container:hover .play-icon {
-  transform: scale(1);
-  opacity: 1;
+.play-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(255, 165, 82, 0.6);
 }
 
 .play-icon img {
-  width: 120px;
-  height: 120px;
-  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8));
+  width: 24px;
+  height: 24px;
+  margin-left: 2px;
 }
 
 
@@ -479,9 +490,9 @@
   font-size: 1.1rem;
   font-weight: 600;
   color: white;
-  text-align: left;
+  text-align: center;
   margin: 0;
-  padding: 0;
+  padding: 0 1rem;
 }
 
 .carousel-type {
@@ -509,10 +520,11 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: none;
+    background: rgba(0, 0, 0, 0.5);
     border: none;
     cursor: pointer;
     padding: 12px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -541,6 +553,7 @@
 }
 
 .carousel-btn-new:hover {
+    background: rgba(0, 212, 255, 0.8);
     transform: translateY(-50%) scale(1.1);
 }
 
