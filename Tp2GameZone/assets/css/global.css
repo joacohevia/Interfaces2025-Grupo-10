@@ -45,7 +45,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.7rem 2rem;
+    padding: 2rem;
+    height: 40px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -903,5 +904,4 @@ body.loaded #loader {
     display: none;
 }
 
-/*___________FIN LOADER___________*/
 

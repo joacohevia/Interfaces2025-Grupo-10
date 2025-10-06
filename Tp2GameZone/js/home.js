@@ -17,13 +17,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }, 20); //tiempo del intervalo que incrementa el loader
 
-    createCarousel('carousel1');
-    createCarousel('carousel2');
-    createCarousel('carousel3');
-    createCarousel('carousel4');
-    createCarousel('carousel5');
-    createCarousel('carousel6');
-    createCarousel('carousel7');
 
     /*__________________FBOTON CAMBIO DE ICONO__________________*/
     let buyButtons = document.querySelectorAll('.button-with-icon');
@@ -528,3 +521,130 @@ function closeUserMenu() {
     userDropdown.classList.remove('show');
 }
 
+
+
+/*__________________CARRUSEL__________________*/
+document.addEventListener('DOMContentLoaded', function() {
+    const track = document.getElementById("carouselTrack");
+    const prevBtns = document.querySelectorAll(".prev-btn");
+    const nextBtns = document.querySelectorAll(".next-btn");
+    const indicators = document.querySelectorAll(".indicator-new");
+    const items = document.querySelectorAll(".carousel-item-new");
+    const carouselContainer = document.querySelector(".carousel-container-new");
+
+    let currentIndex = 0;
+    const totalItems = items.length;
+    let autoplayInterval;
+    let isPaused = false;
+    let isTransitioning = false;
+
+    function updateCarousel() {
+        if (isTransitioning) return;
+        
+        isTransitioning = true;
+        const newTransform = -currentIndex * 100 + '%';
+        track.style.transform = `translateX(${newTransform})`;
+        
+        // Actualizar indicadores
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === currentIndex);
+        });
+
+        // Actualizar clases active
+        items.forEach((item, index) => {
+            item.classList.toggle('active', index === currentIndex);
+        });
+
+        // Permitir la siguiente transición después de la animación
+        setTimeout(() => {
+            isTransitioning = false;
+        }, 500); // Debe coincidir con la duración de la transición en CSS
+    }
+
+    function nextSlide(e) {
+        if (e) e.stopPropagation();
+        if (isTransitioning) return;
+        
+        isPaused = true;
+        currentIndex = (currentIndex + 1) % totalItems;
+        updateCarousel();
+        
+        // Reanudar después de 5 segundos
+        clearTimeout(window.resumeTimeout);
+        window.resumeTimeout = setTimeout(() => {
+            isPaused = false;
+        }, 5000);
+    }
+
+    function prevSlide(e) {
+        if (e) e.stopPropagation();
+        if (isTransitioning) return;
+        
+        isPaused = true;
+        currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+        updateCarousel();
+        
+        // Reanudar después de 5 segundos
+        clearTimeout(window.resumeTimeout);
+        window.resumeTimeout = setTimeout(() => {
+            isPaused = false;
+        }, 5000);
+    }
+
+    // Event listeners para los botones
+    prevBtns.forEach(btn => {
+        btn.addEventListener("click", prevSlide);
+    });
+
+    nextBtns.forEach(btn => {
+        btn.addEventListener("click", nextSlide);
+    });
+
+    // Event listeners para los indicadores
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (isTransitioning || currentIndex === index) return;
+            
+            isPaused = true;
+            currentIndex = index;
+            updateCarousel();
+            
+            // Reanudar después de 5 segundos
+            clearTimeout(window.resumeTimeout);
+            window.resumeTimeout = setTimeout(() => {
+                isPaused = false;
+            }, 5000);
+        });
+    });
+
+    // Iniciar autoplay
+    function startAutoplay() {
+        autoplayInterval = setInterval(() => {
+            if (!isPaused) {
+                currentIndex = (currentIndex + 1) % totalItems;
+                updateCarousel();
+            }
+        }, 5000);
+    }
+
+    // Detener autoplay
+    function stopAutoplay() {
+        clearInterval(autoplayInterval);
+    }
+
+    // Pausar auto-play al hacer hover
+    carouselContainer.addEventListener("mouseenter", () => {
+        isPaused = true;
+        stopAutoplay();
+    });
+
+    carouselContainer.addEventListener("mouseleave", () => {
+        isPaused = false;
+        startAutoplay();
+    });
+
+    // Iniciar el carrusel
+    updateCarousel();
+    startAutoplay();
+});

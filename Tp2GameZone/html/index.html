@@ -20,7 +20,9 @@
                     </svg>
                 </button>
                 <div class="logo">
-                    <img src="../assets/gameZone.png" alt="GameZone Logo">
+                    <a href="../html/index.html">
+                        <img src="../assets/gameZone.png" alt="GameZone Logo">
+                    </a>
                 </div>
             </div>
             <div class="nav-center">
@@ -142,20 +144,79 @@
         <!-- Hero -->
         <section class="hero-section">
             <div class="hero-content">
-                <h1>Trending Games</h1>
-                <div class="featured-game">
-                    <div class="game-card featured">
-                        <img src="https://media.rawg.io/media/games/34b/34b1f1850a1c06fd971bc6ab3ac0ce0e.jpg" alt="Valorant">
-                        <div class="game-overlay">
-                            <button class="play-btn">
-                                <img src="../assets/img/Play.png" alt="Play" width="20" height="20">
+                <h2>Trending Games</h2>
+
+                <div class="carousel-container-new">
+                <div class="carousel-wrapper-new">
+                    <div class="carousel-track-new" id="carouselTrack">
+                        <!-- Item 1 -->
+                        <div class="carousel-item-new active">
+
+                            <button class="carousel-btn-new prev-btn" id="prevBtn">
+                                <img src="../assets/img/flechaIzq.png" alt="Anterior">
                             </button>
+                            <img src="https://media.rawg.io/media/games/34b/34b1f1850a1c06fd971bc6ab3ac0ce0e.jpg" alt="Valorant" class="carousel-image">
+                            <button class="carousel-btn-new next-btn" id="nextBtn">
+                                <img src="../assets/img/flechaDer.png" alt="Siguiente">
+                            </button>
+
+                            <div class="carousel-overlay">
+                            </div>
+                            <div class="carousel-content">
+                                <div class="carousel-title">Valorant</div>
+                                <button class="btn-carrusel-principal">Jugar</button>
+                            </div>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="carousel-item-new">
+                            <button class="carousel-btn-new prev-btn">
+                                <img src="../assets/img/flechaIzq.png" alt="Anterior">
+                            </button>
+                            <img src="https://media.rawg.io/media/games/456/456dea5e1c7e3cd07060c14e96612001.jpg" alt="GTA V" class="carousel-image">
+                            <button class="carousel-btn-new next-btn">
+                                <img src="../assets/img/flechaDer.png" alt="Siguiente">
+                            </button>
+                            <div class="carousel-overlay">
+                                
+                            </div>
+                            <div class="carousel-content">
+                                <div class="carousel-title">GTA V</div>
+                                <button class="btn-carrusel-principal">Jugar</button>
+                            </div>
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="carousel-item-new">
+                            <button class="carousel-btn-new prev-btn" id="prevBtn">
+                                <img src="../assets/img/flechaIzq.png" alt="Anterior">
+                            </button>
+                            <img src="https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg" alt="Witcher 3" class="carousel-image">
+                            <button class="carousel-btn-new next-btn" id="nextBtn">
+                                <img src="../assets/img/flechaDer.png" alt="Siguiente">
+                            </button>
+                            <div class="carousel-overlay">
+                               
+                            </div>
+                            <div class="carousel-content">
+                                <div class="carousel-title">The Witcher 3</div>
+                                <button class="btn-carrusel-principal">Jugar</button>
+                            </div>
                         </div>
                     </div>
-                    <h2>Valorant</h2>
                 </div>
             </div>
+
+            <!-- Indicadores -->
+            <div class="carousel-indicators-new" id="indicators">
+                <span class="indicator-new active" data-index="0"></span>
+                <span class="indicator-new" data-index="1"></span>
+                <span class="indicator-new" data-index="2"></span>
+            </div>
+
+            </div>
         </section>
+    
 
         <!-- Categorías de Juegos -->
         <section class="games-categories">

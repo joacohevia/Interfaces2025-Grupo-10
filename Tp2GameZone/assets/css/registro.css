@@ -70,6 +70,8 @@
     width: 100%;
     max-width: 400px;
 }
+
+
 /* estilo para error - borde rojo */
 input[type="text"].error {
   border-color: #ef4444;
@@ -107,6 +109,7 @@ input[type="text"].success {
 .password-input {
     position: relative;
 }
+
 /*icono en el pass*/
 .toggle-password {
     position: absolute;
@@ -130,7 +133,7 @@ input[type="text"].success {
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 4px;
 }
 
 .form-group .obligatorio {
@@ -138,24 +141,71 @@ input[type="text"].success {
 }
 
 .form-group label {
-    color: #fff;
-    font-size: 0.9rem;
+    display: block;
+    color: #ffffff;
+    margin-bottom: 1px;
+    font-size: 14px;
 }
 
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="password"],
-.form-group input[type="number"] {
-    padding: 0.8rem;
-    border: 1px solid rgba(255, 255, 255);
-    border-radius: 32px;
-    color: #050505;
-    font-size: 1rem;
+.form-group input {
     width: 100%;
-    transition: all 0.3s ease;
-    background: white;
+    padding: 10px;
+    background: #D9D9D9;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 32px;
+    color: #000000;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+input {
+  transition: all 0.3s ease;
+  outline: none;
+}
+/*estado luego de la transition*/
+.form-group input:focus {
+    outline: none;/*quita el borde azul que aparece al hacer focus */
+    border-color: #00d4ff;/*color del borde al hacer focus(cuando hace la trans) */
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);/*sombra azul*/
 }
 
+/* estilo para error - borde rojo */
+input.error {
+  border-color: #ef4444;
+}
+
+/*estilo para éxito - borde verde */
+input.success {
+  border-color: #22c55e;
+}
+
+/* Mensaje de error */
+.error-message {
+  display: none;
+  color: #d43434;
+  font-size: 13px;
+  margin-top: 6px;
+  font-weight: 500;
+}
+/*se muestra el mensaje de error*/
+.error-message.show {
+  display: block;
+}
+
+/* Mensaje de éxito */
+.success-message {
+  display: none;
+  color: #22c55e;
+  font-size: 13px;
+  margin-top: 6px;
+  font-weight: 500;
+}
+.success-message.show {
+  display: block;
+}
+
+.password-input {
+    position: relative;
+}
 
 
 /* Estilos específicos para el input de edad */
@@ -179,16 +229,28 @@ input[type="number"]::-webkit-inner-spin-button {
 .password-input input {
     width: 100%;
 }
+
+/*terminos y condiciones*/
 .checkbox-group {
+    display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 0.5rem;
+    gap: 5px;
+}
+.checkbox-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;/* Cambia el cursor al pasar sobre el checkbox */
+  flex-shrink: 0;/* Evita que el checkbox se reduzca de tamaño */
 }
 
 .checkbox-group label {
-    color: #B8B8B8;
-    font-size: 0.9rem;
+  color: #b8b8b8;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin: 0;
 }
+
 
 .btn-registro {
     background-color: #FFA552;
@@ -448,4 +510,197 @@ input[type="number"]::-webkit-inner-spin-button {
     color: #555;
     font-size: 10px;
     font-family: Roboto, helvetica, arial, sans-serif;
+}
+
+
+
+/* estilo para error - borde rojo */
+input.error {
+  border-color: #ef4444;
+}
+
+/* estilo para éxito - borde verde */
+input.success {
+  border-color: #22c55e;
+}
+
+/* Agregando estilos para el grupo de checkbox */
+.checkbox-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.checkbox-group label {
+  color: #b8b8b8;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* Estilos para mostrar error en checkboxes */
+.checkbox-error {
+  border: 2px solid #ef4444;
+  border-radius: 8px;
+  padding: 0.5rem;
+  background-color: rgba(239, 68, 68, 0.05);
+  animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Estilos específicos para el contenedor del captcha con error */
+.mock-captcha-container.checkbox-error .mock-captcha {
+  border-color: #ef4444;
+}
+
+/* Estilos para la animación de registro exitoso */
+.success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.success-overlay.show {
+  opacity: 1;
+}
+
+.success-modal {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 3rem 2rem;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  transform: scale(0.8);
+  animation: modalAppear 0.4s ease forwards;
+}
+
+@keyframes modalAppear {
+  to {
+    transform: scale(1);
+  }
+}
+
+.success-modal h2 {
+  color: white;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.success-modal p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.btn-continuar {
+  background-color: white;
+  color: #667eea;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-continuar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Agrego estilos para el modal de error */
+.error-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.error-overlay.show {
+  opacity: 1;
+}
+
+.error-modal {
+  background-color: #272b40;
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  transform: scale(0.8);
+  animation: modalAppear 0.3s ease forwards;
+}
+
+.error-modal h2 {
+  color: white;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.error-modal p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.btn-cerrar-error {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-cerrar-error:hover {
+  background-color: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
 }
