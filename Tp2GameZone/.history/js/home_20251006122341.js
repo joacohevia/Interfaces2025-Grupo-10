@@ -98,20 +98,13 @@ async function loadGames() {
             throw new Error(`Error HTTP: ${response.status}`);
         }
         
-        const gamesRaw = await response.json();
-        console.log(`Juegos cargados desde API: ${gamesRaw.length}`);
+        const games = await response.json();
+        console.log(`Juegos cargados desde API: ${games.length}`);
         
         // Verificar que tenemos datos
-        if (!gamesRaw || !Array.isArray(gamesRaw) || gamesRaw.length === 0) {
+        if (!games || !Array.isArray(games) || games.length === 0) {
             throw new Error('No se encontraron juegos en la API');
         }
-        
-        // Agregar propiedad esPremium a los juegos de la API
-        // La mitad de los juegos serán premium (50%)
-        const games = gamesRaw.map((game, index) => ({
-            ...game,
-            esPremium: index % 2 === 0 // Alternar: 50% premium, 50% gratuitos
-        }));
         
         console.log(`Cargados ${games.length} juegos exitosamente desde la API`);
         
@@ -248,35 +241,19 @@ function displayGames(games) {
     const gap = 24; // gap de 1.5rem = 24px
     const gamesPerRow = Math.floor((containerWidth + gap) / (cardWidth + gap));
     
-    // Agregar PegSolitaire como primer juego de lógica
-    const pegSolitaireGame = {
-        id: 'peg-solitaire',
-        name: 'Peg Solitaire',
-        background_image: '../assets/img/portadaPeg.png',
-        rating: 4.5,
-        genres: [{ name: 'Puzzle' }],
-        esPremium: false, // Juego gratuito
-        released: '2024-01-01'
-    };
-    
     // Categorías de juegos basadas en géneros y características
     const categories = {
-        logicGames: (() => {
-            const logicGamesFromAPI = games.filter(game => {
-                if (!game.genres) return false;
-                return game.genres.some(genre => {
-                    const genreName = genre.name.toLowerCase();
-                    return genreName.includes('puzzle') || 
-                           genreName.includes('strategy') ||
-                           genreName.includes('board') ||
-                           game.name.toLowerCase().includes('chess') ||
-                           game.name.toLowerCase().includes('puzzle');
-                });
-            }).slice(0, 3); // Solo 3 de la API para hacer espacio para PegSolitaire
-            
-            // PegSolitaire siempre va primero en juegos de lógica
-            return [pegSolitaireGame, ...logicGamesFromAPI];
-        })(),
+        logicGames: games.filter(game => {
+            if (!game.genres) return false;
+            return game.genres.some(genre => {
+                const genreName = genre.name.toLowerCase();
+                return genreName.includes('puzzle') || 
+                       genreName.includes('strategy') ||
+                       genreName.includes('board') ||
+                       game.name.toLowerCase().includes('chess') ||
+                       game.name.toLowerCase().includes('puzzle');
+            });
+        }).slice(0, 4),
         
         suggestedGames: games.filter(game => 
             game.rating && game.rating >= 4.0

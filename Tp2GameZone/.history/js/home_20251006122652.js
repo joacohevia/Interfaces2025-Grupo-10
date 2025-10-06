@@ -98,20 +98,13 @@ async function loadGames() {
             throw new Error(`Error HTTP: ${response.status}`);
         }
         
-        const gamesRaw = await response.json();
-        console.log(`Juegos cargados desde API: ${gamesRaw.length}`);
+        const games = await response.json();
+        console.log(`Juegos cargados desde API: ${games.length}`);
         
         // Verificar que tenemos datos
-        if (!gamesRaw || !Array.isArray(gamesRaw) || gamesRaw.length === 0) {
+        if (!games || !Array.isArray(games) || games.length === 0) {
             throw new Error('No se encontraron juegos en la API');
         }
-        
-        // Agregar propiedad esPremium a los juegos de la API
-        // La mitad de los juegos serán premium (50%)
-        const games = gamesRaw.map((game, index) => ({
-            ...game,
-            esPremium: index % 2 === 0 // Alternar: 50% premium, 50% gratuitos
-        }));
         
         console.log(`Cargados ${games.length} juegos exitosamente desde la API`);
         

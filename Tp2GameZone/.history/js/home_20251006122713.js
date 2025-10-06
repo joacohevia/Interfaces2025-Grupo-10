@@ -107,10 +107,10 @@ async function loadGames() {
         }
         
         // Agregar propiedad esPremium a los juegos de la API
-        // La mitad de los juegos serán premium (50%)
-        const games = gamesRaw.map((game, index) => ({
+        // Los juegos con rating alto (>= 4.5) serán premium
+        const games = gamesRaw.map(game => ({
             ...game,
-            esPremium: index % 2 === 0 // Alternar: 50% premium, 50% gratuitos
+            esPremium: game.rating >= 4.5 && Math.random() > 0.7 // 30% de los juegos de alta calificación serán premium
         }));
         
         console.log(`Cargados ${games.length} juegos exitosamente desde la API`);
