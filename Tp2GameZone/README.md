@@ -49,7 +49,7 @@
 
 
 ## Datos y API
-- No se consumió directamente la API de la cátedra.  
+- Se consumió la API de la cátedra.  
 - En su lugar, se generó un archivo local `api.json` con los datos extraídos de la API, para simular la respuesta.  
 
 
