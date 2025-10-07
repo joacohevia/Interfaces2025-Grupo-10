@@ -65,7 +65,7 @@ input[type="text"] {
 /*estado luego de la transition*/
 .form-group input:focus {
     outline: none;/*quita el borde azul que aparece al hacer focus */
-    box-shadow: 0 0 10px #576C95;/*sombra azul*/
+    box-shadow: 0 0 10px #4A6EDB;/*sombra azul*/
 }
 
 /* estilo para error - borde rojo */

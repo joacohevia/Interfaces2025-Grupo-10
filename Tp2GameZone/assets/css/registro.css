@@ -128,6 +128,16 @@
     font-size: 16px;
     transition: border-color 0.3s ease;
 }
+input {
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+/*estado luego de la transition*/
+.form-group input:focus {
+    outline: none;/*quita el borde azul que aparece al hacer focus */
+    box-shadow: 0 0 10px #4A6EDB;/*sombra azul*/
+}
 
 /*terminos y condiciones*/
 .checkbox-group {
