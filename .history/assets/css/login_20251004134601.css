@@ -1,0 +1,333 @@
+/* Estilos para la página de inicio de sesión */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;/*altura minima */
+    /* img fondo */
+    background-image: url('../img/fondo_login_registro.jpeg');
+    background-size: cover;       /* Ajusta la imagen al tamaño de la pantalla */
+    background-position: center;  /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que se repita */
+    background-attachment: fixed; /* Mantiene el fondo estático al hacer scroll */
+}
+
+/*___________LOADER___________*/
+#loader {
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    position: fixed; /* Fija el loader en la pantalla, no se mueve con el scroll */
+    top: 0; /* Lo posiciona desde el borde superior */
+    left: 0; /* Lo posiciona desde el borde izquierdo */
+    width: 100%;
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.9); /* Fondo negro semi-transparente */
+    color: #37415C; /* color text */
+    z-index: 9999; /* encima de lo demas*/
+}
+.loader-container {
+    position: absolute; /* Posiciona el contenedor dentro del loader */
+    top: 50%; /* Lo mueve al 50% desde arriba */
+    left: 50%; /* Lo mueve al 50% desde la izquierda */
+    z-index: 999;
+}
+.porcentaje {
+    margin-top: 0; 
+    text-align: center; 
+    font-size: 14px; 
+}
+.spinner {
+    border: 8px solid rgba(255, 255, 255, 0.3); /* Borde gris claro alrededor */
+    border-top: 8px solid white; /* Borde superior blanco para crear efecto de giro */
+    border-radius: 50%; /* Lo convierte en un círculo */
+    width: 50px; /* Ancho del spinner */
+    height: 50px; /* Alto del spinner */
+    animation: spin 1s infinite; /* Aplica animación de giro continua cada 1 segundo */
+    margin-bottom: 5px; /* Espacio debajo del spinner */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.186); /* Sombra suave alrededor */
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0deg); /* Comienza sin rotación */
+    }
+    100% {
+        transform: rotate(360deg); /* Termina con una vuelta completa */
+    }
+}
+
+
+/* Ocultar el loader una vez cargado */
+body.loaded #loader {
+    display: none;
+}
+
+/*___________FIN LOADER___________*/
+.login-container {
+    max-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    /* color de img fondo*/
+    background-color: rgba(0, 0, 0, 0.6); /* Ajustá el 0.5 para más o menos oscuridad */
+    z-index: -1;/* indica que el elemento debe estar atras de otros elementos */
+}
+
+.login-box {
+    /*backdrop-filter: blur(10px); defenfoque en el fondo*/
+    background-color: #37415C;
+    border-radius: 30px;
+    padding: 25px 25px 20px 25px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.login-box h1 {
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    color: #ffffff;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    background: #D9D9D9;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 32px;
+    color: #000000;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+input[type="text"] {
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+/*estado luego de la transition*/
+.form-group input:focus {
+    outline: none;/*quita el borde azul que aparece al hacer focus */
+    border-color: #00d4ff;/*color del borde al hacer focus(cuando hace la trans) */
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);/*sombra azul*/
+}
+
+/* estilo para error - borde rojo */
+input[type="text"].error {
+  border-color: #ef4444;
+}
+
+/*estilo para éxito - borde verde */
+input[type="text"].success {
+  border-color: #22c55e;
+}
+
+/* Mensaje de error */
+.error-message {
+  display: none;
+  color: #d43434;
+  font-size: 13px;
+  margin-top: 6px;
+  font-weight: 500;
+}
+.error-message.show {
+  display: block;
+}
+
+/* Mensaje de éxito */
+.success-message {
+  display: none;
+  color: #22c55e;
+  font-size: 13px;
+  margin-top: 6px;
+  font-weight: 500;
+}
+.success-message.show {
+  display: block;
+}
+
+
+
+.password-input {
+    position: relative;
+}
+/*icono en el pass*/
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+.toggle-password img {
+    width: 22px;
+    height: 22px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+.toggle-password:hover img {
+    opacity: 1;
+}
+
+/* 
+.login-button {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #00d4ff 0%, #0047ff 100%);
+    background-color: #FFA552;
+    border: none;
+    border-radius: 8px;
+    color: #0C0C0C;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    } 
+*/
+
+/* .login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+} */
+
+
+/* From Uiverse.io by adamgiebl */ 
+.login-button {
+ background-color: #FFA552;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: none;/*elimina borde por defecto*/
+  border-radius: 32px;
+
+  letter-spacing: 2px;/*espacio entre letras*/
+  text-transform: uppercase;/*convierte texto a mayusculas*/
+  display: inline-block;
+  text-align: center;
+  font-weight: bold;/*grosor de la fuente*/
+  position: relative;/*necesario para el pseudo elemento :before*/
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);/*sombra*/
+  color: #0C0C0C;
+  text-decoration: none;/*quita subrayado si es un enlace*/
+  transition: 0.3s ease all;
+  z-index: 1;
+}
+
+.login-button:before {
+  border-radius: 32px;
+  box-shadow:0px 1px 3px rgba(255, 255, 255, 0.8);
+  transition: 0.5s all ease;
+  position: absolute;/*se posiciona dentro del boton*/
+  top: 0;
+  left: 50%;
+  right: 50%;
+  bottom: 0;
+  opacity: 0;/*inicialmente invisible*/
+  content: '';
+  background-color: #b85803;
+  z-index: -1;
+}
+
+.login-button:hover, .login-button:focus {
+  color: white;
+}
+
+.login-button:hover:before, .login-button:focus:before {
+  transition: 0.5s all ease;
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+/*reduce tamaño al clic*/
+.login-button:active {
+  transform: scale(0.9);
+}
+
+
+
+
+.text-ingresa{
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+}
+.text-ingresa::before,
+.text-ingresa::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin: 0 12px;
+}
+.social-login {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.social-login p {
+    color: #ffffff;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+}
+
+.social-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-btn img {
+    width: 24px;
+    height: 24px;
+}
+
+.social-btn:hover {
+    transform: translateY(-3px);
+    border-color: #00d4ff;
+}
+
+.register-link {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.register-link a {
+    color: #67dbf2;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.register-link a:hover {
+    color: #1758fe;
+}
