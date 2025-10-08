@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameZone - Tu plataforma de juegos favorita</title>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/home.css">
+</head>
+<body>
+    <!-- Header compartido -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-left">
+                <button class="burger-menu" id="burgerMenu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <div class="logo">
+                    <img src="../assets/gameZone.png" alt="GameZone Logo">
+                </div>
+            </div>
+            <div class="nav-center">
+                <div class="search-container">
+                    <input type="text" placeholder="Buscar juegos..." class="search-input">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="nav-right">
+                <button class="premium-btn" onclick="showPremiumPopup()">
+                    <img src="../assets/img/corona.png" alt="Premium" width="32" height="24">
+                </button>
+                <button class="user-menu">
+                    <img src="../assets/img/user.png" alt="User" width="24" height="24">
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Menú desplegable del burger -->
+        <div class="burger-dropdown" id="burgerDropdown">
+            <div class="dropdown-content">
+                <div class="dropdown-item">
+                    <img src="../assets/img/IconosMenu/ic_accion.png" alt="Acción" width="20" height="20">
+                    <span>Acción</span>
+                </div>
+                <div class="dropdown-item">
+                    <img src="../assets/img/IconosMenu/ic_aventura.png" alt="Aventura" width="20" height="20">
+                    <span>Aventura</span>
+                </div>
+                <div class="dropdown-item">
+                    <img src="../assets/img/IconosMenu/ic_carrera.png" alt="Carreras" width="20" height="20">
+                    <span>Carreras</span>
+                </div>
+                <div class="dropdown-item">
+                    <img src="../assets/img/IconosMenu/ic_clasicos.png" alt="Clásicos" width="20" height="20">
+                    <span>Clásicos</span>
+                </div>
+                <div class="dropdown-item">
+                    <img src="../assets/img/IconosMenu/ic_cocina.png" alt="Cocina" width="20" height="20">
+                    <span>Cocina</span>
+                </div>
+                <div class="dropdown-item">
+                    <img src="../assets/img/IconosMenu/ic_deporte.png" alt="Deportes" width="20" height="20">
+                    <span>Deportes</span>
+                </div>
+                <div class="dropdown-item">
+                    <img src="../assets/img/IconosMenu/ic_escape.png" alt="Escape" width="20" height="20">
+                    <span>Escape</span>
+                </div>
+                <div class="dropdown-item">
+                    <img src="../assets/img/IconosMenu/ic_estrategia.png" alt="Estrategia" width="20" height="20">
+                    <span>Estrategia</span>
+                </div>
+                <div class="dropdown-item">
+                    <img src="../assets/img/IconosMenu/ic_guerra.png" alt="Guerra" width="20" height="20">
+                    <span>Guerra</span>
+                </div>
+                <div class="dropdown-item">
+                    <img src="../assets/img/IconosMenu/ic_habilidad.png" alt="Habilidad" width="20" height="20">
+                    <span>Habilidad</span>
+                </div>
+                <div class="dropdown-item">
+                    <img src="../assets/img/IconosMenu/ic_infantiles.png" alt="Infantiles" width="20" height="20">
+                    <span>Infantiles</span>
+                </div>
+                <div class="dropdown-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>Multijugador</span>
+                </div>
+                <div class="dropdown-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                    </svg>
+                    <span>Plataformas</span>
+                </div>
+                <div class="dropdown-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                        <path d="M9 9h6v6H9z"></path>
+                        <path d="M9 3v6"></path>
+                        <path d="M15 9v6"></path>
+                        <path d="M21 9h-6"></path>
+                        <path d="M9 15v6"></path>
+                    </svg>
+                    <span>Puzzle</span>
+                </div>
+                <div class="dropdown-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="7.5,4.21 12,6.81 16.5,4.21"></polyline>
+                        <polyline points="7.5,19.79 7.5,14.6 3,12"></polyline>
+                        <polyline points="21,12 16.5,14.6 16.5,19.79"></polyline>
+                        <polyline points="3.27,6.96 12,12.01 20.73,6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                    <span>Terror</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <!-- Hero -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>Trending Games</h1>
+                <div class="featured-game">
+                    <div class="game-card featured">
+                        <img src="https://media.rawg.io/media/games/34b/34b1f1850a1c06fd971bc6ab3ac0ce0e.jpg" alt="Valorant">
+                        <div class="game-overlay">
+                            <button class="play-btn">
+                                <img src="../assets/img/Play.png" alt="Play" width="20" height="20">
+                            </button>
+                        </div>
+                    </div>
+                    <h2>Valorant</h2>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categorías de Juegos -->
+        <section class="games-categories">
+            <!-- Juegos de Lógica -->
+            <div class="category-section">
+                <h1>Juegos de lógica</h1>
+                <div class="games-grid" id="logicGames">
+                    <!-- Los juegos se cargarán dinámicamente -->
+                </div>
+            </div>
+
+            <!-- Sugerencias para vos -->
+            <div class="category-section">
+                <h1>Sugerencias para vos</h1>
+                <div class="games-grid" id="suggestedGames">
+                    <!-- Los juegos se cargarán dinámicamente -->
+                </div>
+            </div>
+
+            <!-- Juegos clasicos -->
+            <div class="category-section">
+                <h1>Juegos clásicos</h1>
+                <div class="games-grid" id="classicGames">
+                    <!-- Los juegos se cargarán dinámicamente -->
+                </div>
+            </div>
+
+            <!-- Juegos de estrategia -->
+            <div class="category-section">
+                <h1>Juegos de estrategia</h1>
+                <div class="games-grid" id="strategyGames">
+                    <!-- Los juegos se cargarán dinámicamente -->
+                </div>
+            </div>
+
+            <!-- Juegos multijugador -->
+            <div class="category-section">
+                <h1>Juegos multijugador</h1>
+                <div class="games-grid" id="multiplayerGames">
+                    <!-- Los juegos se cargarán dinámicamente -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer compartido -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <img src="../assets/gameZone.png" alt="GameZone Logo">
+                    <span>GameZone</span>
+                </div>
+                <p>Tu plataforma gamer</p>
+            </div>
+            
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4> <img src="../assets/img/Soporte.png" alt="Soporte" width="20" height="20"> Soporte</h4>
+                    <ul>
+                        <li><a href="#">Centro de Ayuda</a></li>
+                        <li><a href="#">Programa de Desarrollador</a></li>
+                        <li><a href="#">Contactanos</a></li>
+                        <li><a href="#">Reportar Errores</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4><img src="../assets/img/Comunidad.png" alt="Comunidad" width="20" height="20"> Comunidad</h4>
+                    <ul>
+                        <li><a href="#">Foro de Jugadores</a></li>
+                        <li><a href="#">Políticas de privacidad</a></li>
+                        <li><a href="#">Términos de servicio</a></li>
+                        <li><a href="#">Únete a nosotros</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4><img src="../assets/img/Legal.png" alt="Legal" width="20" height="20"> Legal</h4>
+                    <ul>
+                        <li><a href="#">Terminos y condiciones</a></li>
+                        <li><a href="#">Politicas de privacidad</a></li>
+                        <li><a href="#">Politicas de cookies</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4><img src="../assets/img/Juegos.png" alt="Juegos" width="20" height="20"> Juegos</h4>
+                    <ul>
+                        <li><a href="#">Catálogo completo</a></li>
+                        <li><a href="#">Noticias Especializadas</a></li>
+                        <li><a href="#">Guías recomendadas</a></li>
+                        <li><a href="#">Juegos recomendados</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4><img src="../assets/img/Publicidad.png" alt="Publicidad" width="20" height="20"> Publicita tu juego</h4>
+                    <ul>
+                        <li><a href="#">Venta promoción de distribuidores</a></li>
+                        <li><a href="#">Recibe promoción de Agregators</a></li>
+                        <li><a href="#">Herramientas para desarrolladores</a></li>
+                        <li><a href="#">Únete al equipo comercial</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.703.099.12.112.225.085.347-.09.383-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.751-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24c6.624 0 11.99-5.367 11.99-12.013C24.007 5.367 18.641.001.017.001z"/>
+                        </svg>
+                    </a>
+                </div>
+                <p>&copy; 2025 GameZone. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/home.js"></script>
+</body>
+</html>
