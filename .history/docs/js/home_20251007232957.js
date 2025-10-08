@@ -1,4 +1,4 @@
-'use strict';
+''use strict';
 
 //LOADER
 document.addEventListener("DOMContentLoaded", function() {

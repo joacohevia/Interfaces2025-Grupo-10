@@ -16,9 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Manejadores para el menú de usuario
     setupUserMenu();
     
-    // Configurar navegación del menú hamburguesa
-    setupBurgerMenuNavigation();
-    
     // Configurar carousel de screenshots
     setupScreenshotCarousel();
 });
@@ -317,91 +314,6 @@ function closeUserMenu() {
     userDropdown.classList.remove('show');
 }
 
-// Configurar navegación del menú hamburguesa
-function setupBurgerMenuNavigation() {
-    const burgerItems = document.querySelectorAll('.dropdown-item');
-    
-    // Mapeo de categorías del menú a IDs de secciones
-    const categoryMap = {
-        'Acción': 'actionGames',
-        'Aventura': 'adventureGames', 
-        'Carreras': 'racingGames',
-        'Clásicos': 'classicGames',
-        'Cocina': 'cookingGames',
-        'Deportes': 'sportsGames',
-        'Escape': 'escapeGames',
-        'Estrategia': 'logicGames', // Este apunta a logicGames que ahora se llama "Juegos de estrategia"
-        'Guerra': 'warGames',
-        'Habilidad': 'skillGames',
-        'Infantiles': 'kidsGames',
-        'Multijugador': 'multiplayerGames',
-        'Plataformas': 'platformGames',
-        'Puzzle': 'puzzleGames',
-        'Terror': 'horrorGames'
-    };
-
-    burgerItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const categoryText = this.querySelector('span').textContent.trim();
-            const targetId = categoryMap[categoryText];
-            
-            if (targetId) {
-                // Si estamos en otra página, ir al home primero
-                if (window.location.pathname.includes('juego.html') || 
-                    window.location.pathname.includes('login.html') || 
-                    window.location.pathname.includes('registro.html')) {
-                    
-                    // Guardar el objetivo en sessionStorage para navegación entre páginas
-                    sessionStorage.setItem('scrollTarget', targetId);
-                    window.location.href = './index.html';
-                    return;
-                }
-                
-                // Si estamos en el home, hacer scroll directo
-                scrollToCategory(targetId);
-            }
-            
-            // Cerrar el menú
-            closeBurgerMenu();
-        });
-    });
-    
-    // Verificar si hay un scroll pendiente al cargar la página
-    checkPendingScroll();
-}
-
-// Función para hacer scroll a una categoría específica
-function scrollToCategory(targetId) {
-    const targetElement = document.getElementById(targetId);
-    if (targetElement) {
-        // Buscar el h1 padre que contiene el título de la categoría
-        const categorySection = targetElement.closest('.category-section');
-        if (categorySection) {
-            const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
-            const offset = categorySection.offsetTop - headerHeight - 20; // 20px de margen extra
-            
-            window.scrollTo({
-                top: offset,
-                behavior: 'smooth'
-            });
-        }
-    }
-}
-
-// Verificar scroll pendiente después de cargar la página
-function checkPendingScroll() {
-    const pendingScroll = sessionStorage.getItem('scrollTarget');
-    if (pendingScroll) {
-        sessionStorage.removeItem('scrollTarget');
-        // Esperar a que se carguen los juegos antes de hacer scroll
-        setTimeout(() => {
-            scrollToCategory(pendingScroll);
-        }, 1500); // Esperar a que termine el loader
-    }
-}
-
 // Funcionalidad del carousel de screenshots
 function setupScreenshotCarousel() {
     const screenshots = document.querySelectorAll('.screenshot');
@@ -476,3 +388,4 @@ function setupScreenshotCarousel() {
     // Inicializar carousel
     updateCarousel();
 }
+

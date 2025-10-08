@@ -476,3 +476,4 @@ function setupScreenshotCarousel() {
     // Inicializar carousel
     updateCarousel();
 }
+

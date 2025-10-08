@@ -637,7 +637,6 @@ body {
     border: none;
     background: transparent;
     width: 100%;
-    cursor: pointer;
 }
 
 .dropdown-item:hover {

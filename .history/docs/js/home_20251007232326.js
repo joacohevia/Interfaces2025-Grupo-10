@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function() {
 document.addEventListener('DOMContentLoaded', function() {
     loadGames();
     setupEventListeners();
-    setupBurgerMenuNavigation();
 });
 
 // Configurar event listeners
@@ -73,91 +72,6 @@ function setupEventListeners() {
             e.preventDefault();
             window.location.href = './login.html';
         });
-    }
-}
-
-// Configurar navegación del menú hamburguesa
-function setupBurgerMenuNavigation() {
-    const burgerItems = document.querySelectorAll('.dropdown-item');
-    
-    // Mapeo de categorías del menú a IDs de secciones
-    const categoryMap = {
-        'Acción': 'actionGames',
-        'Aventura': 'adventureGames', 
-        'Carreras': 'racingGames',
-        'Clásicos': 'classicGames',
-        'Cocina': 'cookingGames',
-        'Deportes': 'sportsGames',
-        'Escape': 'escapeGames',
-        'Estrategia': 'logicGames', // Este apunta a logicGames que ahora se llama "Juegos de estrategia"
-        'Guerra': 'warGames',
-        'Habilidad': 'skillGames',
-        'Infantiles': 'kidsGames',
-        'Multijugador': 'multiplayerGames',
-        'Plataformas': 'platformGames',
-        'Puzzle': 'puzzleGames',
-        'Terror': 'horrorGames'
-    };
-
-    burgerItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const categoryText = this.querySelector('span').textContent.trim();
-            const targetId = categoryMap[categoryText];
-            
-            if (targetId) {
-                // Si estamos en otra página, ir al home primero
-                if (window.location.pathname.includes('juego.html') || 
-                    window.location.pathname.includes('login.html') || 
-                    window.location.pathname.includes('registro.html')) {
-                    
-                    // Guardar el objetivo en sessionStorage para navegación entre páginas
-                    sessionStorage.setItem('scrollTarget', targetId);
-                    window.location.href = './index.html';
-                    return;
-                }
-                
-                // Si estamos en el home, hacer scroll directo
-                scrollToCategory(targetId);
-            }
-            
-            // Cerrar el menú
-            closeBurgerMenu();
-        });
-    });
-    
-    // Verificar si hay un scroll pendiente al cargar la página
-    checkPendingScroll();
-}
-
-// Función para hacer scroll a una categoría específica
-function scrollToCategory(targetId) {
-    const targetElement = document.getElementById(targetId);
-    if (targetElement) {
-        // Buscar el h1 padre que contiene el título de la categoría
-        const categorySection = targetElement.closest('.category-section');
-        if (categorySection) {
-            const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
-            const offset = categorySection.offsetTop - headerHeight - 20; // 20px de margen extra
-            
-            window.scrollTo({
-                top: offset,
-                behavior: 'smooth'
-            });
-        }
-    }
-}
-
-// Verificar scroll pendiente después de cargar la página
-function checkPendingScroll() {
-    const pendingScroll = sessionStorage.getItem('scrollTarget');
-    if (pendingScroll) {
-        sessionStorage.removeItem('scrollTarget');
-        // Esperar a que se carguen los juegos antes de hacer scroll
-        setTimeout(() => {
-            scrollToCategory(pendingScroll);
-        }, 1500); // Esperar a que termine el loader
     }
 }
 
@@ -374,138 +288,6 @@ function displayGames(games) {
                    description.includes('online') ||
                    description.includes('cooperative') ||
                    description.includes('team');
-        }).slice(0, 4),
-
-        actionGames: games.filter(game => {
-            if (!game.genres) return false;
-            return game.genres.some(genre => {
-                const genreName = genre.name.toLowerCase();
-                return genreName.includes('action') || 
-                       genreName.includes('shooter') ||
-                       genreName.includes('fighting');
-            });
-        }).slice(0, 4),
-        
-        adventureGames: games.filter(game => {
-            if (!game.genres) return false;
-            return game.genres.some(genre => {
-                const genreName = genre.name.toLowerCase();
-                return genreName.includes('adventure') || 
-                       genreName.includes('rpg');
-            });
-        }).slice(0, 4),
-        
-        racingGames: games.filter(game => {
-            if (!game.genres) return false;
-            const name = game.name.toLowerCase();
-            return game.genres.some(genre => {
-                const genreName = genre.name.toLowerCase();
-                return genreName.includes('racing') || 
-                       genreName.includes('sports');
-            }) || name.includes('racing') || 
-                 name.includes('formula') ||
-                 name.includes('speed');
-        }).slice(0, 4),
-        
-        cookingGames: games.filter(game => {
-            const name = game.name.toLowerCase();
-            const description = (game.description || '').toLowerCase();
-            return name.includes('cooking') || 
-                   name.includes('chef') ||
-                   name.includes('restaurant') ||
-                   name.includes('kitchen') ||
-                   description.includes('cooking') ||
-                   description.includes('chef');
-        }).slice(0, 4),
-        
-        sportsGames: games.filter(game => {
-            if (!game.genres) return false;
-            const name = game.name.toLowerCase();
-            return game.genres.some(genre => {
-                const genreName = genre.name.toLowerCase();
-                return genreName.includes('sports') ||
-                       genreName.includes('simulation');
-            }) || name.includes('fifa') ||
-                 name.includes('nba') ||
-                 name.includes('football') ||
-                 name.includes('soccer');
-        }).slice(0, 4),
-        
-        escapeGames: games.filter(game => {
-            const name = game.name.toLowerCase();
-            const description = (game.description || '').toLowerCase();
-            return name.includes('escape') || 
-                   name.includes('mystery') ||
-                   name.includes('puzzle') ||
-                   description.includes('escape') ||
-                   description.includes('mystery');
-        }).slice(0, 4),
-        
-        warGames: games.filter(game => {
-            if (!game.genres) return false;
-            const name = game.name.toLowerCase();
-            return game.genres.some(genre => {
-                const genreName = genre.name.toLowerCase();
-                return genreName.includes('action') || 
-                       genreName.includes('shooter') ||
-                       genreName.includes('strategy');
-            }) && (name.includes('war') ||
-                   name.includes('battle') ||
-                   name.includes('combat') ||
-                   name.includes('military'));
-        }).slice(0, 4),
-        
-        skillGames: games.filter(game => {
-            if (!game.genres) return false;
-            return game.genres.some(genre => {
-                const genreName = genre.name.toLowerCase();
-                return genreName.includes('arcade') || 
-                       genreName.includes('puzzle') ||
-                       genreName.includes('casual');
-            });
-        }).slice(0, 4),
-        
-        kidsGames: games.filter(game => {
-            const name = game.name.toLowerCase();
-            const description = (game.description || '').toLowerCase();
-            return name.includes('kids') || 
-                   name.includes('family') ||
-                   name.includes('children') ||
-                   description.includes('family-friendly') ||
-                   description.includes('all ages');
-        }).slice(0, 4),
-        
-        platformGames: games.filter(game => {
-            if (!game.genres) return false;
-            return game.genres.some(genre => {
-                const genreName = genre.name.toLowerCase();
-                return genreName.includes('platformer') || 
-                       genreName.includes('action') ||
-                       genreName.includes('arcade');
-            });
-        }).slice(0, 4),
-        
-        puzzleGames: games.filter(game => {
-            if (!game.genres) return false;
-            return game.genres.some(genre => {
-                const genreName = genre.name.toLowerCase();
-                return genreName.includes('puzzle') || 
-                       genreName.includes('casual');
-            });
-        }).slice(0, 4),
-        
-        horrorGames: games.filter(game => {
-            if (!game.genres) return false;
-            const name = game.name.toLowerCase();
-            const description = (game.description || '').toLowerCase();
-            return game.genres.some(genre => {
-                const genreName = genre.name.toLowerCase();
-                return genreName.includes('horror');
-            }) || name.includes('horror') ||
-                 name.includes('scary') ||
-                 name.includes('nightmare') ||
-                 description.includes('horror') ||
-                 description.includes('scary');
         }).slice(0, 4)
     };
 
@@ -571,9 +353,8 @@ function createGameCard(game) {
     `;
 
     // Agregar eventos de click según el tipo de juego
-    if (game.name === 'Peg Solitaire' || game.esPremium === false) {
+    if (game.name === 'Peg Solitaire') {
         // Peg Solitaire: redirige a juego.html
-    // Juegos gratuitos (esPremium: false): redirige a peg a modo de ejemplo
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
             window.location.href = 'juego.html';
@@ -585,6 +366,7 @@ function createGameCard(game) {
             showPremiumPopup();
         });
     }
+    // Juegos gratuitos (esPremium: false): sin evento de click
 
     return gameCard;
 }
