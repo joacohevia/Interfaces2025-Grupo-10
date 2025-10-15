@@ -167,7 +167,7 @@
     gap: 0.5rem;
     transform: scale(0.8);
     opacity: 0;
-    transition: none;
+    transition: all 0.3s ease;
 }
 
 .game-card:hover .play-btn,
@@ -477,12 +477,12 @@
   gap: 0.5rem;
   transform: scale(0.8);
   opacity: 0;
-    transition: none;
+  transition: all 0.3s ease;
 }
 
 .carousel-image-container:hover .play-icon {
-    transform: scale(1);
-    opacity: 1;
+  transform: scale(1);
+  opacity: 1;
 }
 
 .play-icon img {
