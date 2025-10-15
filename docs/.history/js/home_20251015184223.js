@@ -589,7 +589,7 @@ function createGameCard(game) {
         // Blocka: redirige a blocka.html
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
-            window.location.href = 'blocka.html';
+            window.location.href = 'juego.html';
         });
     } else if (game.esPremium) {
         // Juegos premium: mostrar popup

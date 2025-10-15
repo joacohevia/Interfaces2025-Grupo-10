@@ -579,29 +579,24 @@ function createGameCard(game) {
     `;
 
     // Agregar eventos de click según el tipo de juego
-    if (game.name === 'Peg Solitaire') {
+    if (game.name === 'Peg Solitaire' || game.esPremium === false) {
         // Peg Solitaire: redirige a juego.html
+    // Juegos gratuitos (esPremium: false): redirige a peg a modo de ejemplo
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
             window.location.href = 'juego.html';
         });
-    } else if (game.name === 'Blocka') {
+    } else if (game.name === 'blocka') {
         // Blocka: redirige a blocka.html
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
-            window.location.href = 'blocka.html';
+            window.location.href = 'juego.html';
         });
     } else if (game.esPremium) {
         // Juegos premium: mostrar popup
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
             showPremiumPopup();
-        });
-    } else{
-        // Juegos gratuitos (esPremium: false): redirige a peg a modo de ejemplo
-        gameCard.style.cursor = 'pointer';
-        gameCard.addEventListener('click', function() {
-            window.location.href = 'juego.html';
         });
     }
 

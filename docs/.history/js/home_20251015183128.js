@@ -337,7 +337,8 @@ function displayGames(games) {
                            game.name.toLowerCase().includes('chess') ||
                            game.name.toLowerCase().includes('puzzle');
                 });
-            }).slice(0, 2); // Solo 2 de la API para dejar espacio a Peg y Blocka
+            }).slice(0, 3); // Solo 3 de la API para hacer espacio para PegSolitaire
+            
             // PegSolitaire y Blocka siempre van primero en juegos de lógica
             return [pegSolitaireGame, blockaGame, ...logicGamesFromAPI];
         })(),
@@ -591,17 +592,17 @@ function createGameCard(game) {
         gameCard.addEventListener('click', function() {
             window.location.href = 'blocka.html';
         });
+    } else if (game.esPremium === false) {
+        // Juegos gratuitos (esPremium: false): redirige a peg a modo de ejemplo
+        gameCard.style.cursor = 'pointer';
+        gameCard.addEventListener('click', function() {
+            window.location.href = 'juego.html';
+        });
     } else if (game.esPremium) {
         // Juegos premium: mostrar popup
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
             showPremiumPopup();
-        });
-    } else{
-        // Juegos gratuitos (esPremium: false): redirige a peg a modo de ejemplo
-        gameCard.style.cursor = 'pointer';
-        gameCard.addEventListener('click', function() {
-            window.location.href = 'juego.html';
         });
     }
 
