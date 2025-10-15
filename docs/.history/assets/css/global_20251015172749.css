@@ -1,6 +1,5 @@
 button, .btn, .premium-btn, .activate-btn {
     font-family: 'Roboto', helvetica, arial, sans-serif;
-    font-weight: normal;
 }
 /* Globales */
 * {
@@ -15,6 +14,10 @@ body {
         color: #ffffff;
         min-height: 100vh;
         line-height: 1.6;
+}
+
+h1, input, button, label, p, span, div, .form-group, .form-header p, .error-message, .success-message, .checkbox-group label, .captcha-box label, .login-link, .btn-registro, .btn-continuar {
+    font-family: 'Roboto', helvetica, arial, sans-serif;
 }
 /*Header login registro*/
 .main-header {

@@ -1,7 +1,7 @@
 
 .games-grid .play-card img {
-    width: 60px;
-    height: 60px;
+    width: 36px !important;
+    height: 36px !important;
     filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.8));
 }
 /* Estilos home */

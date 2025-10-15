@@ -1,6 +1,5 @@
 button, .btn, .premium-btn, .activate-btn {
     font-family: 'Roboto', helvetica, arial, sans-serif;
-    font-weight: normal;
 }
 /* Globales */
 * {
@@ -10,11 +9,11 @@ button, .btn, .premium-btn, .activate-btn {
 }
 
 body {
-        font-family: 'Roboto', helvetica, arial, sans-serif;
-        background: #0E1117;
-        color: #ffffff;
-        min-height: 100vh;
-        line-height: 1.6;
+    font-family: 'Orbitron', sans-serif;
+    background: #0E1117;
+    color: #ffffff;
+    min-height: 100vh;
+    line-height: 1.6;
 }
 /*Header login registro*/
 .main-header {

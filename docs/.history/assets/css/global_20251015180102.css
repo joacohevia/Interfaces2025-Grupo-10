@@ -1,6 +1,13 @@
+button:not(.main-header *):not(.header *):not(.footer *),
+.btn:not(.main-header *):not(.header *):not(.footer *),
+.premium-btn:not(.main-header *):not(.header *):not(.footer *),
+.activate-btn:not(.main-header *):not(.header *):not(.footer *),
+.btn-registro:not(.main-header *):not(.header *):not(.footer *),
+.btn-continuar:not(.main-header *):not(.header *):not(.footer *) {
+    font-weight: normal;
+}
 button, .btn, .premium-btn, .activate-btn {
     font-family: 'Roboto', helvetica, arial, sans-serif;
-    font-weight: normal;
 }
 /* Globales */
 * {

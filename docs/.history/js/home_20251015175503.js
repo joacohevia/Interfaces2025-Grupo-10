@@ -560,7 +560,7 @@ function createGameCard(game) {
                  onerror="this.src='assets/gameZone.png'">
             ${game.esPremium ? '<img src="assets/img/Premium.png" alt="Premium" class="premium-icon">' : ''}
                 <div class="game-overlay">
-                    <div class="play-card">
+                    <div class="play-icon play-btn-card">
                         <img src="assets/img/Play.png" alt="Play">
                     </div>
                 </div>

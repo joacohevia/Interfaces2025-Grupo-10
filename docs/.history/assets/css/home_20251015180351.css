@@ -1,7 +1,8 @@
-
+/* Icono play más chico para cards */
+/* Forzar tamaño chico solo en cards de categorías */
 .games-grid .play-card img {
-    width: 60px;
-    height: 60px;
+    width: 26px !important;
+    height: 26px !important;
     filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.8));
 }
 /* Estilos home */

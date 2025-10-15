@@ -559,11 +559,11 @@ function createGameCard(game) {
                  loading="lazy"
                  onerror="this.src='assets/gameZone.png'">
             ${game.esPremium ? '<img src="assets/img/Premium.png" alt="Premium" class="premium-icon">' : ''}
-                <div class="game-overlay">
-                    <div class="play-card">
-                        <img src="assets/img/Play.png" alt="Play">
-                    </div>
-                </div>
+            <div class="game-overlay">
+                <button class="play-btn">
+                    <img src="assets/img/Play.png" alt="Play" width="35" height="35">
+                </button>
+            </div>
         </div>
         <div class="game-info">
             <div class="game-title">${game.name}</div>

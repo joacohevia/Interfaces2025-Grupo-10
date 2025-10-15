@@ -1,6 +1,13 @@
+button:not(.main-header *):not(.header *):not(.footer *),
+.btn:not(.main-header *):not(.header *):not(.footer *),
+.premium-btn:not(.main-header *):not(.header *):not(.footer *),
+.activate-btn:not(.main-header *):not(.header *):not(.footer *),
+.btn-registro:not(.main-header *):not(.header *):not(.footer *),
+.btn-continuar:not(.main-header *):not(.header *):not(.footer *) {
+    font-weight: normal;
+}
 button, .btn, .premium-btn, .activate-btn {
     font-family: 'Roboto', helvetica, arial, sans-serif;
-    font-weight: normal;
 }
 /* Globales */
 * {
@@ -15,6 +22,26 @@ body {
         color: #ffffff;
         min-height: 100vh;
         line-height: 1.6;
+}
+
+/* Aplica Roboto a todo menos header y footer */
+h1:not(.main-header *):not(.header *):not(.footer *),
+input:not(.main-header *):not(.header *):not(.footer *),
+button:not(.main-header *):not(.header *):not(.footer *),
+label:not(.main-header *):not(.header *):not(.footer *),
+p:not(.main-header *):not(.header *):not(.footer *),
+span:not(.main-header *):not(.header *):not(.footer *),
+div:not(.main-header *):not(.header *):not(.footer *),
+.form-group:not(.main-header *):not(.header *):not(.footer *),
+.form-header p:not(.main-header *):not(.header *):not(.footer *),
+.error-message:not(.main-header *):not(.header *):not(.footer *),
+.success-message:not(.main-header *):not(.header *):not(.footer *),
+.checkbox-group label:not(.main-header *):not(.header *):not(.footer *),
+.captcha-box label:not(.main-header *):not(.header *):not(.footer *),
+.login-link:not(.main-header *):not(.header *):not(.footer *),
+.btn-registro:not(.main-header *):not(.header *):not(.footer *),
+.btn-continuar:not(.main-header *):not(.header *):not(.footer *) {
+    font-family: 'Roboto', helvetica, arial, sans-serif;
 }
 /*Header login registro*/
 .main-header {
@@ -138,6 +165,21 @@ body {
     color: #FF8C29;
     cursor: pointer;
     padding: 0.5rem;
+}
+
+/* Versión pequeña del botón premium para cards */
+.premium-btn-small {
+    background: none;
+    border: none;
+    color: #FF8C29;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
 }
 
 /* Footer */
