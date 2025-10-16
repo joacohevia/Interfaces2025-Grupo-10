@@ -1,8 +1,3 @@
-body, input, button, label, p, span, div, .form-group, .form-header p, .error-message, .success-message, .checkbox-group label, .captcha-box label, .login-link, .btn-registro, .btn-continuar {
-  font-family: 'Roboto', helvetica, arial, sans-serif;
-}
-
-/* Excepciones: header, footer, h1 de login y registro no se tocan */
 /* Estilos registro */
 .main-content {
     min-height: 100vh;
@@ -259,30 +254,27 @@ input {
 
 /* Estilos para el captcha simulado */
 .mock-captcha-container {
-  margin: 1.5rem auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 400px;
+    margin: 1.5rem auto;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
 }
 
 .mock-captcha {
   width: 100%;
-  max-width: 260px;
-  margin-left: 0;
-  margin-right: auto;
+  max-width: 340px;
 }
 
 .captcha-box {
   background: #f9f9f9;
   border: 1px solid #d3d3d3;
-  border-radius: 8px;
-  padding: 12px;
+  border-radius: 10px;
+  padding: 22px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  gap: 18px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.13);
 }
 
 .captcha-box input[type="checkbox"] {

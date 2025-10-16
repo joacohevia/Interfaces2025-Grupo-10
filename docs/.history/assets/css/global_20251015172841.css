@@ -1,6 +1,5 @@
-button, .btn, .premium-btn, .activate-btn, button.publish-btn {
+button, .btn, .premium-btn, .activate-btn {
     font-family: 'Roboto', helvetica, arial, sans-serif;
-    font-weight: normal;
 }
 /* Globales */
 * {
@@ -15,6 +14,26 @@ body {
         color: #ffffff;
         min-height: 100vh;
         line-height: 1.6;
+}
+
+/* Aplica Roboto a todo menos header y footer */
+h1:not(.main-header *):not(.header *):not(.footer *),
+input:not(.main-header *):not(.header *):not(.footer *),
+button:not(.main-header *):not(.header *):not(.footer *),
+label:not(.main-header *):not(.header *):not(.footer *),
+p:not(.main-header *):not(.header *):not(.footer *),
+span:not(.main-header *):not(.header *):not(.footer *),
+div:not(.main-header *):not(.header *):not(.footer *),
+.form-group:not(.main-header *):not(.header *):not(.footer *),
+.form-header p:not(.main-header *):not(.header *):not(.footer *),
+.error-message:not(.main-header *):not(.header *):not(.footer *),
+.success-message:not(.main-header *):not(.header *):not(.footer *),
+.checkbox-group label:not(.main-header *):not(.header *):not(.footer *),
+.captcha-box label:not(.main-header *):not(.header *):not(.footer *),
+.login-link:not(.main-header *):not(.header *):not(.footer *),
+.btn-registro:not(.main-header *):not(.header *):not(.footer *),
+.btn-continuar:not(.main-header *):not(.header *):not(.footer *) {
+    font-family: 'Roboto', helvetica, arial, sans-serif;
 }
 /*Header login registro*/
 .main-header {
@@ -50,7 +69,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.5rem 1rem;
+    padding: 0.7rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -112,7 +131,7 @@ body {
 .search-icon {
     position: absolute;
     right: 1rem;
-    top: 60%;
+    top: 50%;
     transform: translateY(-50%);
     color: #ffffff;
     pointer-events: none;
@@ -285,7 +304,7 @@ body {
     text-align: center;
 }
 
-/* Header y Footer adaptables 
+/* Header y Footer adaptables */
 @media (max-width: 1199px) {
     .navbar {
         padding: 1rem 1.5rem;
@@ -295,12 +314,12 @@ body {
         max-width: 250px;
     }
     
-    .footer::before,// Ocultar imágenes del footer cuando se achica la pantalla
+    /* Ocultar imágenes del footer cuando se achica la pantalla */
+    .footer::before,
     .footer::after {
         display: none;
     }
 }
-*/
 
 @media (max-width: 900px) {
     .navbar {
@@ -504,8 +523,8 @@ body {
     border: none;
     padding: 15px 40px;
     border-radius: 25px;
-    font-size: 1rem;
-    font-weight: normal;
+    font-size: 1.2rem;
+    font-weight: bold;
     cursor: pointer;
     margin-top: 20rem;
     margin-bottom: 0.4rem;
