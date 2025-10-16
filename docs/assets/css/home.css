@@ -277,10 +277,10 @@
         grid-template-columns: repeat(3, 1fr);
     }
     
-    /* Ocultar las cards que no entren en el ancho, de la cuarta en adelante */
-    .games-grid .game-card-small:nth-child(n+4) {
-        display: none;
+    .game-title {
+        text-align: center;
     }
+
 }
 
 @media (max-width: 1024px) {
@@ -310,6 +310,8 @@
     .main-content {
         margin-top: 2.5rem;
         margin-bottom: 2rem;
+        margin-right: 0.5rem;
+        margin-left: 0.5rem;
     }
     
     .hero-content {
@@ -338,14 +340,10 @@
         gap: 1rem;
     }
     
-    /* Ocultar la 3ra card y siguientes - dejar solo 2 por fila */
-    .games-grid .game-card-small:nth-child(n+3) {
-        display: none;
-    }
-    
     .category-section h1 {
         font-size: 1rem;
         margin-bottom: 1rem;
+        color: rgb(131, 131, 131);
     }
     
     .category-section {
@@ -377,13 +375,8 @@
     }
     
     .games-grid {
-        grid-template-columns: 1fr;
-        gap: 0.8rem;
-    }
-    
-    /* Solo 1 card por categoría en móvil */
-    .games-grid .game-card-small:nth-child(n+2) {
-        display: none;
+        grid-template-columns: repeat(2, 0.5fr);
+        column-gap: 0.8rem;
     }
     
     .category-section h1 {
