@@ -326,14 +326,11 @@
         grid-template-columns: repeat(3, 1fr);
     }
     
-<<<<<<< HEAD
     
     .games-grid .game-card-small:nth-child(n+4) {
         display: none;//Ocultar las cards que no entren en el ancho, de la cuarta en adelante
-=======
     .game-title {
         text-align: center;
->>>>>>> e7d05940b5c2e1deb273748f8b18d01976efb679
     }
 
 }
@@ -399,16 +396,7 @@
         gap: 1rem;
     }
     
-<<<<<<< HEAD
-    /* Ocultar la 3ra card y siguientes - dejar solo 2 por fila */
-    .games-grid .game-card-small:nth-child(n+3) {
-        display: none;
-    }
-    
-    .carousel-title {
-=======
     .category-section h1 {
->>>>>>> e7d05940b5c2e1deb273748f8b18d01976efb679
         font-size: 1rem;
         margin-bottom: 1rem;
         color: rgb(131, 131, 131);
