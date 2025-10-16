@@ -401,8 +401,18 @@ function checkPendingScroll() {
         }, 1500); // Esperar a que termine el loader
     }
 }
-
-// Funcionalidad del carousel de screenshots
+/*
+Esta funcionalidad implementa un carrusel de screenshots que empieza mostrando
+ la imagen del medio y permite navegar entre ellas tanto de forma automática 
+ como manual. Cada screenshot puede ser marcada como activa (central), previa 
+ o siguiente, asignando clases correspondientes (active, prev, next) para controlar
+  su posición y estilo. Se agregan eventos de click a cada imagen para saltar 
+  directamente a ella, y también hay botones de navegación que avanzan o retroceden
+   entre screenshots de manera circular. Además, el carrusel incluye un auto-play
+    que avanza automáticamente cada 5 segundos, y se inicializa asignando las clases
+     correctas para reflejar la posición de cada screenshot en el carrusel.
+*/
+// Funcionalidad del carrusel de screenshots----------------------------------------------------
 function setupScreenshotCarousel() {
     const screenshots = document.querySelectorAll('.screenshot');
     const totalScreenshots = screenshots.length;

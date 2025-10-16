@@ -27,11 +27,13 @@
             </div>
             <div class="nav-center">
                 <div class="search-container">
-                    <input type="text" placeholder="Buscar juegos..." class="search-input">
-                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.35-4.35"></path>
-                    </svg>
+                    <div class="search-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </div>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Buscar juegos..." autocomplete="off">
                 </div>
             </div>
             <div class="nav-right">
@@ -164,8 +166,8 @@
                                         <img src="assets/img/Play.png" alt="Play">
                                     </div>
                                 </div>
+                                <div class="carousel-title">Valorant</div>
                             </div>
-                            <div class="carousel-title">Valorant</div>
                         </div>
 
                         <!-- Elemento 2 -->
@@ -183,8 +185,8 @@
                                         <img src="assets/img/Play.png" alt="Play">
                                     </div>
                                 </div>
+                                <div class="carousel-title">GTA V</div>
                             </div>
-                            <div class="carousel-title">GTA V</div>
                         </div>
 
                         <!-- Elemento 3 -->
@@ -202,8 +204,8 @@
                                         <img src="assets/img/Play.png" alt="Play">
                                     </div>
                                 </div>
+                                <div class="carousel-title">The Witcher 3</div>
                             </div>
-                            <div class="carousel-title">The Witcher 3</div>
                         </div>
                     </div>
                 </div>
@@ -221,143 +223,181 @@
     
 
         <!-- Categorías de Juegos -->
-        <section class="games-categories">
+        <section class="games-categories"><!-- carousel-container -->
             <!-- Juegos de Lógica -->
-            <div class="category-section">
-                <h1>Juegos de lógica</h1>
-                <div class="games-grid" id="logicGames">
-                    <!-- Los juegos se cargarán dinámicamente -->
+        <div class="category-section">
+            <h3 class="carousel-title-categories">Juegos de lógica</h3>
+            <div class="carousel-wrapper">
+                <button class="carousel-btn left" aria-label="Anterior">
+                    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                        <polyline 
+                        points="38,12 18,28 38,44" 
+                        stroke="#0055FF" 
+                        stroke-width="8" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>
+                <div class="carousel">
+                    <div class="games-grid" id="logicGames">
+                    </div>
                 </div>
+                <button class="carousel-btn right" aria-label="Siguiente">
+                    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                        <polyline 
+                        points="18,12 38,28 18,44" 
+                        stroke="#FFD600" 
+                        stroke-width="8" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>
             </div>
+        </div>
 
-            <!-- Sugerencias para vos -->
-            <div class="category-section">
-                <h1>Sugerencias para vos</h1>
-                <div class="games-grid" id="suggestedGames">
-                    <!-- Los juegos se cargarán dinámicamente -->
+        <!-- Sugerencias para vos -->
+        <div class="category-section">
+            <h3 class="carousel-title-categories">Sugerencias para vos</h3>
+            <!-- Estructura actualizada con contenedor relativo y ambos botones -->
+            <div class="carousel-wrapper">
+                <button class="carousel-btn left" aria-label="Anterior">
+                    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                        <polyline 
+                        points="38,12 18,28 38,44" 
+                        stroke="#0055FF" 
+                        stroke-width="8" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>
+                <div class="carousel">
+                    <div class="games-carousel">
+                        <div class="games-grid" id="suggestedGames">
+                            <!-- Los juegos se cargarán dinámicamente -->
+                        </div>
+                    </div>
                 </div>
+                <button class="carousel-btn right" aria-label="Siguiente">
+                    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                        <polyline 
+                        points="18,12 38,28 18,44" 
+                        stroke="#FFD600" 
+                        stroke-width="8" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>
             </div>
+        </div>
 
-            <!-- Juegos clasicos -->
-            <div class="category-section">
-                <h1>Juegos clásicos</h1>
-                <div class="games-grid" id="classicGames">
-                    <!-- Los juegos se cargarán dinámicamente -->
+        <!-- Juegos clasicos -->
+        <div class="category-section">
+            <h3 class="carousel-title-categories">Juegos clásicos</h3>
+            <!-- Estructura actualizada con contenedor relativo y ambos botones -->
+            <div class="carousel-wrapper">
+                <button class="carousel-btn left" aria-label="Anterior">
+                    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                        <polyline 
+                        points="38,12 18,28 38,44" 
+                        stroke="#0055FF" 
+                        stroke-width="8" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>
+                <div class="carousel">
+                    <div class="games-grid" id="classicGames">
+                        <!-- Los juegos se cargarán dinámicamente -->
+                    </div>
                 </div>
+                <button class="carousel-btn right" aria-label="Siguiente">
+                    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                        <polyline 
+                        points="18,12 38,28 18,44" 
+                        stroke="#FFD600" 
+                        stroke-width="8" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>
             </div>
-
-            <!-- Juegos de estrategia -->
-            <div class="category-section">
-                <h1>Juegos de estrategia</h1>
-                <div class="games-grid" id="strategyGames">
-                    <!-- Los juegos se cargarán dinámicamente -->
-                </div>
-            </div>
-
-            <!-- Juegos multijugador -->
-            <div class="category-section">
-                <h1>Juegos multijugador</h1>
-                <div class="games-grid" id="multiplayerGames">
-                    <!-- Los juegos se cargarán dinámicamente -->
-                </div>
-            </div>
-
+        </div>
             
-            <!-- Juegos de acción -->
-            <div class="category-section">
-                <h1>Juegos de acción</h1>
-                <div class="games-grid" id="actionGames">
-                    <!-- Los juegos se cargarán dinámicamente -->
+        <!-- Juegos de estrategia -->
+        <div class="category-section">
+            <h3 class="carousel-title-categories">Juegos de estrategia</h3>
+            <!-- Estructura actualizada con contenedor relativo y ambos botones -->
+            <div class="carousel-wrapper">
+                <button class="carousel-btn left" aria-label="Anterior">
+                    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                        <polyline 
+                        points="38,12 18,28 38,44" 
+                        stroke="#0055FF" 
+                        stroke-width="8" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>
+                <div class="carousel">
+                    <div class="games-grid" id="strategyGames">
+                        <!-- Los juegos se cargarán dinámicamente -->
+                    </div>
                 </div>
+                <button class="carousel-btn right" aria-label="Siguiente">
+                    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                        <polyline 
+                        points="18,12 38,28 18,44" 
+                        stroke="#FFD600" 
+                        stroke-width="8" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>
             </div>
-
-            <!-- Juegos de aventura -->
-            <div class="category-section">
-                <h1>Juegos de aventura</h1>
-                <div class="games-grid" id="adventureGames">
-                    <!-- Los juegos se cargarán dinámicamente -->
+        </div>
+    
+            <!-- Juegos multijugador -->
+        <div class="category-section">
+            <h3 class="carousel-title-categories">Juegos multijugador</h3>
+            <!-- Estructura actualizada con contenedor relativo y ambos botones -->
+            <div class="carousel-wrapper">
+                <button class="carousel-btn left" aria-label="Anterior">
+                    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                        <polyline 
+                        points="38,12 18,28 38,44" 
+                        stroke="#0055FF" 
+                        stroke-width="8" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>
+                <div class="carousel">
+                    <div class="games-grid" id="multiplayerGames">
+                        <!-- Los juegos se cargarán dinámicamente -->
+                    </div>
                 </div>
+                <button class="carousel-btn right" aria-label="Siguiente">
+                    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                        <polyline 
+                        points="18,12 38,28 18,44" 
+                        stroke="#FFD600" 
+                        stroke-width="8" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>
             </div>
-
-            <!-- Juegos de carreras -->
-            <div class="category-section">
-                <h1>Juegos de carreras</h1>
-                <div class="games-grid" id="racingGames">
-                    <!-- Los juegos se cargarán dinámicamente -->
-                </div>
-            </div>
-
-            <!-- Juegos de cocina -->
-            <div class="category-section">
-                <h1>Juegos de cocina</h1>
-                <div class="games-grid" id="cookingGames">
-                    <!-- Los juegos se cargarán dinámicamente -->
-                </div>
-            </div>
-
-            <!-- Juegos de deportes -->
-            <div class="category-section">
-                <h1>Juegos de deportes</h1>
-                <div class="games-grid" id="sportsGames">
-                    <!-- Los juegos se cargarán dinámicamente -->
-                </div>
-            </div>
-
-            <!-- Juegos de escape -->
-            <div class="category-section">
-                <h1>Juegos de escape</h1>
-                <div class="games-grid" id="escapeGames">
-                    <!-- Los juegos se cargarán dinámicamente -->
-                </div>
-            </div>
-
-            <!-- Juegos de guerra -->
-            <div class="category-section">
-                <h1>Juegos de guerra</h1>
-                <div class="games-grid" id="warGames">
-                    <!-- Los juegos se cargarán dinámicamente -->
-                </div>
-            </div>
-
-            <!-- Juegos de habilidad -->
-            <div class="category-section">
-                <h1>Juegos de habilidad</h1>
-                <div class="games-grid" id="skillGames">
-                    <!-- Los juegos se cargarán dinámicamente -->
-                </div>
-            </div>
-
-            <!-- Infantiles -->
-            <div class="category-section">
-                <h1>Juegos infantiles</h1>
-                <div class="games-grid" id="kidsGames">
-                    <!-- Los juegos se cargarán dinámicamente -->
-                </div>
-            </div>
-
-            <!-- Juegos de plataformas -->
-            <div class="category-section">
-                <h1>Juegos de plataformas</h1>
-                <div class="games-grid" id="platformGames">
-                    <!-- Los juegos se cargarán dinámicamente -->
-                </div>
-            </div>
-
-            <!-- Puzzle -->
-            <div class="category-section">
-                <h1>Juegos de puzzle</h1>
-                <div class="games-grid" id="puzzleGames">
-                    <!-- Los juegos se cargarán dinámicamente -->
-                </div>
-            </div>
-
-            <!-- Terror -->
-            <div class="category-section">
-                <h1>Juegos de terror</h1>
-                <div class="games-grid" id="horrorGames">
-                    <!-- Los juegos se cargarán dinámicamente -->
-                </div>
-            </div>
+        </div> 
         </section>
     </main>
 
@@ -447,5 +487,6 @@
     </footer>
 
     <script src="js/home.js"></script>
+    <script src="js/carousel.js"></script>
 </body>
 </html>

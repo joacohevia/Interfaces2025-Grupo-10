@@ -22,10 +22,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 // Funcionalidad para la página principal
-document.addEventListener('DOMContentLoaded', function() {
-    loadGames();
+document.addEventListener('DOMContentLoaded', async function() {
     setupEventListeners();
     setupBurgerMenuNavigation();
+    
+    // Cargamos los juegos y esperamos a que terminen de cargarse
+    try {
+        await loadGames();
+        // Inicializar los carruseles después de que los juegos se hayan cargado
+        window.initializeCarousels();
+    } catch (error) {
+        console.error('Error al cargar los juegos:', error);
+    }
 });
 
 // Configurar event listeners
@@ -54,7 +62,7 @@ function setupEventListeners() {
     
     if (userMenu && userDropdown) {
         userMenu.addEventListener('click', function(e) {
-            e.stopPropagation();
+            e.stopPropagation();//evita que se cierre si hago click dentro
             toggleUserMenu();
         });
         
@@ -101,10 +109,13 @@ function setupBurgerMenuNavigation() {
 
     burgerItems.forEach(item => {
         item.addEventListener('click', function(e) {
-            e.preventDefault();
+            e.preventDefault();// Evita el comportamiento por defecto del enlace
             
             const categoryText = this.querySelector('span').textContent.trim();
+            // Obtiene el ID de la sección objetivo basado en el texto del ítem
+            //trim elimina espacios en blanco al inicio y al final
             const targetId = categoryMap[categoryText];
+            // Si se encontró una categoría válida, hacer scroll o redirigir
             
             if (targetId) {
                 // Si estamos en otra página, ir al home primero
@@ -134,9 +145,11 @@ function setupBurgerMenuNavigation() {
 // Función para hacer scroll a una categoría específica
 function scrollToCategory(targetId) {
     const targetElement = document.getElementById(targetId);
-    if (targetElement) {
+    //Busca en el documento un elemento cuyo id sea igual a targetId.
+    if (targetElement) {//Si lo encuentra, entra en el if, sino es null
         // Buscar el h1 padre que contiene el título de la categoría
         const categorySection = targetElement.closest('.category-section');
+        //closest busca el padre más cercano que coincida con el selector dado.
         if (categorySection) {
             const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
             const offset = categorySection.offsetTop - headerHeight - 20; // 20px de margen extra
@@ -150,6 +163,7 @@ function scrollToCategory(targetId) {
 }
 
 // Verificar scroll pendiente después de cargar la página
+//recuerda a que parte del sitio queria ir el usuario antes de cambiar de pagina
 function checkPendingScroll() {
     const pendingScroll = sessionStorage.getItem('scrollTarget');
     if (pendingScroll) {
@@ -191,6 +205,8 @@ async function loadGames() {
         
         // Distribuir juegos por categorías
         displayGames(games);
+        setTimeout(() => {
+        }, 100);
     } catch (error) {
         console.error('Error cargando juegos desde API:', error);
         console.log('Intentando cargar desde archivo local de fallback...');
@@ -199,6 +215,7 @@ async function loadGames() {
         displayGames(getFallbackGames());
     }
 }
+
 
 // Juegos de fallback en caso de que no se pueda cargar el JSON
 function getFallbackGames() {
@@ -317,7 +334,7 @@ function displayGames(games) {
     
     // Categorías de juegos basadas en géneros y características
     const categories = {
-        logicGames: (() => {
+        logicGames: (() => {/*juegos de lógica */
             const logicGamesFromAPI = games.filter(game => {
                 if (!game.genres) return false;
                 return game.genres.some(genre => {
@@ -328,21 +345,21 @@ function displayGames(games) {
                            game.name.toLowerCase().includes('chess') ||
                            game.name.toLowerCase().includes('puzzle');
                 });
-            }).slice(0, 3); // Solo 3 de la API para hacer espacio para PegSolitaire
+            }).slice(0, 10); // agrega 10 juegos de lógica desde la API
             
             // PegSolitaire siempre va primero en juegos de lógica
             return [pegSolitaireGame, ...logicGamesFromAPI];
         })(),
-        
+        /* Juegos sugeridos */
         suggestedGames: games.filter(game => 
             game.rating && game.rating >= 4.0
-        ).sort((a, b) => b.rating - a.rating).slice(0, 4),
+        ).sort((a, b) => b.rating - a.rating).slice(0, 10),
         
         classicGames: games.filter(game => {
             if (!game.released) return false;
             const year = new Date(game.released).getFullYear();
             return year >= 1990 && year <= 2010;
-        }).slice(0, 4),
+        }).slice(0, 10),
         
         strategyGames: games.filter(game => {
             if (!game.genres) return false;
@@ -359,7 +376,7 @@ function displayGames(games) {
                  name.includes('strategy') ||
                  description.includes('strategy') ||
                  description.includes('tactical');
-        }).slice(0, 4),
+        }).slice(0, 10),
         
         multiplayerGames: games.filter(game => {
             const name = game.name.toLowerCase();
@@ -374,139 +391,8 @@ function displayGames(games) {
                    description.includes('online') ||
                    description.includes('cooperative') ||
                    description.includes('team');
-        }).slice(0, 4),
+        }).slice(0, 10),
 
-        actionGames: games.filter(game => {
-            if (!game.genres) return false;
-            return game.genres.some(genre => {
-                const genreName = genre.name.toLowerCase();
-                return genreName.includes('action') || 
-                       genreName.includes('shooter') ||
-                       genreName.includes('fighting');
-            });
-        }).slice(0, 4),
-        
-        adventureGames: games.filter(game => {
-            if (!game.genres) return false;
-            return game.genres.some(genre => {
-                const genreName = genre.name.toLowerCase();
-                return genreName.includes('adventure') || 
-                       genreName.includes('rpg');
-            });
-        }).slice(0, 4),
-        
-        racingGames: games.filter(game => {
-            if (!game.genres) return false;
-            const name = game.name.toLowerCase();
-            return game.genres.some(genre => {
-                const genreName = genre.name.toLowerCase();
-                return genreName.includes('racing') || 
-                       genreName.includes('sports');
-            }) || name.includes('racing') || 
-                 name.includes('formula') ||
-                 name.includes('speed');
-        }).slice(0, 4),
-        
-        cookingGames: games.filter(game => {
-            const name = game.name.toLowerCase();
-            const description = (game.description || '').toLowerCase();
-            return name.includes('cooking') || 
-                   name.includes('chef') ||
-                   name.includes('restaurant') ||
-                   name.includes('kitchen') ||
-                   description.includes('cooking') ||
-                   description.includes('chef');
-        }).slice(0, 4),
-        
-        sportsGames: games.filter(game => {
-            if (!game.genres) return false;
-            const name = game.name.toLowerCase();
-            return game.genres.some(genre => {
-                const genreName = genre.name.toLowerCase();
-                return genreName.includes('sports') ||
-                       genreName.includes('simulation');
-            }) || name.includes('fifa') ||
-                 name.includes('nba') ||
-                 name.includes('football') ||
-                 name.includes('soccer');
-        }).slice(0, 4),
-        
-        escapeGames: games.filter(game => {
-            const name = game.name.toLowerCase();
-            const description = (game.description || '').toLowerCase();
-            return name.includes('escape') || 
-                   name.includes('mystery') ||
-                   name.includes('puzzle') ||
-                   description.includes('escape') ||
-                   description.includes('mystery');
-        }).slice(0, 4),
-        
-        warGames: games.filter(game => {
-            if (!game.genres) return false;
-            const name = game.name.toLowerCase();
-            return game.genres.some(genre => {
-                const genreName = genre.name.toLowerCase();
-                return genreName.includes('action') || 
-                       genreName.includes('shooter') ||
-                       genreName.includes('strategy');
-            }) && (name.includes('war') ||
-                   name.includes('battle') ||
-                   name.includes('combat') ||
-                   name.includes('military'));
-        }).slice(0, 4),
-        
-        skillGames: games.filter(game => {
-            if (!game.genres) return false;
-            return game.genres.some(genre => {
-                const genreName = genre.name.toLowerCase();
-                return genreName.includes('arcade') || 
-                       genreName.includes('puzzle') ||
-                       genreName.includes('casual');
-            });
-        }).slice(0, 4),
-        
-        kidsGames: games.filter(game => {
-            const name = game.name.toLowerCase();
-            const description = (game.description || '').toLowerCase();
-            return name.includes('kids') || 
-                   name.includes('family') ||
-                   name.includes('children') ||
-                   description.includes('family-friendly') ||
-                   description.includes('all ages');
-        }).slice(0, 4),
-        
-        platformGames: games.filter(game => {
-            if (!game.genres) return false;
-            return game.genres.some(genre => {
-                const genreName = genre.name.toLowerCase();
-                return genreName.includes('platformer') || 
-                       genreName.includes('action') ||
-                       genreName.includes('arcade');
-            });
-        }).slice(0, 4),
-        
-        puzzleGames: games.filter(game => {
-            if (!game.genres) return false;
-            return game.genres.some(genre => {
-                const genreName = genre.name.toLowerCase();
-                return genreName.includes('puzzle') || 
-                       genreName.includes('casual');
-            });
-        }).slice(0, 4),
-        
-        horrorGames: games.filter(game => {
-            if (!game.genres) return false;
-            const name = game.name.toLowerCase();
-            const description = (game.description || '').toLowerCase();
-            return game.genres.some(genre => {
-                const genreName = genre.name.toLowerCase();
-                return genreName.includes('horror');
-            }) || name.includes('horror') ||
-                 name.includes('scary') ||
-                 name.includes('nightmare') ||
-                 description.includes('horror') ||
-                 description.includes('scary');
-        }).slice(0, 4)
     };
 
     // Si alguna categoría está vacía, llenarla con juegos aleatorios
@@ -541,6 +427,10 @@ function renderGameCategory(categoryId, games) {
         return;
     }
 
+    // Nuevos registros para depuración
+    console.log(`Renderizando categoría: ${categoryId}`);
+    console.log(`Juegos en la categoría ${categoryId}:`, games);
+
     games.forEach(game => {
         const gameCard = createGameCard(game);
         container.appendChild(gameCard);
@@ -553,6 +443,7 @@ function createGameCard(game) {
     gameCard.className = 'game-card-small';
 
     gameCard.innerHTML = `
+    
         <div class="card-image-container">
             <img src="${game.background_image_low_res || game.background_image}" 
                  alt="${game.name}" 
@@ -564,10 +455,10 @@ function createGameCard(game) {
                     <img src="assets/img/Play.png" alt="Play" width="20" height="20">
                 </button>
             </div>
-        </div>
-        <div class="game-info">
-            <div class="game-title">${game.name}</div>
-        </div>
+            </div>
+            <div class="game-info">
+                <div class="game-title">${game.name}</div>
+            </div>    
     `;
 
     // Agregar eventos de click según el tipo de juego
@@ -605,6 +496,7 @@ function showPremiumPopup() {
             </div>
         `;
         document.body.appendChild(popup);
+        //Agrega el elemento popup (con todo su contenido recién definido) al final del <body>
         console.log('Popup premium creado');
     }
     
@@ -731,7 +623,37 @@ function closeUserMenu() {
     userDropdown.classList.remove('show');
 }
 
+//Carrusel de card pequeñas
 
+
+
+
+/*
+Al cargarse el DOM (DOMContentLoaded), el script captura los elementos principales
+ del carrusel: el contenedor que se mueve (track), los slides individuales (items), 
+ los indicadores (indicators), los botones de navegación (prevBtns y nextBtns) y el
+  contenedor general (carouselContainer). También se inicializan variables clave: 
+  currentIndex en 0 para el slide activo, totalItems con la cantidad de slides, 
+  isPaused en falso para controlar la pausa del autoplay, isTransitioning en falso
+   para evitar animaciones superpuestas y autoplayInterval vacío. Luego se llama 
+   a updateCarousel(), que primero revisa si ya hay una transición en curso y, de
+    no ser así, mueve el track usando translateX(-currentIndex * 100%), activa el
+     indicador y el slide correspondiente y bloquea nuevas transiciones durante 500 ms
+      usando isTransitioning. El autoplay se inicia con startAutoplay(), 
+      que cada 5 segundos avanza al siguiente slide solo si isPaused es falso.
+       Cuando el usuario interactúa, los botones Next o Prev pausarán temporalmente
+        el autoplay, actualizarán currentIndex de forma circular, llamarán a 
+        updateCarousel() y reanudarán el autoplay después de 5 segundos; de manera
+         similar, al clickear un indicador se pausa el autoplay, se actualiza el 
+         slide activo y se reanuda después de 5 segundos. Además, al pasar el 
+         mouse sobre el carrusel (mouseenter) se pausa el autoplay y al salir 
+         (mouseleave) se reanuda. Los flags isTransitioning y isPaused son 
+         fundamentales para controlar la fluidez: el primero evita que varias a
+         nimaciones se solapen y el segundo que el autoplay avance mientras el 
+         usuario interactúa. En resumen, cada cambio de slide, ya sea por botones, 
+         indicadores o autoplay, actualiza currentIndex, mueve el contenedor principal, 
+         activa las clases correspondientes en slides e indicadores y respeta las pausas
+          y transiciones definidas, creando un flujo suave y controlado del carrusel.
 
 /*__________________CARRUSEL__________________*/
 document.addEventListener('DOMContentLoaded', function() {
@@ -857,4 +779,51 @@ document.addEventListener('DOMContentLoaded', function() {
     // Iniciar el carrusel
     updateCarousel();
     startAutoplay();
+});
+
+// Función para buscar juegos
+function searchGames(query) {
+    const allGames = document.querySelectorAll('.card-image-container'); 
+    // Selecciona todas las tarjetas de juegos
+    let firstMatch = null; 
+    // Variable para almacenar el primer juego encontrado
+    // Solo buscar si hay texto
+    if (query.trim() === '') {
+        allGames.forEach(gameContainer => {
+            if (gameContainer.parentElement) {
+                gameContainer.parentElement.style.display = 'block';
+            }
+        });
+        return;
+    }
+
+    allGames.forEach(gameContainer => {
+        const titleElement = gameContainer.nextElementSibling?.querySelector('.game-title');
+         // Busca el título dentro de .game-info
+        if (titleElement) {
+            const title = titleElement.textContent.toLowerCase();
+            if (title.includes(query.toLowerCase())) {
+                gameContainer.parentElement.style.display = 'block'; // Muestra la tarjeta si coincide
+                if (!firstMatch) {
+                    firstMatch = gameContainer.parentElement; // Guarda el primer juego encontrado
+                }
+            } else {
+                gameContainer.parentElement.style.display = 'none'; // Oculta la tarjeta si no coincide
+            }
+        }
+    });
+
+    // Deslizar hacia el primer juego encontrado solo si hay una búsqueda activa
+    if (firstMatch && query.trim() !== '') {
+        firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
+// Event listener para búsqueda con Enter
+document.getElementById('searchInput').addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+        //cuando hago enter en el input capturo el valor y llamo a la fn
+        const query = event.target.value;
+        searchGames(query);
+    }
 });
