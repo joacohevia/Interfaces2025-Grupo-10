@@ -147,12 +147,10 @@ function scrollToCategory(targetId) {
     // El id recibido ya es el de la sección (ej: section-guerra)
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
-        const header = document.querySelector('.header');
-        const headerHeight = header ? header.getBoundingClientRect().height : 0;
-        // getBoundingClientRect().top da la posición relativa al viewport
-        const sectionTop = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight - 10;
+        const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
+        const offset = targetElement.offsetTop - headerHeight - 20;
         window.scrollTo({
-            top: sectionTop,
+            top: offset,
             behavior: 'smooth'
         });
     }

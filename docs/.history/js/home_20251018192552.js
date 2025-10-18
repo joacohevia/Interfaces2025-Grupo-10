@@ -144,17 +144,21 @@ function setupBurgerMenuNavigation() {
 
 // Función para hacer scroll a una categoría específica
 function scrollToCategory(targetId) {
-    // El id recibido ya es el de la sección (ej: section-guerra)
     const targetElement = document.getElementById(targetId);
-    if (targetElement) {
-        const header = document.querySelector('.header');
-        const headerHeight = header ? header.getBoundingClientRect().height : 0;
-        // getBoundingClientRect().top da la posición relativa al viewport
-        const sectionTop = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight - 10;
-        window.scrollTo({
-            top: sectionTop,
-            behavior: 'smooth'
-        });
+    //Busca en el documento un elemento cuyo id sea igual a targetId.
+    if (targetElement) {//Si lo encuentra, entra en el if, sino es null
+        // Buscar el h1 padre que contiene el título de la categoría
+        const categorySection = targetElement.closest('.category-section');
+        //closest busca el padre más cercano que coincida con el selector dado.
+        if (categorySection) {
+            const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
+            const offset = categorySection.offsetTop - headerHeight - 20; // 20px de margen extra
+            
+            window.scrollTo({
+                top: offset,
+                behavior: 'smooth'
+            });
+        }
     }
 }
 
@@ -164,19 +168,10 @@ function checkPendingScroll() {
     const pendingScroll = sessionStorage.getItem('scrollTarget');
     if (pendingScroll) {
         sessionStorage.removeItem('scrollTarget');
-        // Esperar a que el loader desaparezca y los juegos estén cargados
-        const loader = document.getElementById('loader');
-        const tryScroll = () => {
-            // Si el loader está oculto y el target existe, hacer scroll
-            const targetElement = document.getElementById(pendingScroll);
-            if (loader && loader.style.display === 'none' && targetElement) {
-                scrollToCategory(pendingScroll);
-                clearInterval(interval);
-            }
-        };
-        const interval = setInterval(tryScroll, 200);
-        // Por seguridad, detener el intervalo después de 10 segundos
-        setTimeout(() => clearInterval(interval), 10000);
+        // Esperar a que se carguen los juegos antes de hacer scroll
+        setTimeout(() => {
+            scrollToCategory(pendingScroll);
+        }, 1500); // Esperar a que termine el loader
     }
 }
 
