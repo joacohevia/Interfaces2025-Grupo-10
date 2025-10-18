@@ -90,6 +90,9 @@
     width: 100%;
 }
 
+
+
+
 .featured-game {
     display: flex;
     justify-content: center;
@@ -203,7 +206,11 @@
     position: relative;
     width: 100%;
     overflow: hidden;
-}  
+    display: flex;
+    align-items: center;
+}
+
+
 
 .games-grid::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
@@ -212,7 +219,7 @@
 /* Botones del carousel */
 .carousel-btn{
     position: absolute;
-    top: 40%;
+    top: 50%;
     width: 27px;
     height: 27px;
     background: none;
@@ -250,7 +257,6 @@
 .carousel-btn:hover {
     transform: translateY(-50%) scale(1.4);
 }
-         /* Centrado vertical respecto a .carousel-wrapper */
 
 .carousel-btn:active {
     transform: translateY(-50%) scale(0.95);
@@ -271,7 +277,6 @@
 
 
 /* Ícono Premium */
-         /* Centrado vertical respecto a .carousel-wrapper */
 .card-image-container .premium-icon {
   position: absolute;
   top: 8px;

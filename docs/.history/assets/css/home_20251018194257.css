@@ -90,6 +90,9 @@
     width: 100%;
 }
 
+
+
+
 .featured-game {
     display: flex;
     justify-content: center;
@@ -203,7 +206,9 @@
     position: relative;
     width: 100%;
     overflow: hidden;
-}  
+}
+
+
 
 .games-grid::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
@@ -212,7 +217,7 @@
 /* Botones del carousel */
 .carousel-btn{
     position: absolute;
-    top: 40%;
+    top: 50%;
     width: 27px;
     height: 27px;
     background: none;
@@ -231,7 +236,7 @@
     opacity: 0;
 }
  .carousel-btn svg polyline {
-    stroke: #FF8C29; /* flecha naranja */
+      stroke: #FF8C29; /*pisa color del html */
 
  }
 .carousel-wrapper:hover .carousel-btn {
@@ -250,7 +255,6 @@
 .carousel-btn:hover {
     transform: translateY(-50%) scale(1.4);
 }
-         /* Centrado vertical respecto a .carousel-wrapper */
 
 .carousel-btn:active {
     transform: translateY(-50%) scale(0.95);
@@ -271,7 +275,6 @@
 
 
 /* Ícono Premium */
-         /* Centrado vertical respecto a .carousel-wrapper */
 .card-image-container .premium-icon {
   position: absolute;
   top: 8px;
@@ -607,7 +610,6 @@
     width: 24px;
     height: 24px;
     transition: transform 0.3s ease;
-    /* flecha naranja por defecto, quitar filtro */
 }
 
 .carousel-btn-new.prev-btn {

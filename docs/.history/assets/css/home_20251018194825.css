@@ -90,6 +90,9 @@
     width: 100%;
 }
 
+
+
+
 .featured-game {
     display: flex;
     justify-content: center;
@@ -203,7 +206,8 @@
     position: relative;
     width: 100%;
     overflow: hidden;
-}  
+    height: 200px;
+    
 
 .games-grid::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
@@ -212,7 +216,7 @@
 /* Botones del carousel */
 .carousel-btn{
     position: absolute;
-    top: 40%;
+    top: 50%;
     width: 27px;
     height: 27px;
     background: none;
@@ -222,6 +226,7 @@
     border-radius: 50%;
     font-size: 24px;
     cursor: pointer;
+         /* Las flechas se posicionan respecto a este contenedor */
     z-index: 100;
     display: flex;
     align-items: center;
