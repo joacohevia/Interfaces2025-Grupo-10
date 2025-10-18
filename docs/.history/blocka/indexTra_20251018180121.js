@@ -115,7 +115,6 @@ function actualizarTemporizador() {
 function perderNivelPorTiempo() {
   detenerTemporizador();
   juegoEnCurso = false;
-  estadoJuego = 'perdido';
   ctx.fillStyle = 'rgba(0,0,0,0.7)';
   ctx.fillRect(0, ALTO_CANVAS / 2 - 60, ANCHO_CANVAS, 120);
   ctx.fillStyle = '#ff4444';
@@ -298,8 +297,6 @@ function obtenerPiezaEn(px, py) {
 
 
 lienzo.addEventListener('mousedown', (e) => {
-  // Si el juego está ganado o perdido, no hacer nada (tablero bloqueado)
-  if (estadoJuego === 'ganado' || estadoJuego === 'perdido') return;
   // Si el juego no ha iniciado
   if (estadoJuego === 'no_iniciado') {
     iniciarJuego();
@@ -320,6 +317,7 @@ lienzo.addEventListener('mousedown', (e) => {
     comprobarPiezaCorrecta(p);
     render();
   }
+  // Si el juego está ganado o perdido, no hacer nada (tablero bloqueado)
 });
 
 // LÓGICA DE VERIFICACIÓN Y HUD

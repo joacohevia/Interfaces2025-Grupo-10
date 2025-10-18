@@ -115,7 +115,6 @@ function actualizarTemporizador() {
 function perderNivelPorTiempo() {
   detenerTemporizador();
   juegoEnCurso = false;
-  estadoJuego = 'perdido';
   ctx.fillStyle = 'rgba(0,0,0,0.7)';
   ctx.fillRect(0, ALTO_CANVAS / 2 - 60, ANCHO_CANVAS, 120);
   ctx.fillStyle = '#ff4444';

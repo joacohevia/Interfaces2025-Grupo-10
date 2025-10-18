@@ -14,12 +14,12 @@ const btnVolverMenu = document.getElementById('backMenu');
 
 // Niveles (ajusta rutas en tu carpeta images)
 const NIVELES_ORIGINALES = [
-  'level2.png',
-  'level3.png',
-  'level6.png',
-  'level1.jpg',
-  'ChatGPT Image 10 oct 2025, 09_46_21.png',
-  'ChatGPT Image 10 oct 2025, 09_49_01.png'
+  'blocka/level2.png',
+  'blocka/level3.png',
+  'blocka/level6.png',
+  'blocka/level1.jpg',
+  'blocka/ChatGPT Image 10 oct 2025, 09_46_21.png',
+  'blocka/ChatGPT Image 10 oct 2025, 09_49_01.png'
 ];
 let NIVELES = [];
 
@@ -115,7 +115,6 @@ function actualizarTemporizador() {
 function perderNivelPorTiempo() {
   detenerTemporizador();
   juegoEnCurso = false;
-  estadoJuego = 'perdido';
   ctx.fillStyle = 'rgba(0,0,0,0.7)';
   ctx.fillRect(0, ALTO_CANVAS / 2 - 60, ANCHO_CANVAS, 120);
   ctx.fillStyle = '#ff4444';
@@ -173,10 +172,9 @@ if (btnVolverMenu) {
 // Cargar la imagen original, adaptar/cortar para que quede exactamente ANCHO_CANVAS x ALTO_CANVAS y luego crear piezas
 function cargarNivel(src) {
   const orig = new Image();
-  console.log('[Blocka] Intentando cargar imagen:', src);
+  orig.crossOrigin = 'anonymous';
   orig.src = src;
   orig.onload = () => {
-    console.log('[Blocka] Imagen cargada correctamente:', src);
     const adaptada = prepararImagenParaCanvas(orig);
     adaptada.onload = function() {
       imagenNivel = adaptada;
@@ -185,9 +183,12 @@ function cargarNivel(src) {
       contadorCorrectas = 0;
       updateStatus();
       detenerTemporizador();
-      if (btnControl) {
-        btnControl.textContent = 'Comenzar';
-        btnControl.disabled = false;
+      if (btnGameControl) {
+        btnGameControl.textContent = 'Comenzar';
+        // Solo reactivar si no se perdió por tiempo máximo
+        if (!btnGameControl.disabled) {
+          btnGameControl.disabled = false;
+        }
       }
       if (recordsPorNivel[indiceNivelActual]) {
         recordEl.textContent = `Récord nivel ${indiceNivelActual + 1}: ${formatearTiempo(recordsPorNivel[indiceNivelActual])}`;
@@ -198,7 +199,7 @@ function cargarNivel(src) {
     };
   };
   orig.onerror = () => {
-    console.error('[Blocka] Error cargando imagen:', src);
+    console.error('Error cargando imagen: ' + src);
     ctx.clearRect(0, 0, ANCHO_CANVAS, ALTO_CANVAS);
     ctx.fillStyle = '#07102a';
     ctx.fillRect(0, 0, ANCHO_CANVAS, ALTO_CANVAS);
@@ -207,11 +208,6 @@ function cargarNivel(src) {
     ctx.textAlign = 'center';
     ctx.fillText('Error cargando imagen', ANCHO_CANVAS / 2, ALTO_CANVAS / 2);
     ctx.fillText(src, ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 30);
-    // Mensaje extra para depuración
-    ctx.fillStyle = '#fff';
-    ctx.font = '14px Arial';
-    ctx.fillText('¿La imagen existe en la carpeta?', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 60);
-    ctx.fillText('Ruta esperada: blocka/' + src, ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 80);
   };
 }
 
@@ -298,8 +294,6 @@ function obtenerPiezaEn(px, py) {
 
 
 lienzo.addEventListener('mousedown', (e) => {
-  // Si el juego está ganado o perdido, no hacer nada (tablero bloqueado)
-  if (estadoJuego === 'ganado' || estadoJuego === 'perdido') return;
   // Si el juego no ha iniciado
   if (estadoJuego === 'no_iniciado') {
     iniciarJuego();
@@ -320,6 +314,7 @@ lienzo.addEventListener('mousedown', (e) => {
     comprobarPiezaCorrecta(p);
     render();
   }
+  // Si el juego está ganado o perdido, no hacer nada (tablero bloqueado)
 });
 
 // LÓGICA DE VERIFICACIÓN Y HUD
