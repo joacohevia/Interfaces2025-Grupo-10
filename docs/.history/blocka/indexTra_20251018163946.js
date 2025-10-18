@@ -336,7 +336,8 @@ function obtenerPiezaEn(px, py) {
 
 lienzo.addEventListener('mousedown', (e) => {
   // Permitir iniciar el temporizador al clickear la imagen si el juego no está en curso y no se ha ganado ni perdido por tiempo
-  if (!juegoEnCurso && contadorCorrectas < piezas.length && tiempoMaximo !== 0) {
+  // Solo permitir iniciar el temporizador al clickear la imagen si el juego no está en curso, no se ha ganado ni perdido
+  if (!juegoEnCurso && contadorCorrectas < piezas.length && tiempoMaximo !== 0 && !btnSiguienteNivel || (btnSiguienteNivel && btnSiguienteNivel.classList.contains('hidden'))) {
     detenerTemporizador();
     tiempoInicio = Date.now();
     iniciarTemporizador();

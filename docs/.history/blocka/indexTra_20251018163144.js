@@ -169,7 +169,6 @@ if (btnComenzar) {
     detenerTemporizador();
     tiempoInicio = Date.now();
     iniciarTemporizador();
-    if (btnGameControl) btnGameControl.textContent = 'Reiniciar';
   });
 }
 
@@ -178,8 +177,6 @@ if (btnReiniciar) {
     if (indiceNivelActual !== null) {
       cargarNivel(NIVELES[indiceNivelActual]);
       mezclarPiezas();
-      contadorCorrectas = 0;
-      if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
       render();
     }
   });
@@ -335,13 +332,7 @@ function obtenerPiezaEn(px, py) {
 }
 
 lienzo.addEventListener('mousedown', (e) => {
-  // Permitir iniciar el temporizador al clickear la imagen si el juego no está en curso y no se ha ganado ni perdido por tiempo
-  if (!juegoEnCurso && contadorCorrectas < piezas.length && tiempoMaximo !== 0) {
-    detenerTemporizador();
-    tiempoInicio = Date.now();
-    iniciarTemporizador();
-    if (btnGameControl) btnGameControl.textContent = 'Reiniciar';
-  }
+  // Solo permitir interacción si el juego está en curso
   if (!juegoEnCurso) return;
   const rect = lienzo.getBoundingClientRect();
   const x = e.clientX - rect.left;

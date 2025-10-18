@@ -125,7 +125,7 @@ function perderNivelPorTiempo() {
   ctx.fillStyle = '#fff';
   ctx.font = '16px Arial';
   ctx.fillText('No lograste resolver el puzzle a tiempo.', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 20);
-  if (btnGameControl) btnGameControl.disabled = false;
+  if (btnGameControl) btnGameControl.disabled = true;
   if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
   if (btnVolverMenu) btnVolverMenu.focus();
 }
@@ -169,7 +169,6 @@ if (btnComenzar) {
     detenerTemporizador();
     tiempoInicio = Date.now();
     iniciarTemporizador();
-    if (btnGameControl) btnGameControl.textContent = 'Reiniciar';
   });
 }
 
@@ -177,10 +176,6 @@ if (btnReiniciar) {
   btnReiniciar.addEventListener('click', () => {
     if (indiceNivelActual !== null) {
       cargarNivel(NIVELES[indiceNivelActual]);
-      mezclarPiezas();
-      contadorCorrectas = 0;
-      if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
-      render();
     }
   });
 }
@@ -335,12 +330,12 @@ function obtenerPiezaEn(px, py) {
 }
 
 lienzo.addEventListener('mousedown', (e) => {
-  // Permitir iniciar el temporizador al clickear la imagen si el juego no está en curso y no se ha ganado ni perdido por tiempo
-  if (!juegoEnCurso && contadorCorrectas < piezas.length && tiempoMaximo !== 0) {
+  // Si el temporizador no está activo, iniciarlo automáticamente al hacer click en la imagen
+  if (!juegoEnCurso && btnGameControl && !btnGameControl.disabled) {
     detenerTemporizador();
     tiempoInicio = Date.now();
     iniciarTemporizador();
-    if (btnGameControl) btnGameControl.textContent = 'Reiniciar';
+    btnGameControl.textContent = 'Reiniciar';
   }
   if (!juegoEnCurso) return;
   const rect = lienzo.getBoundingClientRect();
@@ -348,16 +343,13 @@ lienzo.addEventListener('mousedown', (e) => {
   const y = e.clientY - rect.top;
   const p = obtenerPiezaEn(x, y);
   if (!p) return;
-  // Solo permitir rotar piezas si el juego está en curso
-  if (juegoEnCurso) {
-    if (e.button === 0) {
-      p.rot = (p.rot + 270) % 360;
-    } else if (e.button === 2) {
-      p.rot = (p.rot + 90) % 360;
-    }
-    comprobarPiezaCorrecta(p);
-    render();
+  if (e.button === 0) {
+    p.rot = (p.rot + 270) % 360;
+  } else if (e.button === 2) {
+    p.rot = (p.rot + 90) % 360;
   }
+  comprobarPiezaCorrecta(p);
+  render();
 });
 
 // LÓGICA DE VERIFICACIÓN Y HUD

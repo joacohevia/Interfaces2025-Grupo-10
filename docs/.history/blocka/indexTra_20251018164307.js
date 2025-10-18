@@ -335,13 +335,15 @@ function obtenerPiezaEn(px, py) {
 }
 
 lienzo.addEventListener('mousedown', (e) => {
-  // Permitir iniciar el temporizador al clickear la imagen si el juego no está en curso y no se ha ganado ni perdido por tiempo
-  if (!juegoEnCurso && contadorCorrectas < piezas.length && tiempoMaximo !== 0) {
+  // Permitir iniciar el temporizador al clickear la imagen SOLO si el juego no está en curso, no se ha ganado ni perdido, y no está esperando pasar de nivel
+  if (!juegoEnCurso && contadorCorrectas < piezas.length && (!btnSiguienteNivel || btnSiguienteNivel.classList.contains('hidden'))) {
     detenerTemporizador();
     tiempoInicio = Date.now();
     iniciarTemporizador();
     if (btnGameControl) btnGameControl.textContent = 'Reiniciar';
+    return;
   }
+  // Si el juego no está en curso, no hacer nada (no reiniciar)
   if (!juegoEnCurso) return;
   const rect = lienzo.getBoundingClientRect();
   const x = e.clientX - rect.left;

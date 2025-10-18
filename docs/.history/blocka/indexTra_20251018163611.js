@@ -178,8 +178,6 @@ if (btnReiniciar) {
     if (indiceNivelActual !== null) {
       cargarNivel(NIVELES[indiceNivelActual]);
       mezclarPiezas();
-      contadorCorrectas = 0;
-      if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
       render();
     }
   });

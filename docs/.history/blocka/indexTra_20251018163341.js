@@ -178,8 +178,6 @@ if (btnReiniciar) {
     if (indiceNivelActual !== null) {
       cargarNivel(NIVELES[indiceNivelActual]);
       mezclarPiezas();
-      contadorCorrectas = 0;
-      if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
       render();
     }
   });
@@ -335,8 +333,8 @@ function obtenerPiezaEn(px, py) {
 }
 
 lienzo.addEventListener('mousedown', (e) => {
-  // Permitir iniciar el temporizador al clickear la imagen si el juego no está en curso y no se ha ganado ni perdido por tiempo
-  if (!juegoEnCurso && contadorCorrectas < piezas.length && tiempoMaximo !== 0) {
+  // Permitir iniciar el temporizador al clickear la imagen si el juego no está en curso y no se ha ganado/perdido
+  if (!juegoEnCurso && contadorCorrectas < piezas.length) {
     detenerTemporizador();
     tiempoInicio = Date.now();
     iniciarTemporizador();

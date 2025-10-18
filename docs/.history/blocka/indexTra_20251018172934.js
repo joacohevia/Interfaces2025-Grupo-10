@@ -8,13 +8,13 @@ const lienzo = document.getElementById('gameCanvas');
 const ctx = lienzo.getContext('2d');
 const etiquetaNivel = document.getElementById('levelLabel');
 const estadoEl = document.getElementById('status');
-const btnReiniciar = document.getElementById('restart');
-const btnVolverMenu = document.getElementById('backMenu');
-const btnComenzar = document.getElementById('comenzarBtn');
-const btnSiguienteNivel = document.getElementById('nextLevel');
+// const btnReiniciar = document.getElementById('restart');
+// const btnVolverMenu = document.getElementById('backMenu');
+// const btnComenzar = document.getElementById('comenzarBtn');
+// const btnSiguienteNivel = document.getElementById('nextLevel');
 const recordEl = document.getElementById('record');
 const temporizadorEl = document.getElementById('timer');
-const btnGameControl = document.getElementById('gameControlBtn');
+const btnControl = document.getElementById('btn-control');
 
 // Niveles (ajusta rutas en tu carpeta images)
 const NIVELES_ORIGINALES = [
@@ -49,6 +49,8 @@ const ALTO_PIEZA = ALTO_CANVAS / FILAS;
 
 // Estado del juego
 let indiceNivelActual = null;
+    let estadoJuego = 'no_iniciado';
+    let tableroBloqueado = false;
 let imagenNivel = new Image();
 let piezas = [];
 let contadorCorrectas = 0;
@@ -79,58 +81,15 @@ function iniciarTemporizador() {
       if (juegoEnCurso) {
         perderNivelPorTiempo();
       }
-    }, tiempoMaximo * 1000);
-  } else {
-    tiempoMaximo = null;
-    if (intervaloTiempoMaximo) clearTimeout(intervaloTiempoMaximo);
-  }
-}
-
-function detenerTemporizador() {
-  if (intervaloTemporizador) {
-    clearInterval(intervaloTemporizador);
-    intervaloTemporizador = null;
-  }
-  if (intervaloTiempoMaximo) {
-    clearTimeout(intervaloTiempoMaximo);
-    intervaloTiempoMaximo = null;
-  }
-  juegoEnCurso = false;
-  return tiempoTranscurrido();
-}
-
-function actualizarTemporizador() {
-  if (!juegoEnCurso) return;
-  const texto = formatearTiempo(tiempoTranscurrido());
-  if (tiempoMaximo) {
-    const restante = Math.max(0, tiempoMaximo - tiempoTranscurrido());
-    temporizadorEl.textContent = `Tiempo: ${texto} / Máx: ${formatearTiempo(tiempoMaximo)} (${formatearTiempo(restante)} restantes)`;
-    // Solo perder si el temporizador máximo llega a 0
-    if (restante === 0 && juegoEnCurso) {
-      perderNivelPorTiempo();
-    }
-  } else {
-    temporizadorEl.textContent = `Tiempo: ${texto}`;
-  }
-// Mostrar mensaje de derrota por tiempo
-function perderNivelPorTiempo() {
-  detenerTemporizador();
-  juegoEnCurso = false;
-  ctx.fillStyle = 'rgba(0,0,0,0.7)';
-  ctx.fillRect(0, ALTO_CANVAS / 2 - 60, ANCHO_CANVAS, 120);
-  ctx.fillStyle = '#ff4444';
-  ctx.font = '28px Arial';
-  ctx.textAlign = 'center';
-  ctx.fillText('¡Tiempo agotado!', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 - 10);
-  ctx.fillStyle = '#fff';
-  ctx.font = '16px Arial';
-  ctx.fillText('No lograste resolver el puzzle a tiempo.', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 20);
-  if (btnGameControl) btnGameControl.disabled = false;
-  if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
-  if (btnVolverMenu) btnVolverMenu.focus();
-}
-}
-
+      if (btnControl) {
+        btnControl.addEventListener('click', () => {
+          if (estadoJuego === 'no_iniciado') {
+            iniciarJuego();
+          } else {
+            reiniciarJuego();
+          }
+        });
+      }
 function tiempoTranscurrido() {
   return Math.floor((Date.now() - tiempoInicio) / 1000);
 }
@@ -169,7 +128,6 @@ if (btnComenzar) {
     detenerTemporizador();
     tiempoInicio = Date.now();
     iniciarTemporizador();
-    if (btnGameControl) btnGameControl.textContent = 'Reiniciar';
   });
 }
 
@@ -177,10 +135,6 @@ if (btnReiniciar) {
   btnReiniciar.addEventListener('click', () => {
     if (indiceNivelActual !== null) {
       cargarNivel(NIVELES[indiceNivelActual]);
-      mezclarPiezas();
-      contadorCorrectas = 0;
-      if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
-      render();
     }
   });
 }
@@ -335,12 +289,12 @@ function obtenerPiezaEn(px, py) {
 }
 
 lienzo.addEventListener('mousedown', (e) => {
-  // Permitir iniciar el temporizador al clickear la imagen si el juego no está en curso y no se ha ganado ni perdido por tiempo
-  if (!juegoEnCurso && contadorCorrectas < piezas.length && tiempoMaximo !== 0) {
+  // Si el temporizador no está activo, iniciarlo automáticamente al hacer click en la imagen
+  if (!juegoEnCurso && btnGameControl && !btnGameControl.disabled) {
     detenerTemporizador();
     tiempoInicio = Date.now();
     iniciarTemporizador();
-    if (btnGameControl) btnGameControl.textContent = 'Reiniciar';
+    btnGameControl.textContent = 'Reiniciar';
   }
   if (!juegoEnCurso) return;
   const rect = lienzo.getBoundingClientRect();
@@ -357,6 +311,7 @@ lienzo.addEventListener('mousedown', (e) => {
     }
     comprobarPiezaCorrecta(p);
     render();
+  }
   }
 });
 

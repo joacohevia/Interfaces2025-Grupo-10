@@ -169,7 +169,6 @@ if (btnComenzar) {
     detenerTemporizador();
     tiempoInicio = Date.now();
     iniciarTemporizador();
-    if (btnGameControl) btnGameControl.textContent = 'Reiniciar';
   });
 }
 
@@ -177,10 +176,6 @@ if (btnReiniciar) {
   btnReiniciar.addEventListener('click', () => {
     if (indiceNivelActual !== null) {
       cargarNivel(NIVELES[indiceNivelActual]);
-      mezclarPiezas();
-      contadorCorrectas = 0;
-      if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
-      render();
     }
   });
 }
@@ -225,13 +220,6 @@ function cargarNivel(src) {
       contadorCorrectas = 0;
       updateStatus();
       detenerTemporizador();
-      if (btnGameControl) {
-        btnGameControl.textContent = 'Comenzar';
-        // Solo reactivar si no se perdió por tiempo máximo
-        if (!btnGameControl.disabled) {
-          btnGameControl.disabled = false;
-        }
-      }
       if (recordsPorNivel[indiceNivelActual]) {
         recordEl.textContent = `Récord nivel ${indiceNivelActual + 1}: ${formatearTiempo(recordsPorNivel[indiceNivelActual])}`;
       } else {
@@ -239,7 +227,6 @@ function cargarNivel(src) {
       }
       render();
     };
-  };
   orig.onerror = () => {
     console.error('Error cargando imagen: ' + src);
     ctx.clearRect(0, 0, ANCHO_CANVAS, ALTO_CANVAS);
@@ -251,7 +238,7 @@ function cargarNivel(src) {
     ctx.fillText('Error cargando imagen', ANCHO_CANVAS / 2, ALTO_CANVAS / 2);
     ctx.fillText(src, ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 30);
   };
-}
+
 
 // Prepara la imagen para que tenga exactamente ANCHO_CANVAS x ALTO_CANVAS (cover centrado)
 // Devuelve una Image cuyo src es un dataURL
@@ -335,12 +322,12 @@ function obtenerPiezaEn(px, py) {
 }
 
 lienzo.addEventListener('mousedown', (e) => {
-  // Permitir iniciar el temporizador al clickear la imagen si el juego no está en curso y no se ha ganado ni perdido por tiempo
-  if (!juegoEnCurso && contadorCorrectas < piezas.length && tiempoMaximo !== 0) {
+  // Si el temporizador no está activo, iniciarlo automáticamente al hacer click en la imagen
+  if (!juegoEnCurso && btnGameControl && !btnGameControl.disabled) {
     detenerTemporizador();
     tiempoInicio = Date.now();
     iniciarTemporizador();
-    if (btnGameControl) btnGameControl.textContent = 'Reiniciar';
+    btnGameControl.textContent = 'Reiniciar';
   }
   if (!juegoEnCurso) return;
   const rect = lienzo.getBoundingClientRect();
@@ -358,7 +345,8 @@ lienzo.addEventListener('mousedown', (e) => {
     comprobarPiezaCorrecta(p);
     render();
   }
-});
+}
+);
 
 // LÓGICA DE VERIFICACIÓN Y HUD
 

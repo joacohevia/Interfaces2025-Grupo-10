@@ -169,7 +169,6 @@ if (btnComenzar) {
     detenerTemporizador();
     tiempoInicio = Date.now();
     iniciarTemporizador();
-    if (btnGameControl) btnGameControl.textContent = 'Reiniciar';
   });
 }
 
@@ -177,10 +176,14 @@ if (btnReiniciar) {
   btnReiniciar.addEventListener('click', () => {
     if (indiceNivelActual !== null) {
       cargarNivel(NIVELES[indiceNivelActual]);
-      mezclarPiezas();
-      contadorCorrectas = 0;
+      // Ocultar botón de avanzar de nivel
       if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
-      render();
+      // Cambiar texto del botón de control a 'Comenzar'
+      if (btnGameControl) btnGameControl.textContent = 'Comenzar';
+      // Reiniciar cronómetro y temporizador
+      detenerTemporizador();
+      tiempoInicio = 0;
+      juegoEnCurso = false;
     }
   });
 }
@@ -194,16 +197,20 @@ if (btnVolverMenu) {
 if (btnGameControl) {
   btnGameControl.addEventListener('click', () => {
     if (!juegoEnCurso) {
-      // Comenzar
+      // Comenzar solo si el juego está en estado inicial
       detenerTemporizador();
       tiempoInicio = Date.now();
       iniciarTemporizador();
       btnGameControl.textContent = 'Reiniciar';
-    } else {
-      // Reiniciar
+    } else if (juegoEnCurso) {
+      // Reiniciar solo si el juego está en curso
       if (indiceNivelActual !== null) {
         cargarNivel(NIVELES[indiceNivelActual]);
+        if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
         btnGameControl.textContent = 'Comenzar';
+        detenerTemporizador();
+        tiempoInicio = 0;
+        juegoEnCurso = false;
       }
     }
   });
@@ -335,20 +342,13 @@ function obtenerPiezaEn(px, py) {
 }
 
 lienzo.addEventListener('mousedown', (e) => {
-  // Permitir iniciar el temporizador al clickear la imagen si el juego no está en curso y no se ha ganado ni perdido por tiempo
-  if (!juegoEnCurso && contadorCorrectas < piezas.length && tiempoMaximo !== 0) {
-    detenerTemporizador();
-    tiempoInicio = Date.now();
-    iniciarTemporizador();
-    if (btnGameControl) btnGameControl.textContent = 'Reiniciar';
-  }
+  // Solo permitir rotar piezas si el juego está en curso
   if (!juegoEnCurso) return;
   const rect = lienzo.getBoundingClientRect();
   const x = e.clientX - rect.left;
   const y = e.clientY - rect.top;
   const p = obtenerPiezaEn(x, y);
   if (!p) return;
-  // Solo permitir rotar piezas si el juego está en curso
   if (juegoEnCurso) {
     if (e.button === 0) {
       p.rot = (p.rot + 270) % 360;

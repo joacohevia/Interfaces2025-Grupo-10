@@ -14,7 +14,7 @@ const btnComenzar = document.getElementById('comenzarBtn');
 const btnSiguienteNivel = document.getElementById('nextLevel');
 const recordEl = document.getElementById('record');
 const temporizadorEl = document.getElementById('timer');
-const btnGameControl = document.getElementById('gameControlBtn');
+const btnControl = document.getElementById('btn-control');
 
 // Niveles (ajusta rutas en tu carpeta images)
 const NIVELES_ORIGINALES = [
@@ -49,6 +49,8 @@ const ALTO_PIEZA = ALTO_CANVAS / FILAS;
 
 // Estado del juego
 let indiceNivelActual = null;
+    let estadoJuego = 'no_iniciado';
+    let tableroBloqueado = false;
 let imagenNivel = new Image();
 let piezas = [];
 let contadorCorrectas = 0;
@@ -169,7 +171,6 @@ if (btnComenzar) {
     detenerTemporizador();
     tiempoInicio = Date.now();
     iniciarTemporizador();
-    if (btnGameControl) btnGameControl.textContent = 'Reiniciar';
   });
 }
 
@@ -177,10 +178,6 @@ if (btnReiniciar) {
   btnReiniciar.addEventListener('click', () => {
     if (indiceNivelActual !== null) {
       cargarNivel(NIVELES[indiceNivelActual]);
-      mezclarPiezas();
-      contadorCorrectas = 0;
-      if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
-      render();
     }
   });
 }
@@ -335,12 +332,12 @@ function obtenerPiezaEn(px, py) {
 }
 
 lienzo.addEventListener('mousedown', (e) => {
-  // Permitir iniciar el temporizador al clickear la imagen si el juego no está en curso y no se ha ganado ni perdido por tiempo
-  if (!juegoEnCurso && contadorCorrectas < piezas.length && tiempoMaximo !== 0) {
+  // Si el temporizador no está activo, iniciarlo automáticamente al hacer click en la imagen
+  if (!juegoEnCurso && btnGameControl && !btnGameControl.disabled) {
     detenerTemporizador();
     tiempoInicio = Date.now();
     iniciarTemporizador();
-    if (btnGameControl) btnGameControl.textContent = 'Reiniciar';
+    btnGameControl.textContent = 'Reiniciar';
   }
   if (!juegoEnCurso) return;
   const rect = lienzo.getBoundingClientRect();

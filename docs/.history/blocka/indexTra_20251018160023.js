@@ -21,9 +21,9 @@ const NIVELES_ORIGINALES = [
   'level2.png',
   'level3.png',
   'level6.png',
-  'level1.jpg',
   'ChatGPT Image 10 oct 2025, 09_46_21.png',
-  'ChatGPT Image 10 oct 2025, 09_49_01.png'
+  'ChatGPT Image 10 oct 2025, 09_49_01.png',
+  'level6-extra.png' // <-- Agrega aquí la imagen del sexto nivel
 ];
 let NIVELES = [];
 
@@ -105,17 +105,12 @@ function actualizarTemporizador() {
   if (tiempoMaximo) {
     const restante = Math.max(0, tiempoMaximo - tiempoTranscurrido());
     temporizadorEl.textContent = `Tiempo: ${texto} / Máx: ${formatearTiempo(tiempoMaximo)} (${formatearTiempo(restante)} restantes)`;
-    // Solo perder si el temporizador máximo llega a 0
-    if (restante === 0 && juegoEnCurso) {
-      perderNivelPorTiempo();
-    }
   } else {
     temporizadorEl.textContent = `Tiempo: ${texto}`;
   }
 // Mostrar mensaje de derrota por tiempo
 function perderNivelPorTiempo() {
   detenerTemporizador();
-  juegoEnCurso = false;
   ctx.fillStyle = 'rgba(0,0,0,0.7)';
   ctx.fillRect(0, ALTO_CANVAS / 2 - 60, ANCHO_CANVAS, 120);
   ctx.fillStyle = '#ff4444';
@@ -125,9 +120,8 @@ function perderNivelPorTiempo() {
   ctx.fillStyle = '#fff';
   ctx.font = '16px Arial';
   ctx.fillText('No lograste resolver el puzzle a tiempo.', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 20);
-  if (btnGameControl) btnGameControl.disabled = false;
+  if (btnGameControl) btnGameControl.textContent = 'Comenzar';
   if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
-  if (btnVolverMenu) btnVolverMenu.focus();
 }
 }
 
@@ -157,7 +151,6 @@ if (btnIniciar) {
     indiceNivelActual = 0;
     etiquetaNivel.textContent = `Nivel: ${indiceNivelActual + 1}`;
     cargarNivel(NIVELES[indiceNivelActual]);
-    if (btnGameControl) btnGameControl.disabled = false;
     if (seccionMenu) seccionMenu.classList.add('hidden');
     if (pantallaJuego) pantallaJuego.classList.remove('hidden');
     if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
@@ -169,7 +162,6 @@ if (btnComenzar) {
     detenerTemporizador();
     tiempoInicio = Date.now();
     iniciarTemporizador();
-    if (btnGameControl) btnGameControl.textContent = 'Reiniciar';
   });
 }
 
@@ -177,10 +169,6 @@ if (btnReiniciar) {
   btnReiniciar.addEventListener('click', () => {
     if (indiceNivelActual !== null) {
       cargarNivel(NIVELES[indiceNivelActual]);
-      mezclarPiezas();
-      contadorCorrectas = 0;
-      if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
-      render();
     }
   });
 }
@@ -225,13 +213,7 @@ function cargarNivel(src) {
       contadorCorrectas = 0;
       updateStatus();
       detenerTemporizador();
-      if (btnGameControl) {
-        btnGameControl.textContent = 'Comenzar';
-        // Solo reactivar si no se perdió por tiempo máximo
-        if (!btnGameControl.disabled) {
-          btnGameControl.disabled = false;
-        }
-      }
+      if (btnGameControl) btnGameControl.textContent = 'Comenzar';
       if (recordsPorNivel[indiceNivelActual]) {
         recordEl.textContent = `Récord nivel ${indiceNivelActual + 1}: ${formatearTiempo(recordsPorNivel[indiceNivelActual])}`;
       } else {
@@ -335,20 +317,21 @@ function obtenerPiezaEn(px, py) {
 }
 
 lienzo.addEventListener('mousedown', (e) => {
-  // Permitir iniciar el temporizador al clickear la imagen si el juego no está en curso y no se ha ganado ni perdido por tiempo
-  if (!juegoEnCurso && contadorCorrectas < piezas.length && tiempoMaximo !== 0) {
-    detenerTemporizador();
-    tiempoInicio = Date.now();
-    iniciarTemporizador();
-    if (btnGameControl) btnGameControl.textContent = 'Reiniciar';
-  }
-  if (!juegoEnCurso) return;
   const rect = lienzo.getBoundingClientRect();
   const x = e.clientX - rect.left;
   const y = e.clientY - rect.top;
+
   const p = obtenerPiezaEn(x, y);
   if (!p) return;
-  // Solo permitir rotar piezas si el juego está en curso
+
+  // Si el temporizador no está activo, iniciarlo automáticamente
+  if (!juegoEnCurso && btnGameControl) {
+    detenerTemporizador();
+    tiempoInicio = Date.now();
+    iniciarTemporizador();
+    btnGameControl.textContent = 'Reiniciar';
+  }
+
   if (juegoEnCurso) {
     if (e.button === 0) {
       p.rot = (p.rot + 270) % 360;
