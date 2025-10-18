@@ -8,17 +8,51 @@ function initializeCarousel(wrapper) {
     if (!wrapper.classList.contains('carousel-wrapper')) {
         console.error('El wrapper no tiene la clase carousel-wrapper');
         return;
-    }
+    }//verifica clase correcta
+
+    // Intentemos obtener los elementos
     const gamesGrid = wrapper.querySelector('.games-grid');
     const carousel = wrapper.querySelector('.carousel');
 
+    // Si no hay botones, vamos a crearlos
     let prevBtn = wrapper.querySelector('button.carousel-btn.left');
     let nextBtn = wrapper.querySelector('button.carousel-btn.right');
+    /*
+    if (!prevBtn) {
+        prevBtn = document.createElement('button');
+        prevBtn.className = 'carousel-btn left';
+        prevBtn.innerHTML = '‹';
+        prevBtn.setAttribute('aria-label', 'Anterior');
+        wrapper.insertBefore(prevBtn, wrapper.firstChild);
+    }
+
+    if (!nextBtn) {
+        nextBtn = document.createElement('button');
+        nextBtn.className = 'carousel-btn right';
+        nextBtn.innerHTML = '›';
+        nextBtn.setAttribute('aria-label', 'Siguiente');
+        wrapper.appendChild(nextBtn);
+    }*/
 
     if (!gamesGrid) {
         console.error('No se encontró el grid de juegos');
         return;
     }
+/*
+    console.log('Elementos encontrados:', {
+        gamesGrid: gamesGrid,
+        prevBtn: prevBtn,
+        nextBtn: nextBtn,
+        carousel: carousel
+    });*/
+
+    // Verificar dimensiones del grid
+    /*
+    console.log('Dimensiones del grid:', {
+        scrollWidth: gamesGrid.scrollWidth,
+        offsetWidth: gamesGrid.offsetWidth,
+        childElementCount: gamesGrid.childElementCount
+    });*/
 
     if (gamesGrid.scrollWidth <= gamesGrid.offsetWidth) {
         //si el ancho del contenido es menor o igual al ancho visible del contenedor
@@ -52,6 +86,9 @@ function initializeCarousel(wrapper) {
     items.forEach((item) => {
         const cloneStart = item.cloneNode(true);
         const cloneEnd = item.cloneNode(true);
+        // Elimina el id de los clones si existe
+        if (cloneStart.id) cloneStart.removeAttribute('id');
+        if (cloneEnd.id) cloneEnd.removeAttribute('id');
         copyClickListeners(item, cloneStart);
         copyClickListeners(item, cloneEnd);
         gamesGrid.appendChild(cloneEnd);
@@ -61,7 +98,14 @@ function initializeCarousel(wrapper) {
     // Ajustar el scroll inicial para que esté en el centro de los elementos clonados
     gamesGrid.scrollLeft = gamesGrid.scrollWidth / 3;//el ancho total de los elem
 
-
+    // Función para actualizar la visibilidad de los botones
+    /*function updateButtonVisibility() {
+        console.log('Estado del scroll:', {
+            scrollLeft: gamesGrid.scrollLeft,
+            scrollWidth: gamesGrid.scrollWidth,
+            offsetWidth: gamesGrid.offsetWidth
+        });
+    }*/
 
     // Event listeners para los botones
     prevBtn.addEventListener('click', (e) => {
@@ -97,6 +141,8 @@ function initializeCarousel(wrapper) {
         requestAnimationFrame(updateButtonVisibility);
     });
 
+    // Actualizar visibilidad de botones inicialmente
+    //updateButtonVisibility();
 
     // Actualiza la visivilidad si cambia el tamaño del contenido
     const observer = new ResizeObserver(() => {

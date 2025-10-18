@@ -90,21 +90,26 @@ function setupBurgerMenuNavigation() {
     
     // Mapeo de categorías del menú a IDs de secciones
     const categoryMap = {
-        'Acción': 'actionGames',
-        'Aventura': 'adventureGames', 
-        'Carreras': 'racingGames',
-        'Clásicos': 'classicGames',
-        'Cocina': 'cookingGames',
-        'Deportes': 'sportsGames',
-        'Escape': 'escapeGames',
-        'Estrategia': 'logicGames', // Este apunta a logicGames que ahora se llama "Juegos de estrategia"
-        'Guerra': 'warGames',
-        'Habilidad': 'skillGames',
-        'Infantiles': 'kidsGames',
-        'Multijugador': 'multiplayerGames',
-        'Plataformas': 'platformGames',
-        'Puzzle': 'puzzleGames',
-        'Terror': 'horrorGames'
+        'Acción': 'section-actionGames',
+        'Aventura': 'section-adventureGames', 
+        'Carreras': 'section-racingGames',
+        'Clásicos': 'section-classicGames',
+        'Cocina': 'section-cookingGames',
+        'Deportes': 'section-sportsGames',
+        'Escape': 'section-escapeGames',
+        'Estrategia': 'section-logicGames',
+        'Guerra': 'section-warGames',
+        'Habilidad': 'section-skillGames',
+        'Infantiles': 'section-kidsGames',
+        'Multijugador': 'section-multiplayerGames',
+        'Plataformas': 'section-platformGames',
+        'Puzzle': 'section-puzzleGames',
+        'Terror': 'section-horrorGames',
+        'Sugerencias para vos': 'section-suggestedGames',
+        'Juegos de estrategia': 'section-strategyGames',
+        'Juegos multijugador': 'section-multiplayerGames',
+        'Juegos de lógica': 'section-logicGames',
+        'Juegos clásicos': 'section-classicGames'
     };
 
     burgerItems.forEach(item => {
@@ -144,21 +149,14 @@ function setupBurgerMenuNavigation() {
 
 // Función para hacer scroll a una categoría específica
 function scrollToCategory(targetId) {
-    const targetElement = document.getElementById(targetId);
-    //Busca en el documento un elemento cuyo id sea igual a targetId.
-    if (targetElement) {//Si lo encuentra, entra en el if, sino es null
-        // Buscar el h1 padre que contiene el título de la categoría
-        const categorySection = targetElement.closest('.category-section');
-        //closest busca el padre más cercano que coincida con el selector dado.
-        if (categorySection) {
-            const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
-            const offset = categorySection.offsetTop - headerHeight - 20; // 20px de margen extra
-            
-            window.scrollTo({
-                top: offset,
-                behavior: 'smooth'
-            });
-        }
+    const categorySection = document.getElementById(targetId);
+    if (categorySection) {
+        const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
+        const offset = categorySection.offsetTop - headerHeight - 20;
+        window.scrollTo({
+            top: offset,
+            behavior: 'smooth'
+        });
     }
 }
 
@@ -341,7 +339,7 @@ function displayGames(games) {
         released: '2024-01-01'
     };
     
-    // Categorías para carrousels y nuevas secciones
+    // Categorías de juegos basadas en géneros y características
     const categories = {
         logicGames: (() => {/*juegos de lógica */
             const logicGamesFromAPI = games.filter(game => {
@@ -355,6 +353,8 @@ function displayGames(games) {
                            game.name.toLowerCase().includes('puzzle');
                 });
             }).slice(0, 10);
+
+            // Evita duplicados de Peg Solitaire
             const pegAlreadyExists = logicGamesFromAPI.some(game => game.name && game.name.toLowerCase() === 'peg solitaire');
             if (pegAlreadyExists) {
                 return logicGamesFromAPI;
@@ -362,12 +362,17 @@ function displayGames(games) {
                 return [pegSolitaireGame, ...logicGamesFromAPI];
             }
         })(),
-        suggestedGames: games.filter(game => game.rating && game.rating >= 4.0).sort((a, b) => b.rating - a.rating).slice(0, 10),
+        /* Juegos sugeridos */
+        suggestedGames: games.filter(game => 
+            game.rating && game.rating >= 4.0
+        ).sort((a, b) => b.rating - a.rating).slice(0, 10),
+        
         classicGames: games.filter(game => {
             if (!game.released) return false;
             const year = new Date(game.released).getFullYear();
             return year >= 1990 && year <= 2010;
         }).slice(0, 10),
+        
         strategyGames: games.filter(game => {
             if (!game.genres) return false;
             const name = game.name.toLowerCase();
@@ -384,6 +389,7 @@ function displayGames(games) {
                  description.includes('strategy') ||
                  description.includes('tactical');
         }).slice(0, 10),
+        
         multiplayerGames: games.filter(game => {
             const name = game.name.toLowerCase();
             const description = (game.description || '').toLowerCase();
@@ -398,91 +404,25 @@ function displayGames(games) {
                    description.includes('cooperative') ||
                    description.includes('team');
         }).slice(0, 10),
-        // Nuevas categorías
-        accion: games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('action'))).slice(0, 10),
-        aventura: games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('adventure'))).slice(0, 10),
-        carreras: games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('racing'))).slice(0, 10),
-        carreras: (() => {
-            const carrerasGames = games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('racing')));
-            const uniqueCarreras = [];
-            const seenNames = new Set();
-            for (const game of carrerasGames) {
-                if (!seenNames.has(game.name)) {
-                    uniqueCarreras.push(game);
-                    seenNames.add(game.name);
-                }
-                if (uniqueCarreras.length >= 10) break;
-            }
-            return uniqueCarreras;
-        })(),
-        carreras: (() => {
-            const carrerasGames = games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('racing')));
-            const uniqueCarreras = [];
-            const seen = new Set();
-            for (const game of carrerasGames) {
-                const key = (game.name || '') + (game.background_image || '');
-                if (!seen.has(key)) {
-                    uniqueCarreras.push(game);
-                    seen.add(key);
-                }
-                if (uniqueCarreras.length >= 10) break;
-            }
-            if (uniqueCarreras.length < 10) {
-                const extra = games.filter(game => !seen.has((game.name || '') + (game.background_image || '')));
-                for (const game of extra) {
-                    uniqueCarreras.push(game);
-                    if (uniqueCarreras.length >= 10) break;
-                }
-            }
-            return uniqueCarreras;
-        })(),
-        cocina: games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('cooking'))).slice(0, 10),
-        deportes: (() => {
-            const deportesGames = games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('sports')));
-            const uniqueDeportes = [];
-            const seen = new Set();
-            for (const game of deportesGames) {
-                const key = (game.name || '') + (game.background_image || '');
-                if (!seen.has(key)) {
-                    uniqueDeportes.push(game);
-                    seen.add(key);
-                }
-                if (uniqueDeportes.length >= 10) break;
-            }
-            if (uniqueDeportes.length < 10) {
-                const extra = games.filter(game => !seen.has((game.name || '') + (game.background_image || '')));
-                for (const game of extra) {
-                    uniqueDeportes.push(game);
-                    if (uniqueDeportes.length >= 10) break;
-                }
-            }
-            return uniqueDeportes;
-        })(),
-        escape: games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('escape'))).slice(0, 10),
-        guerra: games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('war'))).slice(0, 10),
-        habilidad: games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('skill'))).slice(0, 10),
-        infantiles: games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('kids') || g.name.toLowerCase().includes('child'))).slice(0, 10),
-        plataformas: games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('platformer'))).slice(0, 10),
-        puzzle: games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('puzzle'))).slice(0, 10),
-        terror: games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('horror'))).slice(0, 10)
+
     };
 
     // Si alguna categoría está vacía, llenarla con juegos aleatorios
     Object.keys(categories).forEach(categoryId => {
         if (categories[categoryId].length === 0) {
+            console.log(`Categoría ${categoryId} vacía, llenando con juegos aleatorios`);
             const randomGames = games.sort(() => 0.5 - Math.random()).slice(0, 4);
             categories[categoryId] = randomGames;
         }
     });
 
+    console.log('Categorías organizadas:', Object.keys(categories).map(key => 
+        `${key}: ${categories[key].length} juegos`
+    ));
+
     // Renderizar cada categoría
     Object.keys(categories).forEach(categoryId => {
-        // Para las categorías agregadas al final, usar el id "cards-<categoria>" si existe
-        if (document.getElementById('cards-' + categoryId)) {
-            renderGameCategory('cards-' + categoryId, categories[categoryId]);
-        } else {
-            renderGameCategory(categoryId, categories[categoryId]);
-        }
+        renderGameCategory(categoryId, categories[categoryId]);
     });
 }
 

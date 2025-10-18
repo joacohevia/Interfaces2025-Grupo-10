@@ -415,46 +415,17 @@ function displayGames(games) {
             }
             return uniqueCarreras;
         })(),
-        carreras: (() => {
-            const carrerasGames = games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('racing')));
-            const uniqueCarreras = [];
-            const seen = new Set();
-            for (const game of carrerasGames) {
-                const key = (game.name || '') + (game.background_image || '');
-                if (!seen.has(key)) {
-                    uniqueCarreras.push(game);
-                    seen.add(key);
-                }
-                if (uniqueCarreras.length >= 10) break;
-            }
-            if (uniqueCarreras.length < 10) {
-                const extra = games.filter(game => !seen.has((game.name || '') + (game.background_image || '')));
-                for (const game of extra) {
-                    uniqueCarreras.push(game);
-                    if (uniqueCarreras.length >= 10) break;
-                }
-            }
-            return uniqueCarreras;
-        })(),
         cocina: games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('cooking'))).slice(0, 10),
         deportes: (() => {
             const deportesGames = games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('sports')));
             const uniqueDeportes = [];
-            const seen = new Set();
+            const seenNames = new Set();
             for (const game of deportesGames) {
-                const key = (game.name || '') + (game.background_image || '');
-                if (!seen.has(key)) {
+                if (!seenNames.has(game.name)) {
                     uniqueDeportes.push(game);
-                    seen.add(key);
+                    seenNames.add(game.name);
                 }
                 if (uniqueDeportes.length >= 10) break;
-            }
-            if (uniqueDeportes.length < 10) {
-                const extra = games.filter(game => !seen.has((game.name || '') + (game.background_image || '')));
-                for (const game of extra) {
-                    uniqueDeportes.push(game);
-                    if (uniqueDeportes.length >= 10) break;
-                }
             }
             return uniqueDeportes;
         })(),
