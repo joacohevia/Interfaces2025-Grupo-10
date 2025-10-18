@@ -534,7 +534,7 @@ function createGameCard(game) {
             ${game.esPremium ? '<img src="assets/img/Premium.png" alt="Premium" class="premium-icon">' : ''}
             <div class="game-overlay">
                 <button class="play-btn-card">
-                    <img src="assets/img/Play.png" alt="Play" width="12" height="12">
+                    <img src="assets/img/Play.png" alt="Play" width="20" height="20">
                 </button>
             </div>
             </div>

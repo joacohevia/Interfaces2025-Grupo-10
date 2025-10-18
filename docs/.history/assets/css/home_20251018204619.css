@@ -127,13 +127,14 @@
     opacity: 1;
     transition: none;
 }
-
+/* Botón play para cards: más chico y sin fondo */
+/* Botón play para cards: mitad del tamaño original (32px → 16px) */
 .play-btn-card {
     background: transparent;
     border: none;
     box-shadow: none;
-    width: 32px;
-    height: 32px;
+    width: 16px;
+    height: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -147,11 +148,13 @@
     transition: transform 0.1s;
 }
 .play-btn-card img {
-    width: 28px;
-    height: 28px;
+    width: 16px;
+    height: 16px;
     object-fit: contain;
 }
-    
+    border-radius: 0;
+    box-shadow: none;
+}
 
 /* Categorías de Juegos */
 .games-categories {

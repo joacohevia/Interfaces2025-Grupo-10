@@ -127,7 +127,9 @@
     opacity: 1;
     transition: none;
 }
-
+/* Botón play para cards: más chico y sin fondo */
+/* Botón play para cards: mitad del tamaño original (32px → 16px) */
+/* Botón play para cards: tamaño grande y visible */
 .play-btn-card {
     background: transparent;
     border: none;

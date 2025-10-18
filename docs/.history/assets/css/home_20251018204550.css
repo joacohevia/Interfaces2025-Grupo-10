@@ -127,13 +127,13 @@
     opacity: 1;
     transition: none;
 }
-
+/* Botón play para cards: más chico y sin fondo */
 .play-btn-card {
     background: transparent;
     border: none;
     box-shadow: none;
-    width: 32px;
-    height: 32px;
+    width: 20px;
+    height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -141,17 +141,19 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0.8);
     z-index: 2;
     cursor: pointer;
     transition: transform 0.1s;
 }
 .play-btn-card img {
-    width: 28px;
-    height: 28px;
+    width: 14px;
+    height: 14px;
     object-fit: contain;
 }
-    
+    border-radius: 0;
+    box-shadow: none;
+}
 
 /* Categorías de Juegos */
 .games-categories {
