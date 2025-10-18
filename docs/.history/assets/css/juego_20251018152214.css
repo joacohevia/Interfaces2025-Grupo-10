@@ -110,8 +110,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.8); /* negro más opaco */
-    backdrop-filter: blur(8px); /* blur más suave */
+    background: rgba(0,0,0,0.5); /* negro semitransparente */
+    backdrop-filter: blur(16px); /* blur más fuerte */
     z-index: 1;
     border-radius: 32px;
 }
