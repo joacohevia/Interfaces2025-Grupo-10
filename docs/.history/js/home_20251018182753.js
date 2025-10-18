@@ -487,7 +487,13 @@ function createGameCard(game) {
         gameCard.addEventListener('click', function() {
             showPremiumPopup();
         });
-    } else if (game.esPremium === false || game.name === 'Peg Solitaire') {
+    } else if (game.name === 'Peg Solitaire' || game.esPremium === false) {
+        gameCard.style.cursor = 'pointer';
+        gameCard.addEventListener('click', function() {
+            window.location.href = 'juego.html';
+        });
+    } else {
+        // Si no está definido esPremium, por defecto redirige a juego.html
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
             window.location.href = 'juego.html';

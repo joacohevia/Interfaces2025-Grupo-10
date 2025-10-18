@@ -477,9 +477,14 @@ function createGameCard(game) {
 
     // Agregar eventos de click según el tipo de juego
     console.log(`[GameCard] ${game.name} esPremium:`, game.esPremium);
+    const playBtn = gameCard.querySelector('.play-btn');
     if (game.name === 'Blocka') {
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
+            window.location.href = 'blocka.html';
+        });
+        if (playBtn) playBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
             window.location.href = 'blocka.html';
         });
     } else if (game.esPremium === true) {
@@ -487,9 +492,17 @@ function createGameCard(game) {
         gameCard.addEventListener('click', function() {
             showPremiumPopup();
         });
+        if (playBtn) playBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            showPremiumPopup();
+        });
     } else if (game.esPremium === false || game.name === 'Peg Solitaire') {
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
+            window.location.href = 'juego.html';
+        });
+        if (playBtn) playBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
             window.location.href = 'juego.html';
         });
     }

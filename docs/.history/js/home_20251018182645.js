@@ -476,7 +476,6 @@ function createGameCard(game) {
     `;
 
     // Agregar eventos de click según el tipo de juego
-    console.log(`[GameCard] ${game.name} esPremium:`, game.esPremium);
     if (game.name === 'Blocka') {
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
@@ -487,7 +486,8 @@ function createGameCard(game) {
         gameCard.addEventListener('click', function() {
             showPremiumPopup();
         });
-    } else if (game.esPremium === false || game.name === 'Peg Solitaire') {
+    } else {
+        // Juegos gratuitos y Peg Solitaire: redirige a juego.html
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
             window.location.href = 'juego.html';

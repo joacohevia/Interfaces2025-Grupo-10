@@ -480,17 +480,17 @@ function createGameCard(game) {
     if (game.name === 'Blocka') {
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
-            window.location.href = 'blocka.html';
+            setTimeout(() => { window.location.href = 'blocka.html'; }, 10);
         });
     } else if (game.esPremium === true) {
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
-            showPremiumPopup();
+            setTimeout(() => { showPremiumPopup(); }, 10);
         });
     } else if (game.esPremium === false || game.name === 'Peg Solitaire') {
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
-            window.location.href = 'juego.html';
+            setTimeout(() => { window.location.href = 'juego.html'; }, 10);
         });
     }
 

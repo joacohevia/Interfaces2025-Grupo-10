@@ -476,18 +476,20 @@ function createGameCard(game) {
     `;
 
     // Agregar eventos de click según el tipo de juego
-    console.log(`[GameCard] ${game.name} esPremium:`, game.esPremium);
     if (game.name === 'Blocka') {
+        // Blocka: redirige a blocka.html
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
             window.location.href = 'blocka.html';
         });
     } else if (game.esPremium === true) {
+        // Juegos premium: mostrar popup
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
             showPremiumPopup();
         });
-    } else if (game.esPremium === false || game.name === 'Peg Solitaire') {
+    } else if (game.name === 'Peg Solitaire' || game.esPremium === false || typeof game.esPremium === 'undefined') {
+        // Peg Solitaire y juegos gratuitos: redirige a juego.html
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
             window.location.href = 'juego.html';

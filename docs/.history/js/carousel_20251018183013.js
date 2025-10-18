@@ -65,31 +65,11 @@ function initializeCarousel(wrapper) {
     // Clonar elementos para crear el efecto de bucle
     const items = Array.from(gamesGrid.children);
     //convierte los hijos del grid en un array
-
-    // Helper para copiar listeners de click del original al clon
-    function copyClickListeners(original, clone) {
-        // Solo copia el click principal de la card
-        clone.addEventListener('click', function(e) {
-            // Busca el tipo de juego por el contenido
-            const premiumIcon = clone.querySelector('.premium-icon');
-            const title = clone.querySelector('.game-title')?.textContent;
-            if (title === 'Blocka') {
-                window.location.href = 'blocka.html';
-            } else if (premiumIcon) {
-                showPremiumPopup();
-            } else if (title === 'Peg Solitaire' || !premiumIcon) {
-                window.location.href = 'juego.html';
-            }
-        });
-    }
-
     items.forEach((item) => {
-        const cloneStart = item.cloneNode(true);
+        const cloneStart = item.cloneNode(true);//clona para ponerlo al ini
         const cloneEnd = item.cloneNode(true);
-        copyClickListeners(item, cloneStart);
-        copyClickListeners(item, cloneEnd);
-        gamesGrid.appendChild(cloneEnd);
-        gamesGrid.insertBefore(cloneStart, gamesGrid.firstChild);
+        gamesGrid.appendChild(cloneEnd); // inserta al final
+        gamesGrid.insertBefore(cloneStart, gamesGrid.firstChild); //inserta el clon al principio
     });
 
     // Ajustar el scroll inicial para que esté en el centro de los elementos clonados

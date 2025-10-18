@@ -476,18 +476,26 @@ function createGameCard(game) {
     `;
 
     // Agregar eventos de click según el tipo de juego
-    console.log(`[GameCard] ${game.name} esPremium:`, game.esPremium);
-    if (game.name === 'Blocka') {
+    if (game.name === 'Peg Solitaire') {
+        // Peg Solitaire: redirige a juego.html
+        gameCard.style.cursor = 'pointer';
+        gameCard.addEventListener('click', function() {
+            window.location.href = 'juego.html';
+        });
+    } else if (game.name === 'Blocka') {
+        // Blocka: redirige a blocka.html
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
             window.location.href = 'blocka.html';
         });
-    } else if (game.esPremium === true) {
+    } else if (game.esPremium) {
+        // Juegos premium: mostrar popup
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
             showPremiumPopup();
         });
-    } else if (game.esPremium === false || game.name === 'Peg Solitaire') {
+    } else{
+        // Juegos gratuitos (esPremium: false): redirige a peg a modo de ejemplo
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
             window.location.href = 'juego.html';
@@ -815,20 +823,14 @@ function searchGames(query) {
     }
 
 
-    const shownNames = new Set();
     allGames.forEach(gameContainer => {
         const titleElement = gameContainer.nextElementSibling?.querySelector('.game-title');
         if (titleElement) {
             const title = titleElement.textContent.toLowerCase();
             if (title.includes(query.toLowerCase())) {
-                if (!shownNames.has(title)) {
-                    gameContainer.parentElement.style.display = 'block';
-                    shownNames.add(title);
-                    if (!firstMatch) {
-                        firstMatch = gameContainer.parentElement;
-                    }
-                } else {
-                    gameContainer.parentElement.style.display = 'none';
+                gameContainer.parentElement.style.display = 'block';
+                if (!firstMatch) {
+                    firstMatch = gameContainer.parentElement;
                 }
             } else {
                 gameContainer.parentElement.style.display = 'none';
