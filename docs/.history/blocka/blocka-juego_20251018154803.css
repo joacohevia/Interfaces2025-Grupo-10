@@ -22,11 +22,11 @@ button {
   transition: background 0.2s;
 }
 button:hover {
-  background: #e67e22;
+  background: #FFA552;
 }
 button:active {
   transform: translateY(1px);
-  background: #e67e22;
+  background: #FF7A00;
 }
 
 /* Contenedor del canvas con borde */

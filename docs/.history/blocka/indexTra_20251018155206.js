@@ -509,7 +509,7 @@ function showWin() {
 // Inicialización automática para blocka-juego.html
 document.addEventListener('DOMContentLoaded', function() {
   if (lienzo && etiquetaNivel && estadoEl && temporizadorEl && recordEl) {
-    NIVELES = shuffleArray(NIVELES_ORIGINALES.slice());
+    NIVELES = NIVELES_ORIGINALES.slice();
     indiceNivelActual = 0;
     etiquetaNivel.textContent = `Nivel: ${indiceNivelActual + 1}`;
     cargarNivel(NIVELES[indiceNivelActual]);

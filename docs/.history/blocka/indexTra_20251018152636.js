@@ -14,7 +14,6 @@ const btnComenzar = document.getElementById('comenzarBtn');
 const btnSiguienteNivel = document.getElementById('nextLevel');
 const recordEl = document.getElementById('record');
 const temporizadorEl = document.getElementById('timer');
-const btnGameControl = document.getElementById('gameControlBtn');
 
 // Niveles (ajusta rutas en tu carpeta images)
 const NIVELES_ORIGINALES = [
@@ -132,28 +131,16 @@ if (btnReiniciar) {
 
 if (btnVolverMenu) {
   btnVolverMenu.addEventListener('click', () => {
-    window.location.href = '../blocka.html';
+    if (pantallaJuego) pantallaJuego.classList.add('hidden');
+    if (seccionMenu) seccionMenu.classList.remove('hidden');
+    imagenNivel.src = '';
+    piezas = [];
+    contadorCorrectas = 0;
+    detenerTemporizador();
+    actualizarEstado();
+    limpiarLienzo();
   });
 }
-
-if (btnGameControl) {
-  btnGameControl.addEventListener('click', () => {
-    if (!juegoEnCurso) {
-      // Comenzar
-      detenerTemporizador();
-      tiempoInicio = Date.now();
-      iniciarTemporizador();
-      btnGameControl.textContent = 'Reiniciar';
-    } else {
-      // Reiniciar
-      if (indiceNivelActual !== null) {
-        cargarNivel(NIVELES[indiceNivelActual]);
-        btnGameControl.textContent = 'Comenzar';
-      }
-    }
-  });
-}
-
 // CARGA Y PREPARACIÓN DE IMAGEN
 
 // Cargar la imagen original, adaptar/cortar para que quede exactamente ANCHO_CANVAS x ALTO_CANVAS y luego crear piezas
@@ -163,20 +150,22 @@ function cargarNivel(src) {
   orig.src = src;
   orig.onload = () => {
     const adaptada = prepararImagenParaCanvas(orig);
-    adaptada.onload = function() {
+    adaptada.onload = () => {
       imagenNivel = adaptada;
       crearPiezas();
       mezclarPiezas();
       contadorCorrectas = 0;
       updateStatus();
       detenerTemporizador();
-      if (btnGameControl) btnGameControl.textContent = 'Comenzar';
       if (recordsPorNivel[indiceNivelActual]) {
         recordEl.textContent = `Récord nivel ${indiceNivelActual + 1}: ${formatearTiempo(recordsPorNivel[indiceNivelActual])}`;
       } else {
         recordEl.textContent = '';
       }
       render();
+    };
+    adaptada.onerror = () => {
+      console.error('Error al adaptar la imagen para el canvas.');
     };
   };
   orig.onerror = () => {
@@ -281,23 +270,17 @@ lienzo.addEventListener('mousedown', (e) => {
   const p = obtenerPiezaEn(x, y);
   if (!p) return;
 
-  // Si el temporizador no está activo, iniciarlo automáticamente
-  if (!juegoEnCurso && btnGameControl) {
-    detenerTemporizador();
-    tiempoInicio = Date.now();
-    iniciarTemporizador();
-    btnGameControl.textContent = 'Reiniciar';
+  // Solo permitir rotar si el juego está en curso
+  if (!juegoEnCurso) return;
+
+  if (e.button === 0) {
+    p.rot = (p.rot + 270) % 360;
+  } else if (e.button === 2) {
+    p.rot = (p.rot + 90) % 360;
   }
 
-  if (juegoEnCurso) {
-    if (e.button === 0) {
-      p.rot = (p.rot + 270) % 360;
-    } else if (e.button === 2) {
-      p.rot = (p.rot + 90) % 360;
-    }
-    comprobarPiezaCorrecta(p);
-    render();
-  }
+  comprobarPiezaCorrecta(p);
+  render();
 });
 
 // LÓGICA DE VERIFICACIÓN Y HUD
@@ -327,69 +310,13 @@ function comprobarPiezaCorrecta(p) {
       recordEl.textContent = `Récord nivel ${nivel + 1}: ${formatearTiempo(tiempoFinal)}`;
     }
 
-      setTimeout(() => {
-        showWin();
-        // Si es el último nivel, mostrar animación de victoria final
-        if (indiceNivelActual === NIVELES.length - 1) {
-          mostrarAnimacionVictoria();
-        } else {
-          btnSiguienteNivel.classList.remove('hidden');
-        }
-      }, 180);
+    setTimeout(showWin, 180);
+    if (indiceNivelActual < NIVELES.length - 1) {
+      btnSiguienteNivel.classList.remove('hidden');
+    }
   }
 }
 
-  // Animación de victoria final
-  // Animación de victoria final
-  function mostrarAnimacionVictoria() {
-    const winDiv = document.createElement('div');
-    winDiv.id = 'victoria-final';
-    winDiv.style.position = 'fixed';
-    winDiv.style.top = '0';
-    winDiv.style.left = '0';
-    winDiv.style.width = '100vw';
-    winDiv.style.height = '100vh';
-    winDiv.style.background = 'rgba(0,0,0,0.7)';
-    winDiv.style.display = 'flex';
-    winDiv.style.flexDirection = 'column';
-    winDiv.style.justifyContent = 'center';
-    winDiv.style.alignItems = 'center';
-    winDiv.style.zIndex = '9999';
-    winDiv.innerHTML = `
-      <h1 style="color: #fff; font-size: 3em; margin-bottom: 20px;">¡Ganaste Blocka!</h1>
-      <div id="confetti" style="width:100vw;height:40vh;position:relative;z-index:1;"></div>
-      <button id="volverMenuBtn" style="font-size:1.5em;padding:10px 30px;margin-top:30px;position:absolute;top:60%;left:50%;transform:translate(-50%,0);z-index:2;">Volver al menú</button>
-    `;
-    document.body.appendChild(winDiv);
-    lanzarConfetti();
-    const btnVolver = document.getElementById('volverMenuBtn');
-    btnVolver.onclick = () => {
-      window.location.href = '../blocka.html';
-    };
-    btnVolver.focus();
-  }
-
-  // Animación confetti simple
-  function lanzarConfetti() {
-    const confettiDiv = document.getElementById('confetti');
-    for (let i = 0; i < 120; i++) {
-      const c = document.createElement('div');
-      c.style.position = 'absolute';
-      c.style.width = '10px';
-      c.style.height = '20px';
-      c.style.background = `hsl(${Math.random()*360},100%,60%)`;
-      c.style.left = Math.random()*window.innerWidth + 'px';
-      c.style.top = Math.random()*window.innerHeight/2 + 'px';
-      c.style.opacity = '0.8';
-      c.style.borderRadius = '3px';
-      c.style.transform = `rotate(${Math.random()*360}deg)`;
-      confettiDiv.appendChild(c);
-      setTimeout(() => {
-        c.style.transition = 'top 2s';
-        c.style.top = (window.innerHeight/2 + Math.random()*window.innerHeight/2) + 'px';
-      }, 100);
-    }
-  }
 btnSiguienteNivel.addEventListener('click', () => {
   indiceNivelActual++;
   if (indiceNivelActual < NIVELES.length) {
@@ -502,7 +429,7 @@ function showWin() {
   ctx.fillText('¡Completaste el puzzle!', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 - 6);
 
   ctx.fillStyle = '#ffffff';
-  ctx.font = '14px Roboto';
+  ctx.font = '14px Arial';
   ctx.fillText('Presiona Reiniciar o Volver al menú', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 20);
 }
 

@@ -502,17 +502,13 @@ function showWin() {
   ctx.fillText('¡Completaste el puzzle!', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 - 6);
 
   ctx.fillStyle = '#ffffff';
-  ctx.font = '14px Roboto';
+  ctx.font = '14px Arial';
   ctx.fillText('Presiona Reiniciar o Volver al menú', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 20);
 }
 
 // Inicialización automática para blocka-juego.html
 document.addEventListener('DOMContentLoaded', function() {
   if (lienzo && etiquetaNivel && estadoEl && temporizadorEl && recordEl) {
-    NIVELES = shuffleArray(NIVELES_ORIGINALES.slice());
-    indiceNivelActual = 0;
-    etiquetaNivel.textContent = `Nivel: ${indiceNivelActual + 1}`;
-    cargarNivel(NIVELES[indiceNivelActual]);
     limpiarLienzo();
     updateStatus();
   }

@@ -502,7 +502,7 @@ function showWin() {
   ctx.fillText('¡Completaste el puzzle!', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 - 6);
 
   ctx.fillStyle = '#ffffff';
-  ctx.font = '14px Roboto';
+  ctx.font = '14px Arial';
   ctx.fillText('Presiona Reiniciar o Volver al menú', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 20);
 }
 

@@ -14,7 +14,6 @@ const btnComenzar = document.getElementById('comenzarBtn');
 const btnSiguienteNivel = document.getElementById('nextLevel');
 const recordEl = document.getElementById('record');
 const temporizadorEl = document.getElementById('timer');
-const btnGameControl = document.getElementById('gameControlBtn');
 
 // Niveles (ajusta rutas en tu carpeta images)
 const NIVELES_ORIGINALES = [
@@ -132,28 +131,16 @@ if (btnReiniciar) {
 
 if (btnVolverMenu) {
   btnVolverMenu.addEventListener('click', () => {
-    window.location.href = '../blocka.html';
+    if (pantallaJuego) pantallaJuego.classList.add('hidden');
+    if (seccionMenu) seccionMenu.classList.remove('hidden');
+    imagenNivel.src = '';
+    piezas = [];
+    contadorCorrectas = 0;
+    detenerTemporizador();
+    actualizarEstado();
+    limpiarLienzo();
   });
 }
-
-if (btnGameControl) {
-  btnGameControl.addEventListener('click', () => {
-    if (!juegoEnCurso) {
-      // Comenzar
-      detenerTemporizador();
-      tiempoInicio = Date.now();
-      iniciarTemporizador();
-      btnGameControl.textContent = 'Reiniciar';
-    } else {
-      // Reiniciar
-      if (indiceNivelActual !== null) {
-        cargarNivel(NIVELES[indiceNivelActual]);
-        btnGameControl.textContent = 'Comenzar';
-      }
-    }
-  });
-}
-
 // CARGA Y PREPARACIÓN DE IMAGEN
 
 // Cargar la imagen original, adaptar/cortar para que quede exactamente ANCHO_CANVAS x ALTO_CANVAS y luego crear piezas
@@ -163,20 +150,22 @@ function cargarNivel(src) {
   orig.src = src;
   orig.onload = () => {
     const adaptada = prepararImagenParaCanvas(orig);
-    adaptada.onload = function() {
+    adaptada.onload = () => {
       imagenNivel = adaptada;
       crearPiezas();
       mezclarPiezas();
       contadorCorrectas = 0;
       updateStatus();
       detenerTemporizador();
-      if (btnGameControl) btnGameControl.textContent = 'Comenzar';
       if (recordsPorNivel[indiceNivelActual]) {
         recordEl.textContent = `Récord nivel ${indiceNivelActual + 1}: ${formatearTiempo(recordsPorNivel[indiceNivelActual])}`;
       } else {
         recordEl.textContent = '';
       }
       render();
+    };
+    adaptada.onerror = () => {
+      console.error('Error al adaptar la imagen para el canvas.');
     };
   };
   orig.onerror = () => {
@@ -281,23 +270,14 @@ lienzo.addEventListener('mousedown', (e) => {
   const p = obtenerPiezaEn(x, y);
   if (!p) return;
 
-  // Si el temporizador no está activo, iniciarlo automáticamente
-  if (!juegoEnCurso && btnGameControl) {
-    detenerTemporizador();
-    tiempoInicio = Date.now();
-    iniciarTemporizador();
-    btnGameControl.textContent = 'Reiniciar';
+  if (e.button === 0) {
+    p.rot = (p.rot + 270) % 360;
+  } else if (e.button === 2) {
+    p.rot = (p.rot + 90) % 360;
   }
 
-  if (juegoEnCurso) {
-    if (e.button === 0) {
-      p.rot = (p.rot + 270) % 360;
-    } else if (e.button === 2) {
-      p.rot = (p.rot + 90) % 360;
-    }
-    comprobarPiezaCorrecta(p);
-    render();
-  }
+  comprobarPiezaCorrecta(p);
+  render();
 });
 
 // LÓGICA DE VERIFICACIÓN Y HUD
@@ -364,7 +344,7 @@ function comprobarPiezaCorrecta(p) {
     lanzarConfetti();
     const btnVolver = document.getElementById('volverMenuBtn');
     btnVolver.onclick = () => {
-      window.location.href = '../blocka.html';
+      window.location.href = 'blocka.html';
     };
     btnVolver.focus();
   }
@@ -502,7 +482,7 @@ function showWin() {
   ctx.fillText('¡Completaste el puzzle!', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 - 6);
 
   ctx.fillStyle = '#ffffff';
-  ctx.font = '14px Roboto';
+  ctx.font = '14px Arial';
   ctx.fillText('Presiona Reiniciar o Volver al menú', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 20);
 }
 

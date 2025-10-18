@@ -163,7 +163,7 @@ function cargarNivel(src) {
   orig.src = src;
   orig.onload = () => {
     const adaptada = prepararImagenParaCanvas(orig);
-    adaptada.onload = function() {
+    adaptada.onload = () => {
       imagenNivel = adaptada;
       crearPiezas();
       mezclarPiezas();
@@ -178,7 +178,6 @@ function cargarNivel(src) {
       }
       render();
     };
-  };
   orig.onerror = () => {
     console.error('Error cargando imagen: ' + src);
     ctx.clearRect(0, 0, ANCHO_CANVAS, ALTO_CANVAS);
@@ -502,7 +501,7 @@ function showWin() {
   ctx.fillText('¡Completaste el puzzle!', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 - 6);
 
   ctx.fillStyle = '#ffffff';
-  ctx.font = '14px Roboto';
+  ctx.font = '14px Arial';
   ctx.fillText('Presiona Reiniciar o Volver al menú', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 20);
 }
 
