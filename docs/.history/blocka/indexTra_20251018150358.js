@@ -17,11 +17,11 @@ const temporizadorEl = document.getElementById('timer');
 
 // Niveles (ajusta rutas en tu carpeta images)
 const NIVELES_ORIGINALES = [
-  'level2.png',
-  'level3.png',
-  'level6.png',
-  'ChatGPT Image 10 oct 2025, 09_46_21.png',
-  'ChatGPT Image 10 oct 2025, 09_49_01.png'
+  'blocka/level2.png',
+  'blocka/level3.png',
+  'blocka/level6.png',
+  'blocka/ChatGPT Image 10 oct 2025, 09_46_21.png',
+  'blocka/ChatGPT Image 10 oct 2025, 09_49_01.png'
 ];
 let NIVELES = [];
 
@@ -99,6 +99,10 @@ function actualizarRecord(tiempoSegundos) {
   }
 }
 
+btnIniciar.addEventListener('click', () => {
+btnComenzar.addEventListener('click', () => {
+btnReiniciar.addEventListener('click', () => {
+btnVolverMenu.addEventListener('click', () => {
 // BOTONES Y NAVEGACIÓN
 
 if (btnIniciar) {
@@ -430,14 +434,11 @@ function showWin() {
   ctx.fillText('Presiona Reiniciar o Volver al menú', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 20);
 }
 
-// Inicialización automática para blocka-juego.html
-document.addEventListener('DOMContentLoaded', function() {
-  if (lienzo && etiquetaNivel && estadoEl && temporizadorEl && recordEl) {
-    NIVELES = shuffleArray(NIVELES_ORIGINALES.slice());
-    indiceNivelActual = 0;
-    etiquetaNivel.textContent = `Nivel: ${indiceNivelActual + 1}`;
-    cargarNivel(NIVELES[indiceNivelActual]);
-    limpiarLienzo();
-    updateStatus();
-  }
-});
+// Inicialización visual directa para blocka-juego.html (solo canvas y HUD)
+if (lienzo && etiquetaNivel && estadoEl && temporizadorEl && recordEl) {
+  NIVELES = shuffleArray(NIVELES_ORIGINALES.slice());
+  indiceNivelActual = 0;
+  etiquetaNivel.textContent = `Nivel: ${indiceNivelActual + 1}`;
+  cargarNivel(NIVELES[indiceNivelActual]);
+  limpiarLienzo();
+  updateStatus();

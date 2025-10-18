@@ -15,23 +15,21 @@ const btnSiguienteNivel = document.getElementById('nextLevel');
 const recordEl = document.getElementById('record');
 const temporizadorEl = document.getElementById('timer');
 
-// Niveles (ajusta rutas en tu carpeta images)
-const NIVELES_ORIGINALES = [
+
+// Lista de imágenes disponibles (ajusta rutas si es necesario)
+const IMAGENES_DISPONIBLES = [
+  'assets/img/blockaScreen1.png',
+  'assets/img/blockaScreen2.png',
+  'assets/img/blockaScreen3.png',
+  'assets/img/blockaScreen4.png',
   'level2.png',
   'level3.png',
   'level6.png',
   'ChatGPT Image 10 oct 2025, 09_46_21.png',
   'ChatGPT Image 10 oct 2025, 09_49_01.png'
 ];
-let NIVELES = [];
 
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
+let NIVELES = [];
 
 // Dimensiones del canvas
 const ANCHO_CANVAS = 500;
@@ -101,46 +99,69 @@ function actualizarRecord(tiempoSegundos) {
 
 // BOTONES Y NAVEGACIÓN
 
-if (btnIniciar) {
-  btnIniciar.addEventListener('click', () => {
-    NIVELES = shuffleArray(NIVELES_ORIGINALES.slice());
-    indiceNivelActual = 0;
-    etiquetaNivel.textContent = `Nivel: ${indiceNivelActual + 1}`;
-    cargarNivel(NIVELES[indiceNivelActual]);
-    if (seccionMenu) seccionMenu.classList.add('hidden');
-    if (pantallaJuego) pantallaJuego.classList.remove('hidden');
-    if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
-  });
+
+// Utilidad para obtener parámetro de la URL
+function getQueryParam(name) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(name);
 }
 
-if (btnComenzar) {
-  btnComenzar.addEventListener('click', () => {
-    detenerTemporizador();
-    tiempoInicio = Date.now();
-    iniciarTemporizador();
-  });
+function shuffleArray(array) {
+  // Fisher-Yates
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }
 
-if (btnReiniciar) {
-  btnReiniciar.addEventListener('click', () => {
-    if (indiceNivelActual !== null) {
-      cargarNivel(NIVELES[indiceNivelActual]);
+btnIniciar.addEventListener('click', () => {
+  // Obtener imagen inicial de la URL si existe
+  const imgParam = getQueryParam('img');
+  let imagenes = IMAGENES_DISPONIBLES.slice();
+  if (imgParam) {
+    // Buscar la ruta completa que termina con el nombre recibido
+    const found = imagenes.find(img => img.endsWith('/' + imgParam) || img === imgParam);
+    if (found) {
+      imagenes = imagenes.filter(img => img !== found);
+      shuffleArray(imagenes);
+      NIVELES = [found, ...imagenes];
+    } else {
+      NIVELES = shuffleArray(imagenes);
     }
-  });
-}
+  } else {
+    NIVELES = shuffleArray(imagenes);
+  }
+  indiceNivelActual = 0;
+  etiquetaNivel.textContent = `Nivel: ${indiceNivelActual + 1}`;
+  cargarNivel(NIVELES[indiceNivelActual]);
+  seccionMenu.classList.add('hidden');
+  pantallaJuego.classList.remove('hidden');
+  btnSiguienteNivel.classList.add('hidden');
+});
 
-if (btnVolverMenu) {
-  btnVolverMenu.addEventListener('click', () => {
-    if (pantallaJuego) pantallaJuego.classList.add('hidden');
-    if (seccionMenu) seccionMenu.classList.remove('hidden');
-    imagenNivel.src = '';
-    piezas = [];
-    contadorCorrectas = 0;
-    detenerTemporizador();
-    actualizarEstado();
-    limpiarLienzo();
-  });
-}
+btnComenzar.addEventListener('click', () => {
+  detenerTemporizador();
+  tiempoInicio = Date.now();
+  iniciarTemporizador();
+});
+
+btnReiniciar.addEventListener('click', () => {
+  if (indiceNivelActual !== null) {
+    cargarNivel(NIVELES[indiceNivelActual]);
+  }
+});
+
+btnVolverMenu.addEventListener('click', () => {
+  pantallaJuego.classList.add('hidden');
+  seccionMenu.classList.remove('hidden');
+  imagenNivel.src = '';
+  piezas = [];
+  contadorCorrectas = 0;
+  detenerTemporizador();
+  actualizarEstado();
+  limpiarLienzo();
+});
 // CARGA Y PREPARACIÓN DE IMAGEN
 
 // Cargar la imagen original, adaptar/cortar para que quede exactamente ANCHO_CANVAS x ALTO_CANVAS y luego crear piezas
@@ -150,34 +171,32 @@ function cargarNivel(src) {
   orig.src = src;
   orig.onload = () => {
     const adaptada = prepararImagenParaCanvas(orig);
-    adaptada.onload = () => {
-      imagenNivel = adaptada;
-      crearPiezas();
-      mezclarPiezas();
-      contadorCorrectas = 0;
-      updateStatus();
-      detenerTemporizador();
-      if (recordsPorNivel[indiceNivelActual]) {
-        recordEl.textContent = `Récord nivel ${indiceNivelActual + 1}: ${formatearTiempo(recordsPorNivel[indiceNivelActual])}`;
-      } else {
-        recordEl.textContent = '';
-      }
-      render();
-    };
-    adaptada.onerror = () => {
-      console.error('Error al adaptar la imagen para el canvas.');
-    };
+    imagenNivel = adaptada;
+    crearPiezas();
+    mezclarPiezas();
+    contadorCorrectas = 0;
+    updateStatus();
+    detenerTemporizador();
+    if (recordsPorNivel[indiceNivelActual]) {
+      recordEl.textContent = `Récord nivel ${indiceNivelActual + 1}: ${formatearTiempo(recordsPorNivel[indiceNivelActual])}`;
+    } else {
+      recordEl.textContent = '';
+    }
+    render();
+    console.log('Imagen cargada correctamente:', src);
   };
-  orig.onerror = () => {
-    console.error('Error cargando imagen: ' + src);
+  orig.onerror = (e) => {
+    console.error('Error cargando imagen: ' + src, e);
+    alert('Error cargando imagen: ' + src);
+    // Mostrar error en el canvas
     ctx.clearRect(0, 0, ANCHO_CANVAS, ALTO_CANVAS);
-    ctx.fillStyle = '#07102a';
+    ctx.fillStyle = '#300';
     ctx.fillRect(0, 0, ANCHO_CANVAS, ALTO_CANVAS);
-    ctx.fillStyle = '#ff4444';
+    ctx.fillStyle = '#fff';
     ctx.font = '20px Arial';
     ctx.textAlign = 'center';
-    ctx.fillText('Error cargando imagen', ANCHO_CANVAS / 2, ALTO_CANVAS / 2);
-    ctx.fillText(src, ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 30);
+    ctx.fillText('Error cargando imagen', ANCHO_CANVAS/2, ALTO_CANVAS/2);
+    ctx.fillText(src, ANCHO_CANVAS/2, ALTO_CANVAS/2+30);
   };
 }
 
@@ -430,14 +449,23 @@ function showWin() {
   ctx.fillText('Presiona Reiniciar o Volver al menú', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 20);
 }
 
-// Inicialización automática para blocka-juego.html
-document.addEventListener('DOMContentLoaded', function() {
-  if (lienzo && etiquetaNivel && estadoEl && temporizadorEl && recordEl) {
-    NIVELES = shuffleArray(NIVELES_ORIGINALES.slice());
-    indiceNivelActual = 0;
-    etiquetaNivel.textContent = `Nivel: ${indiceNivelActual + 1}`;
-    cargarNivel(NIVELES[indiceNivelActual]);
-    limpiarLienzo();
-    updateStatus();
+// Inicialización visual
+// Si la pantalla de menú está oculta (acceso directo al juego), inicializar el primer nivel automáticamente con orden aleatorio
+if (seccionMenu.classList.contains('hidden')) {
+  const imgParam = getQueryParam('img');
+  let imagenes = IMAGENES_DISPONIBLES.slice();
+  if (imgParam && imagenes.includes(imgParam)) {
+    imagenes = imagenes.filter(img => img !== imgParam);
+    shuffleArray(imagenes);
+    NIVELES = [imgParam, ...imagenes];
+  } else {
+    NIVELES = shuffleArray(imagenes);
   }
-});
+  indiceNivelActual = 0;
+  etiquetaNivel.textContent = `Nivel: ${indiceNivelActual + 1}`;
+  cargarNivel(NIVELES[indiceNivelActual]);
+  pantallaJuego.classList.remove('hidden');
+  btnSiguienteNivel.classList.add('hidden');
+}
+limpiarLienzo();
+updateStatus();

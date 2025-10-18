@@ -163,7 +163,6 @@
                                 var btn = document.getElementById('startGame');
                                 if (btn) {
                                     btn.addEventListener('click', function() {
-                                        // Redirigir directamente al juego, la lógica de imágenes aleatorias está en indexTra.js
                                         window.location.href = 'blocka/blocka-juego.html';
                                     });
                                 }
@@ -380,6 +379,31 @@
             <button class="modal-close" id="modalClose">&times;</button>
         </div>
     </div>
+
+    <!-- MENÚ INICIAL PARA BLOCKA -->
+    <section id="menu">
+      <h2>Blocka</h2>
+      <button id="startGame">Jugar</button>
+    </section>
+
+    <!-- Contenedor del juego: tamaño fijo solicitado -->
+    <section id="gameScreen" class="screen hidden">
+      <div class="game-area" style="width:500px;height:500px;">
+        <!-- Canvas donde se dibuja el puzzle; tamaño fijo -->
+        <canvas id="gameCanvas" width="500" height="500" tabindex="0"></canvas>
+      </div>
+      <!-- HUD simple -->
+      <div class="hud">
+        <span id="levelLabel">Nivel: —</span>
+        <span id="status">Piezas correctas: 0 / 4</span>
+        <span id="timer">Tiempo: 00:00</span>
+        <button id="comenzarBtn">Comenzar</button>
+        <span id="record"></span>
+        <button id="restart">Reiniciar</button>
+        <button id="nextLevel" class="hidden">Siguiente nivel</button>
+        <button id="backMenu">Volver al menú</button>
+      </div>
+    </section>
 
     <script src="js/juego.js"></script>
 </body>

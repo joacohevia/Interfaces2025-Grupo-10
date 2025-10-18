@@ -163,8 +163,19 @@
                                 var btn = document.getElementById('startGame');
                                 if (btn) {
                                     btn.addEventListener('click', function() {
-                                        // Redirigir directamente al juego, la lógica de imágenes aleatorias está en indexTra.js
-                                        window.location.href = 'blocka/blocka-juego.html';
+                                        // Seleccionar aleatoriamente una de las 6 imágenes
+                                        var imagenes = [
+                                            'assets/img/blockaScreen1.png',
+                                            'assets/img/blockaScreen2.png',
+                                            'assets/img/blockaScreen3.png',
+                                            'assets/img/blockaScreen4.png',
+                                            'assets/img/blockaScreen2.png',
+                                            'assets/img/blockaScreen1.png'
+                                        ];
+                                        var idx = Math.floor(Math.random() * imagenes.length);
+                                        var imagenSeleccionada = imagenes[idx];
+                                        // Redirigir pasando la imagen seleccionada como parámetro (ruta completa)
+                                        window.location.href = 'blocka/blocka-juego.html?img=' + encodeURIComponent(imagenSeleccionada);
                                     });
                                 }
                             });

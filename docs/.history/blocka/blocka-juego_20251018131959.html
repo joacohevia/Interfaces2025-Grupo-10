@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Blocka</title>
+  <link rel="stylesheet" href="blocka-juego.css" />
+</head>
+<body>
+  <main>
+    <!-- Pantalla inicial (oculta) -->
+    <section id="menu" class="screen hidden">
+      <h1>Blocka</h1>
+      <p>Juego de rompecabezas: gira las piezas para recomponer la imagen</p>
+      <button id="startGame">Iniciar partida (elige nivel aleatorio)</button>
+    </section>
+
+    <!-- Contenedor del juego: tamaño fijo solicitado -->
+    <section id="gameScreen" class="screen">
+      <div class="game-area" style="width:500px;height:500px;">
+        <!-- Canvas donde se dibuja el puzzle; tamaño fijo -->
+        <canvas id="gameCanvas" width="500" height="500" tabindex="0"></canvas>
+      </div>
+
+      <!-- HUD simple -->
+      <div class="hud">
+        <span id="levelLabel">Nivel: —</span>
+        <span id="status">Piezas correctas: 0 / 4</span>
+        <span id="timer">Tiempo: 00:00</span>
+        <button id="comenzarBtn">Comenzar</button>
+        <span id="record"></span>
+        <button id="restart">Reiniciar</button>
+        <button id="nextLevel" class="hidden">Siguiente nivel</button>
+        <button id="backMenu">Volver al menú</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="indexTra.js"></script>
+</body>
+</html>

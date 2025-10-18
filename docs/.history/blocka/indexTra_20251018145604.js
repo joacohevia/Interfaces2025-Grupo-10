@@ -101,46 +101,38 @@ function actualizarRecord(tiempoSegundos) {
 
 // BOTONES Y NAVEGACIÓN
 
-if (btnIniciar) {
-  btnIniciar.addEventListener('click', () => {
-    NIVELES = shuffleArray(NIVELES_ORIGINALES.slice());
-    indiceNivelActual = 0;
-    etiquetaNivel.textContent = `Nivel: ${indiceNivelActual + 1}`;
+btnIniciar.addEventListener('click', () => {
+  NIVELES = shuffleArray(NIVELES_ORIGINALES.slice());
+  indiceNivelActual = 0;
+  etiquetaNivel.textContent = `Nivel: ${indiceNivelActual + 1}`;
+  cargarNivel(NIVELES[indiceNivelActual]);
+  seccionMenu.classList.add('hidden');
+  pantallaJuego.classList.remove('hidden');
+  btnSiguienteNivel.classList.add('hidden');
+});
+
+btnComenzar.addEventListener('click', () => {
+  detenerTemporizador();
+  tiempoInicio = Date.now();
+  iniciarTemporizador();
+});
+
+btnReiniciar.addEventListener('click', () => {
+  if (indiceNivelActual !== null) {
     cargarNivel(NIVELES[indiceNivelActual]);
-    if (seccionMenu) seccionMenu.classList.add('hidden');
-    if (pantallaJuego) pantallaJuego.classList.remove('hidden');
-    if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
-  });
-}
+  }
+});
 
-if (btnComenzar) {
-  btnComenzar.addEventListener('click', () => {
-    detenerTemporizador();
-    tiempoInicio = Date.now();
-    iniciarTemporizador();
-  });
-}
-
-if (btnReiniciar) {
-  btnReiniciar.addEventListener('click', () => {
-    if (indiceNivelActual !== null) {
-      cargarNivel(NIVELES[indiceNivelActual]);
-    }
-  });
-}
-
-if (btnVolverMenu) {
-  btnVolverMenu.addEventListener('click', () => {
-    if (pantallaJuego) pantallaJuego.classList.add('hidden');
-    if (seccionMenu) seccionMenu.classList.remove('hidden');
-    imagenNivel.src = '';
-    piezas = [];
-    contadorCorrectas = 0;
-    detenerTemporizador();
-    actualizarEstado();
-    limpiarLienzo();
-  });
-}
+btnVolverMenu.addEventListener('click', () => {
+  pantallaJuego.classList.add('hidden');
+  seccionMenu.classList.remove('hidden');
+  imagenNivel.src = '';
+  piezas = [];
+  contadorCorrectas = 0;
+  detenerTemporizador();
+  actualizarEstado();
+  limpiarLienzo();
+});
 // CARGA Y PREPARACIÓN DE IMAGEN
 
 // Cargar la imagen original, adaptar/cortar para que quede exactamente ANCHO_CANVAS x ALTO_CANVAS y luego crear piezas
@@ -430,14 +422,15 @@ function showWin() {
   ctx.fillText('Presiona Reiniciar o Volver al menú', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 20);
 }
 
-// Inicialización automática para blocka-juego.html
-document.addEventListener('DOMContentLoaded', function() {
-  if (lienzo && etiquetaNivel && estadoEl && temporizadorEl && recordEl) {
-    NIVELES = shuffleArray(NIVELES_ORIGINALES.slice());
-    indiceNivelActual = 0;
-    etiquetaNivel.textContent = `Nivel: ${indiceNivelActual + 1}`;
-    cargarNivel(NIVELES[indiceNivelActual]);
-    limpiarLienzo();
-    updateStatus();
-  }
-});
+// Inicialización visual
+// Si la pantalla de menú está oculta (acceso directo al juego), inicializar el primer nivel automáticamente
+if (seccionMenu.classList.contains('hidden')) {
+  NIVELES = shuffleArray(NIVELES_ORIGINALES.slice());
+  indiceNivelActual = 0;
+  etiquetaNivel.textContent = `Nivel: ${indiceNivelActual + 1}`;
+  cargarNivel(NIVELES[indiceNivelActual]);
+  pantallaJuego.classList.remove('hidden');
+  btnSiguienteNivel.classList.add('hidden');
+}
+limpiarLienzo();
+updateStatus();

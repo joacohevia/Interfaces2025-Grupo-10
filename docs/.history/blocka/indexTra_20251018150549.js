@@ -17,11 +17,11 @@ const temporizadorEl = document.getElementById('timer');
 
 // Niveles (ajusta rutas en tu carpeta images)
 const NIVELES_ORIGINALES = [
-  'level2.png',
-  'level3.png',
-  'level6.png',
-  'ChatGPT Image 10 oct 2025, 09_46_21.png',
-  'ChatGPT Image 10 oct 2025, 09_49_01.png'
+  'blocka/level2.png',
+  'blocka/level3.png',
+  'blocka/level6.png',
+  'blocka/ChatGPT Image 10 oct 2025, 09_46_21.png',
+  'blocka/ChatGPT Image 10 oct 2025, 09_49_01.png'
 ];
 let NIVELES = [];
 
@@ -31,7 +31,6 @@ function shuffleArray(array) {
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
-}
 
 // Dimensiones del canvas
 const ANCHO_CANVAS = 500;

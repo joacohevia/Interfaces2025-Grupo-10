@@ -1,16 +1,11 @@
-/* Fuente global para todo Blocka */
-.blocka-inicio-bg, .blocka-inicio-card, .blocka-inicio-title, .blocka-inicio-desc, .blocka-inicio-btn,
-.game-content, .game-main, .game-display, .game-board-display, .game-title, .game-header, .hud, .board-simulation, .game-area, .screenshot, .game-screenshots, .game-description, .carousel-nav, .comment, .comment-header, .comment-content, .comment-username, .comment-form, .form-title, .form-subtitle, .form-actions, .publish-btn, .cancel-btn {
-    font-family: 'Roboto', Helvetica, Arial, sans-serif;
-}
-
 /* --- Blocka pantalla inicial estilos --- */
 .blocka-inicio-bg {
     height: 420px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: none;
+    background: #ffffff;
+    box-shadow: 0 8px 32px #0008;
 }
 .blocka-inicio-card {
     background: none;
@@ -22,35 +17,32 @@
     min-height: 260px;
 }
 .blocka-inicio-title {
-    color: #ffffff;
+    color: #7fd6ff;
     font-size: 2.2rem;
     margin-bottom: 10px;
     letter-spacing: 1px;
-    text-shadow: 0 2px 8px #1a2233cc;
 }
 .blocka-inicio-desc {
-    color: #fff;
+    color: #e6eef8;
     font-size: 1.15rem;
     margin-bottom: 28px;
     text-align: center;
     max-width: 320px;
 }
 .blocka-inicio-btn {
-    background: #ff8c29;
-    color: #fff;
+    background: #2ea3ff;
+    color: #042036;
     border: none;
     padding: 12px 28px;
     border-radius: 8px;
     cursor: pointer;
     font-weight: 700;
     font-size: 1.1rem;
-    box-shadow: 0 2px 12px #ff8c2940;
-    transition: background 0.2s, color 0.2s;
-    letter-spacing: 0.5px;
+    box-shadow: 0 2px 12px #0003;
+    transition: background 0.2s;
 }
 .blocka-inicio-btn:hover {
-    background: #e67e22;
-    color: #fff;
+    background: #1c7fc2;
 }
 /* Estilos pagina juego */
 .game-content {
@@ -105,7 +97,7 @@
     height: 100%;
     object-fit: cover;
     border-radius: 32px;
-    box-shadow: 0 0 15px #576c95;
+    box-shadow: 0 0 15px #576C95;
 }
 /*ubicacion btn share y btn expandir*/
 .game-overlay-buttons {
@@ -132,12 +124,12 @@
 }
 
 .share-btn {
-    background: #ff8c29;
+    background: #FF8C29;
     color: black;
 }
 
 .share-btn:hover {
-    background: #e67e22;
+    background: #E67E22;
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
@@ -162,20 +154,20 @@
 @keyframes shareClickPulse {
     0% {
         transform: scale(1);
-        background: #ff8c29;
+        background: #FF8C29;
     }
     30% {
         transform: scale(1.15);
-        background: #ff6b1a;
+        background: #FF6B1A;
         box-shadow: 0 0 20px rgba(255, 140, 41, 0.6);
     }
     60% {
         transform: scale(0.95);
-        background: #e67e22;
+        background: #E67E22;
     }
     100% {
         transform: scale(1);
-        background: #ff8c29;
+        background: #FF8C29;
     }
 }
 
@@ -198,12 +190,12 @@
 }
 
 .expand-btn {
-    background: #ff8c29;
+    background: #FF8C29;
     color: black;
 }
 
 .expand-btn:hover {
-    background: #e67e22;
+    background: #E67E22;
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
@@ -216,7 +208,7 @@
     position: absolute;
     bottom: 50px;
     left: 0;
-    background: #ff8c29;
+    background: #FF8C29;
     border-radius: 25px;
     padding: 8px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
@@ -357,7 +349,7 @@
 }
 
 .screenshot-play-btn:hover {
-    background: #e67e22;
+    background: #E67E22;
     transform: translate(-50%, -50%) scale(1.2);
     box-shadow: 0 15px 40px rgba(230, 126, 34, 0.6);
 }
@@ -475,7 +467,7 @@
 }
 
 .carousel-nav:hover {
-    background: #e67e22;
+    background: #E67E22;
     transform: translateY(-50%) scale(1.1);
     box-shadow: 0 12px 35px rgba(230, 126, 34, 0.5);
 }
@@ -553,7 +545,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: #b8b8b8;
+    color: #B8B8B8;
     order: 2;
 }
 
@@ -586,6 +578,11 @@
     margin-bottom: 0.8rem;
 }
 
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
 
 .comment {
     display: flex;
@@ -629,7 +626,7 @@
 }
 
 .comment-time {
-    color: #b8b8b8;
+    color: #B8B8B8;
     font-size: 0.9rem;
 }
 
@@ -699,7 +696,7 @@
 }
 
 .publish-btn {
-    background: #ffa552;
+    background: #FFA552;
     color: black;
     border-radius: 32px;
     position: relative;
@@ -714,13 +711,13 @@
 }
 
 .publish-btn:hover {
-    background: #e67e22;
+    background: #E67E22;
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(255, 165, 82, 0.4);
 }
 
 .publish-btn.loading {
-    background: #ffa552;
+    background: #FFA552;
     pointer-events: none;
 }
 
@@ -731,7 +728,7 @@
     left: 0;
     height: 100%;
     width: 0%;
-    background: #ff8c29;
+    background: #FF8C29;
     border-radius: 32px;
     animation: fillBar 1.5s linear forwards;
     z-index: -1;

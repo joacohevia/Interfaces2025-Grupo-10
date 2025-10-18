@@ -149,7 +149,7 @@
             <div class="game-display">
                 <div class="game-window">
                     <!-- Simulación del juego -->
-                    <div class="game-board-display">
+                    <div class="game-board-display blocka-bg-space">
                         <!-- Pantalla inicial Blocka con fondo y estilos -->
                         <div class="board-simulation blocka-inicio-bg">
                            <section id="menu" class="screen blocka-inicio-card">
@@ -163,7 +163,6 @@
                                 var btn = document.getElementById('startGame');
                                 if (btn) {
                                     btn.addEventListener('click', function() {
-                                        // Redirigir directamente al juego, la lógica de imágenes aleatorias está en indexTra.js
                                         window.location.href = 'blocka/blocka-juego.html';
                                     });
                                 }
