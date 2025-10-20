@@ -11,6 +11,8 @@ const btnSiguienteNivel = document.getElementById('nextLevel');
 const recordEl = document.getElementById('record');
 const temporizadorEl = document.getElementById('timer');
 const btnVolverMenu = document.getElementById('backMenu');
+const btnAyuda = document.getElementById('btn-ayuda');
+
 
 // Niveles (ajusta rutas en tu carpeta images)
 const NIVELES_ORIGINALES = [
@@ -420,6 +422,7 @@ btnSiguienteNivel.addEventListener('click', () => {
     cargarNivel(NIVELES[indiceNivelActual]);
     btnSiguienteNivel.classList.add('hidden');
     reiniciarJuego();
+    actualizarVisibilidadBotonAyuda();
   }
 });
 
@@ -541,6 +544,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateStatus();
     estadoJuego = 'no_iniciado';
     actualizarBotonControl();
+    actualizarVisibilidadBotonAyuda();
   }
 });
 
@@ -582,6 +586,152 @@ function reiniciarJuego() {
   // Cambiar texto del botón
   estadoJuego = 'no_iniciado';
   actualizarBotonControl();
+  resetBtnHelp();
   updateStatus();
   render();
+}
+
+// LOGICA BTN AYUDA
+btnAyuda.addEventListener('click', (e) => {
+  e.preventDefault
+  if (btnAyuda.disabled) return; // ya usada en este nivel
+  console.log('¡Ayudita usada!');
+  btnAyuda.disabled = true;//evita múltiples usos
+  btnAyuda.classList.add('pulse');
+  btnAyuda.classList.add('usada');
+
+ //accion ayudita
+ helpAction();
+});
+
+//Logica de la ayuda-------------------------------------------------------------------------------------
+function helpAction() {
+  // Buscamos piezas que NO estén correctas (posición y rotación)
+  const misplaced = piezas.filter(p => !(p.x === p.tx && p.y === p.ty && (p.rot % 360) === 0));
+
+  if (misplaced.length === 0) {
+    // Ya está todo correcto
+    updateStatus();
+    return;
+  }
+
+  // Elegimos una pieza mal ubicada (aleatoria)
+  const pieceToPlace = misplaced[Math.floor(Math.random() * misplaced.length)];
+
+  // Coordenadas objetivo (posición correcta)
+  const targetX = pieceToPlace.tx;
+  const targetY = pieceToPlace.ty;
+
+  // Encuentra la pieza que actualmente ocupa el target (si existe)
+  const pieceAtTarget = piezas.find(p => p.x === targetX && p.y === targetY);
+
+  // Guardamos origen
+  const fromX = pieceToPlace.x;
+  const fromY = pieceToPlace.y;
+
+  // Si la pieza está en el slot correcto pero rotada --> solo corregimos rotación
+  if (fromX === targetX && fromY === targetY) {
+    pieceToPlace.rot = 0;
+    comprobarPiezaCorrecta(pieceToPlace); // actualizar contador
+    render();
+    updateStatus();
+    añadirSegundosTemporizador(5); // sumar 5s cuando se usa la ayudita
+    return;
+  }
+
+  // Si hay otra pieza en el target, la movemos al origen (swap de posiciones)
+  if (pieceAtTarget && pieceAtTarget !== pieceToPlace) {
+    pieceAtTarget.x = fromX;
+    pieceAtTarget.y = fromY;
+    // opcional: mantener la rotación actual de la pieza movida al origen
+    comprobarPiezaCorrecta(pieceAtTarget);
+  }
+
+  // Mover la pieza seleccionada a su posición correcta y corregir rotación
+  pieceToPlace.x = targetX;
+  pieceToPlace.y = targetY;
+  pieceToPlace.rot = 0;
+
+  // Comprobamos la(s) pieza(s) afectadas para actualizar contador
+  comprobarPiezaCorrecta(pieceToPlace);
+  // (pieceAtTarget ya fue comprobada más arriba si existía)
+
+  // Re-render y HUD
+  render();
+  updateStatus();
+
+  // Sumar 5 segundos al temporizador restante / visual
+  añadirSegundosTemporizador(5);
+}
+
+// FUNCION AUXILIAR: añade segundos al temporizador en curso (y reajusta timeout de tiempoMaximo)
+function añadirSegundosTemporizador(segundos) {
+  if (!tiempoInicio) {
+    // Si el temporizador no está iniciado, no hacemos nada
+    return;
+  }
+
+  // Reducimos tiempoInicio para que tiempoTranscurrido() disminuya => suma de tiempo visible
+  tiempoInicio -= segundos * 1000;
+
+  // Si hay un límite máximo (tiempoMaximo) debemos extender el timeout que provocaría perder por tiempo.
+  if (typeof tiempoMaximo === 'number' && tiempoMaximo > 0) {
+    // calculamos el nuevo restante y reprogramamos el timeout
+    if (intervaloTiempoMaximo) clearTimeout(intervaloTiempoMaximo);
+
+    const restante = Math.max(0, tiempoMaximo - tiempoTranscurrido()); // ya considera el nuevo tiempoInicio
+    intervaloTiempoMaximo = setTimeout(() => {
+      if (juegoEnCurso) {
+        perderNivelPorTiempo();
+      }
+    }, restante * 1000);
+  }
+
+  // Actualizar la UI del temporizador inmediatamente
+  actualizarTemporizador();
+}
+
+// --- PROTECCIÓN EN EL MOUSEDOWN: evitar rotar piezas ya correctas ---
+// Reemplaza la parte dentro de tu listener lienzo.addEventListener('mousedown', ...) donde obtienes la pieza
+// Añade la comprobación p._correct para evitar rotarla:
+lienzo.addEventListener('mousedown', (e) => {
+  if (estadoJuego === 'ganado' || estadoJuego === 'perdido') return;
+  if (estadoJuego === 'no_iniciado') {
+    iniciarJuego();
+  }
+  if (estadoJuego === 'jugando') {
+    const rect = lienzo.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const p = obtenerPiezaEn(x, y);
+    if (!p) return;
+    // NUEVA LÍNEA: si la pieza ya está marcada como correcta, no permitir rotarla
+    if (p._correct) return;
+
+    if (e.button === 0) {
+      p.rot = (p.rot + 270) % 360;
+    } else if (e.button === 2) {
+      p.rot = (p.rot + 90) % 360;
+    }
+    comprobarPiezaCorrecta(p);
+    render();
+  }
+});
+
+function resetBtnHelp() {
+  btnAyuda.disabled = false;
+  btnAyuda.classList.remove('usada');
+  btnAyuda.classList.remove('pulse');
+}
+
+// Función para controlar la visibilidad del botón de ayuda
+function actualizarVisibilidadBotonAyuda() {
+  if (btnAyuda) {
+    // El botón aparece a partir del nivel 3 (indiceNivelActual >= 2)
+    if (indiceNivelActual >= 2) {
+      btnAyuda.style.display = 'flex';
+    } else {
+      btnAyuda.style.display = 'none';
+    }
+  }
 }
