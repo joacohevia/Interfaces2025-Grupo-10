@@ -338,140 +338,6 @@
     transform: translateY(-5px);
 }
 
-/* RESPONSIVE -------------------------------------
-
-@media (max-width: 1199px) {
-    .games-categories {
-        padding: 0 1.5rem;
-    }
-    
-    .games-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    
-    
-    .games-grid .game-card-small:nth-child(n+4) {
-        display: none;//Ocultar las cards que no entren en el ancho, de la cuarta en adelante
-    .game-title {
-        text-align: center;
-    }
-
-}
-*/
-/* laptop
-@media (max-width: 1024px) {
-    
-    .hero-content {
-        margin : 1rem 1rem;
-        padding: 1rem 1rem;
-    
-    }
-    
-    .game-card.featured {
-        height: 50vh;
-    }
-    
-    .games-categories {
-        padding: 0 1rem;
-    }
-    
-    .games-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
-    }
-    
-    .category-section {
-        margin-bottom: 2.5rem;
-    }
-}
-*/
-@media (max-width: 768px) {
-    .main-content {
-        margin-top: 2.5rem;
-        margin-bottom: 2rem;
-        margin-right: 0.5rem;
-        margin-left: 0.5rem;
-    }
-    
-    .hero-content {
-        padding: 0 0.5rem;
-    }
-    
-    .carousel-image-container {
-        aspect-ratio: 16 / 5;
-    }
-    
-    .carousel-title {
-        font-size: 1rem;
-    }
-    
-    .play-icon img {
-        width: 40px;
-        height: 40px;
-    }
-    
-    .games-categories {
-        padding: 0 0.5rem;
-    }
-    
-    .games-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
-    
-    .category-section h1 {
-        font-size: 1rem;
-        margin-bottom: 1rem;
-        color: rgb(131, 131, 131);
-    }
-    
-    .category-section {
-        margin-bottom: 2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero-content {
-        padding: 0 0.25rem;
-    }
-    
-    .carousel-image-container {
-        aspect-ratio: 16 / 7;
-    }
-    
-    .carousel-title {
-        font-size: 0.95rem;
-        padding: 0 0.5rem;
-    }
-    
-    .play-icon img {
-        width: 36px;
-        height: 36px;
-    }
-    
-    .games-categories {
-        padding: 0 0.25rem;
-    }
-    
-    .games-grid {
-        grid-template-columns: repeat(2, 0.5fr);
-        column-gap: 0.8rem;
-    }
-    
-    .carousel-title {
-        font-size: 0.95rem;
-        margin-bottom: 0.8rem;
-    }
-    
-    .category-section {
-        margin-bottom: 1.5rem;
-    }
-    
-    .game-card-small .card-info h3 {
-        font-size: 0.9rem;
-    }
-}
-
 
 /* Contenedor del carrusel ----------------------*/
 .hero-content {
@@ -694,3 +560,95 @@
 }
 
 
+
+
+@media (max-width: 480px) {
+    .hero-content {
+        margin: 3rem 0 4rem 0;
+    }
+    
+    .carousel-image-container {
+        aspect-ratio: 16 / 7;
+    }
+    
+    .play-icon img {
+        width: 36px;
+        height: 36px;
+    }
+
+
+    /* Quitar scroll horizontal y mostrar grid vertical */
+    .games-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;  /* 2 columnas en móvil */
+        overflow-x: visible;
+        row-gap: 2rem;
+    }
+
+    .category-section {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .games-categories {
+        margin: 0 0.25rem 0 0.25rem;
+    }
+    
+
+    /* Ocultar botones de navegación del carrusel */
+    .carousel-btn {
+        display: none;
+    }
+
+    /* Ajustar el contenedor del carrusel */
+    .carousel-wrapper {
+        padding: 0;
+        overflow: visible;
+    }
+
+    .carousel {
+        overflow: visible;
+    }
+    
+    .carousel-title {
+        font-size: 0.95rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .carousel-title-categories {
+        margin-top: 3.5rem;
+    }
+
+    .carousel-title-categories, .game-title {
+        color: rgba(255, 255, 255, 0.849);
+    }
+    
+    .game-card-small .card-image-container {
+        width: 90%;
+        aspect-ratio: 14 / 9;
+    }
+
+    /* Ajustar las tarjetas de juegos */
+    .game-card-small {
+        width: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Eliminar clones de elementos */
+    .game-card-small.clone {
+        display: none;
+    }
+
+    .game-info {
+        width: 70%;
+    }
+
+    .game-title {
+        text-align: center;
+    }
+
+    
+}

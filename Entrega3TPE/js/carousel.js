@@ -2,6 +2,7 @@
 function updateButtonVisibility() {
     // Aquí puedes agregar lógica para mostrar/ocultar botones si lo necesitas
 }
+
 function initializeCarousel(wrapper) {
     console.log('Inicializando carrusel para wrapper:', wrapper);
 
@@ -106,20 +107,22 @@ function initializeCarousel(wrapper) {
 }
 
 // Función para inicializar todos los carruseles
-function initializeCarousels() {
-    console.log('Buscando carruseles para inicializar...');
-    const carouselWrappers = document.querySelectorAll('.carousel-wrapper');
-    console.log(`Encontrados ${carouselWrappers.length} carruseles`);
-    //${carouselWrappers.length} crea un NodeLists ya que hay varios elementos con esa clase
-    carouselWrappers.forEach((wrapper, index) => {
-      //wrapper pos actual, index numero de iteracion
-        console.log(`Inicializando carrusel #${index + 1}`);
-        // si no tiene id le asigna uno unico
-        if (!wrapper.id) {
-            wrapper.id = `carousel-${index + 1}`;
+    function initializeCarousels() {
+        if (window.screen.width > 768 && window.screen.height > 1000) {    
+            console.log('Buscando carruseles para inicializar...');
+            const carouselWrappers = document.querySelectorAll('.carousel-wrapper');
+            console.log(`Encontrados ${carouselWrappers.length} carruseles`);
+            //${carouselWrappers.length} crea un NodeLists ya que hay varios elementos con esa clase
+            carouselWrappers.forEach((wrapper, index) => {
+            //wrapper pos actual, index numero de iteracion
+                console.log(`Inicializando carrusel #${index + 1}`);
+                // si no tiene id le asigna uno unico
+                if (!wrapper.id) {
+                    wrapper.id = `carousel-${index + 1}`;
+                }
+                initializeCarousel(wrapper);
+            });
         }
-        initializeCarousel(wrapper);
-    });
 }
 
 // Exportar la función para uso global
