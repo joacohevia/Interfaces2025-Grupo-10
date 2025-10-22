@@ -457,9 +457,8 @@ function perderNivelPorTiempo() {
   document.body.appendChild(loseDiv);
   const btnVolver = document.getElementById('volverMenuBtnDerrota');
   btnVolver.onclick = () => {
-    const overlay = document.getElementById('derrota-tiempo');
-    if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
-    window.location.href = '../blocka.html';
+    document.body.removeChild(loseDiv);
+    window.location.assign('../blocka.html');
   };
   btnVolver.focus();
   // Oculta botones de control y siguiente nivel si están visibles

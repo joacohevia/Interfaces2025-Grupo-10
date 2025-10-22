@@ -435,37 +435,17 @@ function actualizarTemporizador() {
 
 // Mostrar mensaje de derrota por tiempo
 function perderNivelPorTiempo() {
-  // Overlay de derrota por tiempo agotado
-  const loseDiv = document.createElement('div');
-  loseDiv.id = 'derrota-tiempo';
-  loseDiv.style.position = 'fixed';
-  loseDiv.style.top = '0';
-  loseDiv.style.left = '0';
-  loseDiv.style.width = '100vw';
-  loseDiv.style.height = '100vh';
-  loseDiv.style.background = 'rgba(0,0,0,0.7)';
-  loseDiv.style.display = 'flex';
-  loseDiv.style.flexDirection = 'column';
-  loseDiv.style.justifyContent = 'center';
-  loseDiv.style.alignItems = 'center';
-  loseDiv.style.zIndex = '9999';
-  loseDiv.innerHTML = `
-    <h1 style="color: #fff; font-size: 2.5em; margin-bottom: 20px;">¡Tiempo agotado!</h1>
-    <div style="color: #fff; font-size: 1.2em; margin-bottom: 30px;">No lograste resolver el puzzle a tiempo.</div>
-    <button id="volverMenuBtnDerrota" style="font-size:1.5em;padding:10px 30px;margin-top:30px;position:relative;">Volver al menú</button>
-  `;
-  document.body.appendChild(loseDiv);
-  const btnVolver = document.getElementById('volverMenuBtnDerrota');
-  btnVolver.onclick = () => {
-    const overlay = document.getElementById('derrota-tiempo');
-    if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
-    window.location.href = '../blocka.html';
-  };
-  btnVolver.focus();
-  // Oculta botones de control y siguiente nivel si están visibles
-  if (btnGameControl) btnGameControl.style.display = 'none';
+  ctx.fillRect(0, ALTO_CANVAS / 2 - 60, ANCHO_CANVAS, 120);
+  ctx.fillStyle = '#ff4444';
+  ctx.font = '28px Arial';
+  ctx.textAlign = 'center';
+  ctx.fillText('¡Tiempo agotado!', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 - 10);
+  ctx.fillStyle = '#fff';
+  ctx.font = '16px Arial';
+  ctx.fillText('No lograste resolver el puzzle a tiempo.', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 20);
+  if (btnGameControl) btnGameControl.disabled = false;
   if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
-  if (btnVolverMenu) btnVolverMenu.style.display = 'none';
+  if (btnVolverMenu) btnVolverMenu.focus();
 }
 
 function tiempoTranscurrido() {
