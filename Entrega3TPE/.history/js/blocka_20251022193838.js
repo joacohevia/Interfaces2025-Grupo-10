@@ -8,11 +8,11 @@ function initGameLevel() {
   const gameDisplayContainer = document.getElementById('game-board-display');
   gameDisplayContainer.classList.add('canvas-active');
   gameDisplayContainer.classList.remove('bg-blocka');
-    // Eliminar cualquier límite de altura para que el canvas no se corte
-    gameDisplayContainer.style.height = 'auto';
-    gameDisplayContainer.style.maxHeight = 'none';
-    gameDisplayContainer.style.overflow = 'visible';
-  gameDisplayContainer.style.background = 'none';
+  // Ajustar el alto y estilos del fondo al tamaño del canvas, sin cortes arriba
+  gameDisplayContainer.style.height = lienzo.height + 'px';
+  gameDisplayContainer.style.minHeight = lienzo.height + 'px';
+  gameDisplayContainer.style.padding = '0';
+  gameDisplayContainer.style.margin = '0';
   setSubdivisions(selectedSubdivisions);
   cargarNivel(NIVELES[indiceNivelActual]);
   estadoJuego = 'no_iniciado';
@@ -26,8 +26,8 @@ function startThumbnailSelection(subdivisions) {
   const gameDisplayContainer = document.getElementById('game-board-display');
   gameDisplayContainer.classList.remove('canvas-active');
   gameDisplayContainer.classList.remove('bg-blocka');
-  // Restaurar el background al valor por defecto
-  gameDisplayContainer.style.background = '';
+  // Restaurar el alto del fondo al valor por defecto
+  gameDisplayContainer.style.height = '';
   selectedSubdivisions = subdivisions;
 
   // Carrusel contenedor
@@ -93,8 +93,8 @@ function showSubdivisionSelector() {
   const gameDisplayContainer = document.getElementById('game-board-display');
   gameDisplayContainer.classList.remove('canvas-active');
   gameDisplayContainer.classList.add('bg-blocka');
-  // Restaurar el background al valor por defecto
-  gameDisplayContainer.style.background = '';
+  // Restaurar el alto del fondo al valor por defecto
+  gameDisplayContainer.style.height = '';
 
   const title = document.createElement('h2');
   title.textContent = 'Selecciona subdivisión de piezas:';
@@ -133,8 +133,8 @@ function showStartButton() {
   const gameDisplayContainer = document.getElementById('game-board-display');
   gameDisplayContainer.classList.remove('canvas-active');
   gameDisplayContainer.classList.add('bg-blocka');
-  // Restaurar el background al valor por defecto
-  gameDisplayContainer.style.background = '';
+  // Restaurar el alto del fondo al valor por defecto
+  gameDisplayContainer.style.height = '';
   const startBtn = document.createElement('button');
   startBtn.textContent = 'JUGAR';
   startBtn.className = 'btn-jugar';

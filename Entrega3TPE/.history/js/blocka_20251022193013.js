@@ -8,11 +8,6 @@ function initGameLevel() {
   const gameDisplayContainer = document.getElementById('game-board-display');
   gameDisplayContainer.classList.add('canvas-active');
   gameDisplayContainer.classList.remove('bg-blocka');
-    // Eliminar cualquier límite de altura para que el canvas no se corte
-    gameDisplayContainer.style.height = 'auto';
-    gameDisplayContainer.style.maxHeight = 'none';
-    gameDisplayContainer.style.overflow = 'visible';
-  gameDisplayContainer.style.background = 'none';
   setSubdivisions(selectedSubdivisions);
   cargarNivel(NIVELES[indiceNivelActual]);
   estadoJuego = 'no_iniciado';
@@ -26,8 +21,6 @@ function startThumbnailSelection(subdivisions) {
   const gameDisplayContainer = document.getElementById('game-board-display');
   gameDisplayContainer.classList.remove('canvas-active');
   gameDisplayContainer.classList.remove('bg-blocka');
-  // Restaurar el background al valor por defecto
-  gameDisplayContainer.style.background = '';
   selectedSubdivisions = subdivisions;
 
   // Carrusel contenedor
@@ -45,8 +38,8 @@ function startThumbnailSelection(subdivisions) {
     const img = document.createElement('img');
     img.src = url;
     img.className = 'thumbnail';
-  img.style.width = '160px';
-  img.style.height = '160px';
+    img.style.width = '80px';
+    img.style.height = '80px';
     img.style.objectFit = 'cover';
     img.dataset.idx = idx;
     carousel.appendChild(img);
@@ -54,38 +47,22 @@ function startThumbnailSelection(subdivisions) {
   });
   gameDisplayContainer.appendChild(carousel);
 
-  // Animación tipo slot: resalta secuencialmente cada miniatura
-  const winnerIdx = Math.floor(Math.random() * NIVELES.length);
-  let currentIdx = 0;
-  let rounds = 3; // cantidad de vueltas completas antes de detenerse
-  let totalSteps = rounds * thumbnails.length + winnerIdx;
-  let step = 0;
-  let highlightClass = 'slot-highlight';
+  // Animación tipo ruleta
+  carousel.classList.add('rolling');
 
-  function highlightNext() {
+  // Selección aleatoria
+  const winnerIdx = Math.floor(Math.random() * NIVELES.length);
+
+  setTimeout(() => {
+    carousel.classList.remove('rolling');
     thumbnails.forEach((img, idx) => {
-      img.classList.toggle(highlightClass, idx === currentIdx);
+      img.classList.toggle('selected-winner', idx === winnerIdx);
     });
-    step++;
-    if (step <= totalSteps) {
-      currentIdx = (currentIdx + 1) % thumbnails.length;
-      // velocidad: más rápido al principio, más lento al final
-      let base = 80;
-      let extra = Math.min(180, Math.floor((step / totalSteps) * 300));
-      setTimeout(highlightNext, base + extra);
-    } else {
-      // Termina en el ganador
-      thumbnails.forEach((img, idx) => {
-        img.classList.remove(highlightClass);
-        img.classList.toggle('selected-winner', idx === winnerIdx);
-      });
-      indiceNivelActual = winnerIdx;
-      setTimeout(() => {
-        initGameLevel();
-      }, 1000);
-    }
-  }
-  highlightNext();
+    indiceNivelActual = winnerIdx;
+    setTimeout(() => {
+      initGameLevel();
+    }, 1000);
+  }, 4000);
 }
 // Muestra selector de subdivisiones (4, 6, 8 piezas)
 function showSubdivisionSelector() {
@@ -93,8 +70,6 @@ function showSubdivisionSelector() {
   const gameDisplayContainer = document.getElementById('game-board-display');
   gameDisplayContainer.classList.remove('canvas-active');
   gameDisplayContainer.classList.add('bg-blocka');
-  // Restaurar el background al valor por defecto
-  gameDisplayContainer.style.background = '';
 
   const title = document.createElement('h2');
   title.textContent = 'Selecciona subdivisión de piezas:';
@@ -133,8 +108,6 @@ function showStartButton() {
   const gameDisplayContainer = document.getElementById('game-board-display');
   gameDisplayContainer.classList.remove('canvas-active');
   gameDisplayContainer.classList.add('bg-blocka');
-  // Restaurar el background al valor por defecto
-  gameDisplayContainer.style.background = '';
   const startBtn = document.createElement('button');
   startBtn.textContent = 'JUGAR';
   startBtn.className = 'btn-jugar';

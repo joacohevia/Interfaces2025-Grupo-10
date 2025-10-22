@@ -8,10 +8,7 @@ function initGameLevel() {
   const gameDisplayContainer = document.getElementById('game-board-display');
   gameDisplayContainer.classList.add('canvas-active');
   gameDisplayContainer.classList.remove('bg-blocka');
-    // Eliminar cualquier límite de altura para que el canvas no se corte
-    gameDisplayContainer.style.height = 'auto';
-    gameDisplayContainer.style.maxHeight = 'none';
-    gameDisplayContainer.style.overflow = 'visible';
+  // Quitar el background del game-board-display
   gameDisplayContainer.style.background = 'none';
   setSubdivisions(selectedSubdivisions);
   cargarNivel(NIVELES[indiceNivelActual]);

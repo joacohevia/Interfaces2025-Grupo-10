@@ -8,11 +8,6 @@ function initGameLevel() {
   const gameDisplayContainer = document.getElementById('game-board-display');
   gameDisplayContainer.classList.add('canvas-active');
   gameDisplayContainer.classList.remove('bg-blocka');
-    // Eliminar cualquier límite de altura para que el canvas no se corte
-    gameDisplayContainer.style.height = 'auto';
-    gameDisplayContainer.style.maxHeight = 'none';
-    gameDisplayContainer.style.overflow = 'visible';
-  gameDisplayContainer.style.background = 'none';
   setSubdivisions(selectedSubdivisions);
   cargarNivel(NIVELES[indiceNivelActual]);
   estadoJuego = 'no_iniciado';
@@ -26,8 +21,6 @@ function startThumbnailSelection(subdivisions) {
   const gameDisplayContainer = document.getElementById('game-board-display');
   gameDisplayContainer.classList.remove('canvas-active');
   gameDisplayContainer.classList.remove('bg-blocka');
-  // Restaurar el background al valor por defecto
-  gameDisplayContainer.style.background = '';
   selectedSubdivisions = subdivisions;
 
   // Carrusel contenedor
@@ -93,8 +86,6 @@ function showSubdivisionSelector() {
   const gameDisplayContainer = document.getElementById('game-board-display');
   gameDisplayContainer.classList.remove('canvas-active');
   gameDisplayContainer.classList.add('bg-blocka');
-  // Restaurar el background al valor por defecto
-  gameDisplayContainer.style.background = '';
 
   const title = document.createElement('h2');
   title.textContent = 'Selecciona subdivisión de piezas:';
@@ -133,8 +124,6 @@ function showStartButton() {
   const gameDisplayContainer = document.getElementById('game-board-display');
   gameDisplayContainer.classList.remove('canvas-active');
   gameDisplayContainer.classList.add('bg-blocka');
-  // Restaurar el background al valor por defecto
-  gameDisplayContainer.style.background = '';
   const startBtn = document.createElement('button');
   startBtn.textContent = 'JUGAR';
   startBtn.className = 'btn-jugar';
