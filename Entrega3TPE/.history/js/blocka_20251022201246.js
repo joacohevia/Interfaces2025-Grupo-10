@@ -583,6 +583,33 @@ function obtenerPiezaEn(px, py) {
 }
 
 
+lienzo.addEventListener('mousedown', (e) => {
+  // Si el juego está ganado o perdido, no hacer nada (tablero bloqueado)
+  if (estadoJuego === 'ganado' || estadoJuego === 'perdido') return;
+  // Si el juego no ha iniciado
+  if (estadoJuego === 'no_iniciado') {
+    iniciarJuego();
+    // Procesar el primer clic como movimiento
+  }
+  // Si el juego está en curso
+  if (estadoJuego === 'jugando') {
+    const rect = lienzo.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const p = obtenerPiezaEn(x, y);
+    if (!p) return;
+    // Si la pieza ya está correcta, no permitir rotarla
+    if (p._correct) return;
+    
+    if (e.button === 0) {
+      p.rot = (p.rot + 270) % 360;
+    } else if (e.button === 2) {
+      p.rot = (p.rot + 90) % 360;
+    }
+    comprobarPiezaCorrecta(p);
+    render();
+  }
+});
 
 // LÓGICA DE VERIFICACIÓN Y HUD
 
