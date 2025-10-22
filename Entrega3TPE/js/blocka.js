@@ -1,7 +1,4 @@
-// juego.js - Blocka para canvas 500x500, piezas 2x2, rotación con click izquierdo/derecho
-
-// Referencias DOM
-
+'use strict';
 const lienzo = document.getElementById('gameCanvas');
 const ctx = lienzo.getContext('2d');
 const etiquetaNivel = document.getElementById('levelLabel');
@@ -13,18 +10,17 @@ const temporizadorEl = document.getElementById('timer');
 const btnVolverMenu = document.getElementById('backMenu');
 const btnAyuda = document.getElementById('btn-ayuda');
 
-
 // Niveles (ajusta rutas en tu carpeta images)
 const NIVELES_ORIGINALES = [
-  'level2.png',
-  'level3.png',
-  'level6.png',
-  'level1.jpg',
-  'ChatGPT Image 10 oct 2025, 09_46_21.png',
-  'ChatGPT Image 10 oct 2025, 09_49_01.png'
+  'assets/img/imgBlocka/ChatGPT Image 10 oct 2025, 09_46_21.png',
+  'assets/img/imgBlocka/ChatGPT Image 10 oct 2025, 09_49_01.png',
+  'assets/img/imgBlocka/level1.png',
+  'assets/img/imgBlocka/level2.png',
+  'assets/img/imgBlocka/level3.png',
+  'assets/img/imgBlocka/level6.png',
 ];
+console.log('[Blocka] Niveles originales:', NIVELES_ORIGINALES);
 let NIVELES = [];
-
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -56,6 +52,7 @@ let intervaloTemporizador = null;
 let recordsPorNivel = {};
 let tiempoMaximo = null;
 let intervaloTiempoMaximo = null;
+let juegoEnCurso = false;
 
 // Estados posibles: 'no_iniciado', 'jugando', 'ganado', 'perdido'
 let estadoJuego = 'no_iniciado';
@@ -113,6 +110,8 @@ function actualizarTemporizador() {
   } else {
     temporizadorEl.textContent = `Tiempo: ${texto}`;
   }
+}
+
 // Mostrar mensaje de derrota por tiempo
 function perderNivelPorTiempo() {
   detenerTemporizador();
@@ -130,7 +129,6 @@ function perderNivelPorTiempo() {
   if (btnGameControl) btnGameControl.disabled = false;
   if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
   if (btnVolverMenu) btnVolverMenu.focus();
-}
 }
 
 function tiempoTranscurrido() {
@@ -213,7 +211,7 @@ function cargarNivel(src) {
     ctx.fillStyle = '#fff';
     ctx.font = '14px Arial';
     ctx.fillText('¿La imagen existe en la carpeta?', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 60);
-    ctx.fillText('Ruta esperada: blocka/' + src, ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 80);
+    ctx.fillText('Ruta completa: ' + src, ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 80);
   };
 }
 
@@ -314,6 +312,9 @@ lienzo.addEventListener('mousedown', (e) => {
     const y = e.clientY - rect.top;
     const p = obtenerPiezaEn(x, y);
     if (!p) return;
+    // Si la pieza ya está correcta, no permitir rotarla
+    if (p._correct) return;
+    
     if (e.button === 0) {
       p.rot = (p.rot + 270) % 360;
     } else if (e.button === 2) {
@@ -525,11 +526,11 @@ function showWin() {
   ctx.fillStyle = '#d4ffd9';
   ctx.font = '26px Arial';
   ctx.textAlign = 'center';
-  ctx.fillText('¡Completaste el puzzle!', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 - 6);
+  ctx.fillText('¡Completaste el nivel!', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 - 6);
 
   ctx.fillStyle = '#ffffff';
   ctx.font = '14px Roboto';
-  ctx.fillText('Presiona Reiniciar o Volver al menú', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 20);
+  ctx.fillText('Presiona siguiente nivel o reiniciar', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 20);
 }
 
 
@@ -691,32 +692,7 @@ function añadirSegundosTemporizador(segundos) {
   actualizarTemporizador();
 }
 
-// --- PROTECCIÓN EN EL MOUSEDOWN: evitar rotar piezas ya correctas ---
-// Reemplaza la parte dentro de tu listener lienzo.addEventListener('mousedown', ...) donde obtienes la pieza
-// Añade la comprobación p._correct para evitar rotarla:
-lienzo.addEventListener('mousedown', (e) => {
-  if (estadoJuego === 'ganado' || estadoJuego === 'perdido') return;
-  if (estadoJuego === 'no_iniciado') {
-    iniciarJuego();
-  }
-  if (estadoJuego === 'jugando') {
-    const rect = lienzo.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const p = obtenerPiezaEn(x, y);
-    if (!p) return;
-    // NUEVA LÍNEA: si la pieza ya está marcada como correcta, no permitir rotarla
-    if (p._correct) return;
 
-    if (e.button === 0) {
-      p.rot = (p.rot + 270) % 360;
-    } else if (e.button === 2) {
-      p.rot = (p.rot + 90) % 360;
-    }
-    comprobarPiezaCorrecta(p);
-    render();
-  }
-});
 
 function resetBtnHelp() {
   btnAyuda.disabled = false;
@@ -724,7 +700,7 @@ function resetBtnHelp() {
   btnAyuda.classList.remove('pulse');
 }
 
-// Función para controlar la visibilidad del botón de ayuda
+// Función para controlar la visibilidad del botón de ayuda--------------------------------
 function actualizarVisibilidadBotonAyuda() {
   if (btnAyuda) {
     // El botón aparece a partir del nivel 3 (indiceNivelActual >= 2)

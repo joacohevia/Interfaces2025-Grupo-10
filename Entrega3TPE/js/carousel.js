@@ -108,7 +108,7 @@ function initializeCarousel(wrapper) {
 
 // Función para inicializar todos los carruseles
     function initializeCarousels() {
-        if (window.screen.width > 768 && window.screen.height > 1000) {    
+        if (window.screen.width > 768 && window.screen.height > 695) {    
             console.log('Buscando carruseles para inicializar...');
             const carouselWrappers = document.querySelectorAll('.carousel-wrapper');
             console.log(`Encontrados ${carouselWrappers.length} carruseles`);

@@ -183,8 +183,6 @@
     gap: 1rem; /* Espaciado entre los elementos */
     overflow-x: auto; /* Habilitar el desplazamiento horizontal */
     scroll-behavior: smooth; /* Desplazamiento suave */
-    scrollbar-width: none; /* Firefox */
-
 }
 
 .game-card-small {
@@ -546,18 +544,6 @@
   background: rgba(255, 255, 255, 0.6);
 }
 
-/* Asegurar que los elementos del grid tengan un ancho fijo y no se compriman */
-.games-grid {
-    display: flex; /* Asegurar que los elementos estén alineados horizontalmente */
-    gap: 1rem; /* Espaciado entre los elementos */
-    overflow-x: auto; /* Habilitar el desplazamiento horizontal */
-    scroll-behavior: smooth; /* Desplazamiento suave */
-}
-
-.game-card-small {
-    flex-shrink: 0; /* Evitar que los elementos se compriman */
-    width: 200px; /* Ancho fijo para cada tarjeta */
-}
 
 
 

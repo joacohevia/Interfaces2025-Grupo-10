@@ -331,19 +331,19 @@ function displayGames(games) {
     
     // Agregar PegSolitaire y Blocka como juegos fijos de lógica
     const pegSolitaireGame = {
-        id: 'peg-solitaire',
+        id: 1,
         name: 'Peg Solitaire',
         background_image: 'assets/img/portadaPeg.png',
-        rating: 4.5,
+        rating: 4.9,
         genres: [{ name: 'Puzzle' }],
         esPremium: false, // Juego gratuito
         released: '2024-01-01'
     };
     const blockaGame = {
-        id: 'blocka',
+        id: 2,
         name: 'Blocka',
         background_image: 'assets/img/blocka.png',
-        rating: 4.5,
+        rating: 4.9,
         genres: [{ name: 'Puzzle' }],
         esPremium: false,
         released: '2024-01-01'
@@ -367,12 +367,17 @@ function displayGames(games) {
             // Asegurar que Blocka y PegSolitaire estén siempre al principio
             logicGamesFromAPI = [pegSolitaireGame, blockaGame, ...logicGamesFromAPI.filter(game => {
                 const name = game.name ? game.name.toLowerCase() : '';
-                return name !== 'peg solitaire' && name !== 'blocka';
+                return name !== 'Peg Solitaire' && name !== 'Blocka';
             })];
             // Limitar a 10 juegos
+            //console.log('LOGIC GAMES - primeros 5 objetos (detalle):', logicGamesFromAPI.slice(0,5));
+            //console.table(logicGamesFromAPI.slice(0,10), ['id','name','rating','background_image']);
             return logicGamesFromAPI.slice(0, 10);
         })(),
-        suggestedGames: games.filter(game => game.rating && game.rating >= 4.0).sort((a, b) => b.rating - a.rating).slice(0, 10),
+        suggestedGames: (() => {
+            const suggested = games.filter(game => game.rating && game.rating >= 4.0).sort((a, b) => b.rating - a.rating).slice(0, 8);
+            return [pegSolitaireGame, blockaGame, ...suggested];
+        })(),
         classicGames: games.filter(game => {
             if (!game.released) return false;
             const year = new Date(game.released).getFullYear();
@@ -510,7 +515,7 @@ function renderGameCategory(categoryId, games) {
     }
 
     // Nuevos registros para depuración
-    console.log(`Renderizando categoría: ${categoryId}`);
+    //console.log(`Renderizando categoría: ${categoryId}`);
     console.log(`Juegos en la categoría ${categoryId}:`, games);
 
     games.forEach(game => {
@@ -544,7 +549,7 @@ function createGameCard(game) {
     `;
 
     // Agregar eventos de click según el tipo de juego
-    console.log(`[GameCard] ${game.name} esPremium:`, game.esPremium);
+    //console.log(`[GameCard] ${game.name} esPremium:`, game.esPremium);
     if (game.name === 'Blocka') {
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
