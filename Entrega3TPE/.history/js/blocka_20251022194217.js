@@ -17,10 +17,6 @@ function initGameLevel() {
   gameDisplayContainer.style.overflow = 'visible';
   gameDisplayContainer.style.background = 'none';
   setSubdivisions(selectedSubdivisions);
-  // Mostrar el número de nivel actual
-  if (etiquetaNivel) {
-    etiquetaNivel.textContent = `Nivel: ${indiceNivelActual + 1}`;
-  }
   // Solo cargar el nivel si el canvas y contexto existen
   if (lienzo && ctx) {
     cargarNivel(NIVELES[indiceNivelActual]);
@@ -175,39 +171,8 @@ function ensureGameUI() {
     lienzo.width = 500;
     lienzo.height = 500;
     lienzo.tabIndex = 0;
-  gameArea.appendChild(lienzo);
-  ctx = lienzo.getContext('2d');
-  // Registrar eventos de mouse para rotar piezas
-  lienzo.addEventListener('mousedown', (e) => {
-    // Si el juego está ganado o perdido, no hacer nada (tablero bloqueado)
-    if (estadoJuego === 'ganado' || estadoJuego === 'perdido') return;
-    // Si el juego no ha iniciado
-    if (estadoJuego === 'no_iniciado') {
-      iniciarJuego();
-      // Procesar el primer clic como movimiento
-    }
-    // Si el juego está en curso
-    if (estadoJuego === 'jugando') {
-      const rect = lienzo.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const p = obtenerPiezaEn(x, y);
-      if (!p) return;
-      // Si la pieza ya está correcta, no permitir rotarla
-      if (p._correct) return;
-      if (e.button === 0) {
-        // Click izquierdo: girar a la izquierda
-        p.rot = (p.rot + 270) % 360;
-      } else if (e.button === 2) {
-        // Click derecho: girar a la derecha
-        p.rot = (p.rot + 90) % 360;
-      }
-      comprobarPiezaCorrecta(p);
-      render();
-    }
-  });
-  // Permitir el uso de botón derecho en el canvas
-  lienzo.addEventListener('contextmenu', e => e.preventDefault());
+    gameArea.appendChild(lienzo);
+    ctx = lienzo.getContext('2d');
     // HUD
     const hud = document.createElement('div');
     hud.className = 'hud';
@@ -250,9 +215,6 @@ function enableCanvasContextMenu() {
     }
 }
 
-// Variables globales para elementos UI
-let lienzo, ctx, etiquetaNivel, estadoEl, temporizadorEl, btnControl, recordEl, btnSiguienteNivel, btnAyuda;
-
 'use strict';
 // Niveles (ajusta rutas en carpeta images)
 const NIVELES_ORIGINALES = [
@@ -277,30 +239,11 @@ function shuffleArray(array) {
 const ANCHO_CANVAS = 500;
 const ALTO_CANVAS = 500;
 
-// Configuración de piezas (por subdivisión)
-let FILAS = 2;
-let COLUMNAS = 2;
-let ANCHO_PIEZA = ANCHO_CANVAS / COLUMNAS;
-let ALTO_PIEZA = ALTO_CANVAS / FILAS;
-
-// Ajusta la cantidad de filas y columnas según subdivisión elegida
-function setSubdivisions(subdiv) {
-  if (subdiv === 4) {
-    FILAS = 2;
-    COLUMNAS = 2;
-  } else if (subdiv === 6) {
-    FILAS = 2;
-    COLUMNAS = 3;
-  } else if (subdiv === 8) {
-    FILAS = 2;
-    COLUMNAS = 4;
-  } else {
-    FILAS = 2;
-    COLUMNAS = 2;
-  }
-  ANCHO_PIEZA = ANCHO_CANVAS / COLUMNAS;
-  ALTO_PIEZA = ALTO_CANVAS / FILAS;
-}
+// Configuración de piezas (2x2)
+const FILAS = 2;
+const COLUMNAS = 2;
+const ANCHO_PIEZA = ANCHO_CANVAS / COLUMNAS;
+const ALTO_PIEZA = ALTO_CANVAS / FILAS;
 
 // Estado del juego
 

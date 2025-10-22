@@ -17,10 +17,6 @@ function initGameLevel() {
   gameDisplayContainer.style.overflow = 'visible';
   gameDisplayContainer.style.background = 'none';
   setSubdivisions(selectedSubdivisions);
-  // Mostrar el número de nivel actual
-  if (etiquetaNivel) {
-    etiquetaNivel.textContent = `Nivel: ${indiceNivelActual + 1}`;
-  }
   // Solo cargar el nivel si el canvas y contexto existen
   if (lienzo && ctx) {
     cargarNivel(NIVELES[indiceNivelActual]);
