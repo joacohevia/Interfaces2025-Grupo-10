@@ -854,11 +854,6 @@ function searchGames(query) {
         } else {
             displayGames(getFallbackGames());
         }
-        // Asegurarse de mostrar todas las categorías
-        const categorySections = document.querySelectorAll('.category-section');
-        categorySections.forEach(section => {
-            section.style.display = 'block';
-        });
         return;
     }
 
@@ -884,20 +879,18 @@ function searchGames(query) {
         }
     });
 
-    // Ocultar categorías solo si hay texto en el input
-    if (query.trim() !== '') {
-        const categorySections = document.querySelectorAll('.category-section');
-        categorySections.forEach(section => {
-            const visibleGames = section.querySelectorAll('.card-image-container');
-            let hasVisible = false;
-            visibleGames.forEach(card => {
-                if (card.parentElement.style.display !== 'none') {
-                    hasVisible = true;
-                }
-            });
-            section.style.display = hasVisible ? 'block' : 'none';
+    // Ocultar categorías que no tengan juegos visibles
+    const categorySections = document.querySelectorAll('.category-section');
+    categorySections.forEach(section => {
+        const visibleGames = section.querySelectorAll('.card-image-container');
+        let hasVisible = false;
+        visibleGames.forEach(card => {
+            if (card.parentElement.style.display !== 'none') {
+                hasVisible = true;
+            }
         });
-    }
+        section.style.display = hasVisible ? 'block' : 'none';
+    });
 
     // Deslizar hacia el primer juego encontrado solo si hay una búsqueda activa
     if (firstMatch && query.trim() !== '') {

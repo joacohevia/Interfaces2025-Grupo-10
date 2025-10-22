@@ -854,11 +854,6 @@ function searchGames(query) {
         } else {
             displayGames(getFallbackGames());
         }
-        // Asegurarse de mostrar todas las categorías
-        const categorySections = document.querySelectorAll('.category-section');
-        categorySections.forEach(section => {
-            section.style.display = 'block';
-        });
         return;
     }
 

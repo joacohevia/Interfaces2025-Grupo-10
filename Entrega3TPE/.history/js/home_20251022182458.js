@@ -848,16 +848,10 @@ function searchGames(query) {
     // Variable para almacenar el primer juego encontrado
     // Solo buscar si hay texto
     if (query.trim() === '') {
-        // Cuando el input está vacío, recargar todas las categorías y juegos
-        if (window.currentGamesData) {
-            displayGames(window.currentGamesData);
-        } else {
-            displayGames(getFallbackGames());
-        }
-        // Asegurarse de mostrar todas las categorías
-        const categorySections = document.querySelectorAll('.category-section');
-        categorySections.forEach(section => {
-            section.style.display = 'block';
+        allGames.forEach(gameContainer => {
+            if (gameContainer.parentElement) {
+                gameContainer.parentElement.style.display = 'block';
+            }
         });
         return;
     }
@@ -884,20 +878,18 @@ function searchGames(query) {
         }
     });
 
-    // Ocultar categorías solo si hay texto en el input
-    if (query.trim() !== '') {
-        const categorySections = document.querySelectorAll('.category-section');
-        categorySections.forEach(section => {
-            const visibleGames = section.querySelectorAll('.card-image-container');
-            let hasVisible = false;
-            visibleGames.forEach(card => {
-                if (card.parentElement.style.display !== 'none') {
-                    hasVisible = true;
-                }
-            });
-            section.style.display = hasVisible ? 'block' : 'none';
+    // Ocultar categorías que no tengan juegos visibles
+    const categorySections = document.querySelectorAll('.category-section');
+    categorySections.forEach(section => {
+        const visibleGames = section.querySelectorAll('.card-image-container');
+        let hasVisible = false;
+        visibleGames.forEach(card => {
+            if (card.parentElement.style.display !== 'none') {
+                hasVisible = true;
+            }
         });
-    }
+        section.style.display = hasVisible ? 'block' : 'none';
+    });
 
     // Deslizar hacia el primer juego encontrado solo si hay una búsqueda activa
     if (firstMatch && query.trim() !== '') {
