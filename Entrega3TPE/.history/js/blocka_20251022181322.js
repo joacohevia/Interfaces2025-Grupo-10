@@ -547,74 +547,7 @@ document.addEventListener('DOMContentLoaded', function() {
     actualizarBotonControl();
     actualizarVisibilidadBotonAyuda();
   }
-  // Lógica de redirección hamburguesa igual a juego.js
-  const burgerItems = document.querySelectorAll('.dropdown-item');
-  const categoryMap = {
-    'Acción': 'section-accion',
-    'Aventura': 'section-aventura',
-    'Carreras': 'section-carreras',
-    'Clásicos': 'section-classicGames',
-    'Cocina': 'section-cocina',
-    'Deportes': 'section-deportes',
-    'Escape': 'section-escape',
-    'Estrategia': 'section-strategyGames',
-    'Guerra': 'section-guerra',
-    'Habilidad': 'section-habilidad',
-    'Infantiles': 'section-infantiles',
-    'Multijugador': 'section-multiplayerGames',
-    'Plataformas': 'section-plataformas',
-    'Puzzle': 'section-puzzle',
-    'Terror': 'section-terror'
-  };
-  burgerItems.forEach(item => {
-    item.addEventListener('click', function(e) {
-      e.preventDefault();
-      const categoryText = this.querySelector('span').textContent.trim();
-      const targetId = categoryMap[categoryText];
-      if (targetId) {
-        // Si estamos en otra página, ir al home primero
-        if (window.location.pathname.includes('blocka.html') || 
-            window.location.pathname.includes('login.html') || 
-            window.location.pathname.includes('registro.html')) {
-          sessionStorage.setItem('scrollTarget', targetId);
-          window.location.href = './index.html';
-          return;
-        }
-        // Si estamos en el home, hacer scroll directo
-        scrollToCategory(targetId);
-      }
-      // Cerrar el menú (opcional, si tienes función)
-      // closeBurgerMenu();
-    });
-  });
-  // Verificar si hay un scroll pendiente al cargar la página
-  checkPendingScroll();
 });
-
-function scrollToCategory(targetId) {
-  const targetElement = document.getElementById(targetId);
-  if (targetElement) {
-    const categorySection = targetElement.closest('.category-section');
-    if (categorySection) {
-      const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
-      const offset = categorySection.offsetTop - headerHeight - 20;
-      window.scrollTo({
-        top: offset,
-        behavior: 'smooth'
-      });
-    }
-  }
-}
-
-function checkPendingScroll() {
-  const pendingScroll = sessionStorage.getItem('scrollTarget');
-  if (pendingScroll) {
-    sessionStorage.removeItem('scrollTarget');
-    setTimeout(() => {
-      scrollToCategory(pendingScroll);
-    }, 1500);
-  }
-}
 
 // Función para actualizar el texto del botón de control
 function actualizarBotonControl() {

@@ -535,7 +535,7 @@ function showWin() {
 
 
 // Inicialización automática para blocka-juego.html
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
   if (lienzo && etiquetaNivel && estadoEl && temporizadorEl && recordEl) {
     NIVELES = shuffleArray(NIVELES_ORIGINALES.slice());
     indiceNivelActual = 0;
@@ -547,7 +547,90 @@ document.addEventListener('DOMContentLoaded', function() {
     actualizarBotonControl();
     actualizarVisibilidadBotonAyuda();
   }
-  // Lógica de redirección hamburguesa igual a juego.js
+  // Lógica literal copiada de juego.js
+  setupBurgerMenu();
+  setupUserMenu();
+  setupBurgerMenuNavigation();
+});
+
+function setupBurgerMenu() {
+  const burgerMenu = document.getElementById('burgerMenu');
+  const burgerDropdown = document.getElementById('burgerDropdown');
+  if (burgerMenu && burgerDropdown) {
+    burgerMenu.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleBurgerMenu();
+    });
+    document.addEventListener('click', function(e) {
+      if (!burgerMenu.contains(e.target) && !burgerDropdown.contains(e.target)) {
+        closeBurgerMenu();
+      }
+    });
+  }
+}
+
+function toggleBurgerMenu() {
+  const burgerDropdown = document.getElementById('burgerDropdown');
+  if (burgerDropdown.classList.contains('show')) {
+    closeBurgerMenu();
+  } else {
+    openBurgerMenu();
+  }
+}
+
+function openBurgerMenu() {
+  const burgerDropdown = document.getElementById('burgerDropdown');
+  burgerDropdown.classList.add('show');
+}
+
+function closeBurgerMenu() {
+  const burgerDropdown = document.getElementById('burgerDropdown');
+  burgerDropdown.classList.remove('show');
+}
+
+function setupUserMenu() {
+  const userMenu = document.getElementById('userMenu');
+  const userDropdown = document.getElementById('userDropdown');
+  if (userMenu && userDropdown) {
+    userMenu.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleUserMenu();
+    });
+    document.addEventListener('click', function(e) {
+      if (!userMenu.contains(e.target) && !userDropdown.contains(e.target)) {
+        closeUserMenu();
+      }
+    });
+  }
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.location.href = './login.html';
+    });
+  }
+}
+
+function toggleUserMenu() {
+  const userDropdown = document.getElementById('userDropdown');
+  if (userDropdown.classList.contains('show')) {
+    closeUserMenu();
+  } else {
+    openUserMenu();
+  }
+}
+
+function openUserMenu() {
+  const userDropdown = document.getElementById('userDropdown');
+  userDropdown.classList.add('show');
+}
+
+function closeUserMenu() {
+  const userDropdown = document.getElementById('userDropdown');
+  userDropdown.classList.remove('show');
+}
+
+function setupBurgerMenuNavigation() {
   const burgerItems = document.querySelectorAll('.dropdown-item');
   const categoryMap = {
     'Acción': 'section-accion',
@@ -574,8 +657,8 @@ document.addEventListener('DOMContentLoaded', function() {
       if (targetId) {
         // Si estamos en otra página, ir al home primero
         if (window.location.pathname.includes('blocka.html') || 
-            window.location.pathname.includes('login.html') || 
-            window.location.pathname.includes('registro.html')) {
+          window.location.pathname.includes('login.html') || 
+          window.location.pathname.includes('registro.html')) {
           sessionStorage.setItem('scrollTarget', targetId);
           window.location.href = './index.html';
           return;
@@ -583,13 +666,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Si estamos en el home, hacer scroll directo
         scrollToCategory(targetId);
       }
-      // Cerrar el menú (opcional, si tienes función)
-      // closeBurgerMenu();
+      closeBurgerMenu();
     });
   });
-  // Verificar si hay un scroll pendiente al cargar la página
   checkPendingScroll();
-});
+}
 
 function scrollToCategory(targetId) {
   const targetElement = document.getElementById(targetId);
