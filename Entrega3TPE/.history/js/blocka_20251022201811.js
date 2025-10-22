@@ -54,7 +54,9 @@ function startThumbnailSelection(subdivisions) {
 
   // Miniaturas
   const thumbnails = [];
-  // NIVELES y indiceNivelActual solo se reinician al presionar JUGAR
+  NIVELES = shuffleArray([...NIVELES_ORIGINALES]);
+  // Siempre arrancar en el nivel 1 (índice 0) al iniciar desde JUGAR
+  indiceNivelActual = 0;
   NIVELES.forEach((url, idx) => {
     const img = document.createElement('img');
     img.src = url;
@@ -69,7 +71,7 @@ function startThumbnailSelection(subdivisions) {
   gameDisplayContainer.appendChild(carousel);
 
   // Animación tipo slot: resalta secuencialmente cada miniatura
-  const winnerIdx = indiceNivelActual;
+  const winnerIdx = Math.floor(Math.random() * NIVELES.length);
   let currentIdx = 0;
   let rounds = 3; // cantidad de vueltas completas antes de detenerse
   let totalSteps = rounds * thumbnails.length + winnerIdx;
@@ -88,11 +90,12 @@ function startThumbnailSelection(subdivisions) {
       let extra = Math.min(180, Math.floor((step / totalSteps) * 300));
       setTimeout(highlightNext, base + extra);
     } else {
-      // Termina en el "ganador" (el nivel actual)
+      // Termina en el ganador
       thumbnails.forEach((img, idx) => {
         img.classList.remove(highlightClass);
         img.classList.toggle('selected-winner', idx === winnerIdx);
       });
+  indiceNivelActual = winnerIdx;
       setTimeout(() => {
         initGameLevel();
       }, 1000);
@@ -155,12 +158,7 @@ function showStartButton() {
   startBtn.style.padding = '0.5rem 1rem';
   startBtn.style.margin = '3rem auto';
   startBtn.style.display = 'block';
-  startBtn.onclick = () => {
-    // Reiniciar contador de niveles y barajar niveles
-    indiceNivelActual = 0;
-    NIVELES = shuffleArray([...NIVELES_ORIGINALES]);
-    showSubdivisionSelector();
-  };
+  startBtn.onclick = showSubdivisionSelector;
   gameDisplayContainer.appendChild(startBtn);
   console.log('Botón JUGAR insertado en game-board-display');
 }
@@ -278,17 +276,6 @@ function ensureGameUI() {
   btnAyuda.id = 'btn-ayuda';
   btnAyuda.innerHTML = '<img src="../assets/img/help-btn-1.png">';
   hud.appendChild(btnAyuda);
-  // Listener para ayuda (debe estar después de crear el botón)
-  btnAyuda.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (btnAyuda.disabled) return; // ya usada en este nivel
-    console.log('¡Ayudita usada!');
-    btnAyuda.disabled = true;//evita múltiples usos
-    btnAyuda.classList.add('pulse');
-    btnAyuda.classList.add('usada');
-    //accion ayudita
-    if (typeof helpAction === 'function') helpAction();
-  });
   gameDisplayContainer.appendChild(gameArea);
   gameDisplayContainer.appendChild(hud);
 }
