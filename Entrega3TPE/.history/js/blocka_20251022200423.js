@@ -240,39 +240,13 @@ function ensureGameUI() {
     btnSiguienteNivel.className = 'hidden';
     btnSiguienteNivel.textContent = 'Siguiente nivel';
     hud.appendChild(btnSiguienteNivel);
-    // Listener para siguiente nivel (debe estar después de crear el botón)
-    btnSiguienteNivel.addEventListener('click', () => {
-      btnSiguienteNivel.classList.add('hidden');
-      indiceNivelActual++;
-      if (indiceNivelActual < NIVELES.length) {
-        // 1. Ocultar el lienzo actual (canvas)
-        if (lienzo) lienzo.style.display = 'none';
-        // 2. Limpiar variables de tiempo/estado para el próximo juego
-        reiniciarVariablesJuego();
-        // 3. Iniciar la fase de selección de imagen (carrusel)
-        startThumbnailSelection(selectedSubdivisions);
-      } else {
-        // Si no hay más niveles, mostrar animación de victoria o mensaje final
-        mostrarAnimacionVictoria && mostrarAnimacionVictoria();
-      }
-    });
-  // Botón Volver al menú
-  btnVolverMenu = document.createElement('button');
-  btnVolverMenu.id = 'btn-volver-menu';
-  btnVolverMenu.className = 'btn-volver-menu';
-  btnVolverMenu.textContent = 'Volver al menú';
-  hud.appendChild(btnVolverMenu);
-  // Listener para volver al menú (debe estar después de crear el botón)
-  btnVolverMenu.addEventListener('click', () => {
-    window.location.href = '../blocka.html';
-  });
-  btnAyuda = document.createElement('button');
-  btnAyuda.className = 'btn-ayuda';
-  btnAyuda.id = 'btn-ayuda';
-  btnAyuda.innerHTML = '<img src="../assets/img/help-btn-1.png">';
-  hud.appendChild(btnAyuda);
-  gameDisplayContainer.appendChild(gameArea);
-  gameDisplayContainer.appendChild(hud);
+    btnAyuda = document.createElement('button');
+    btnAyuda.className = 'btn-ayuda';
+    btnAyuda.id = 'btn-ayuda';
+    btnAyuda.innerHTML = '<img src="../assets/img/help-btn-1.png">';
+    hud.appendChild(btnAyuda);
+    gameDisplayContainer.appendChild(gameArea);
+    gameDisplayContainer.appendChild(hud);
 }
 
 function enableCanvasContextMenu() {
@@ -282,7 +256,7 @@ function enableCanvasContextMenu() {
 }
 
 // Variables globales para elementos UI
-let lienzo, ctx, etiquetaNivel, estadoEl, temporizadorEl, btnControl, recordEl, btnSiguienteNivel, btnAyuda, btnVolverMenu;
+let lienzo, ctx, etiquetaNivel, estadoEl, temporizadorEl, btnControl, recordEl, btnSiguienteNivel, btnAyuda;
 
 'use strict';
 // Niveles (ajusta rutas en carpeta images)
@@ -694,6 +668,21 @@ function comprobarPiezaCorrecta(p) {
     }
   }
 
+btnSiguienteNivel.addEventListener('click', () => {
+    btnSiguienteNivel.classList.add('hidden');
+    indiceNivelActual++;
+    if (indiceNivelActual < NIVELES.length) {
+      // 1. Ocultar el lienzo actual (canvas)
+      if (lienzo) lienzo.style.display = 'none';
+      // 2. Limpiar variables de tiempo/estado para el próximo juego
+      reiniciarVariablesJuego();
+      // 3. Iniciar la fase de selección de imagen (carrusel)
+      startThumbnailSelection(selectedSubdivisions);
+    } else {
+      // Si no hay más niveles, mostrar animación de victoria o mensaje final
+      mostrarAnimacionVictoria && mostrarAnimacionVictoria();
+    }
+});
 
 // Reinicia variables internas del juego sin cargar el lienzo ni la imagen
 function reiniciarVariablesJuego() {

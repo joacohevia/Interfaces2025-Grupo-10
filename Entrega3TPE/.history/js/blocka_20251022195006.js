@@ -2,15 +2,13 @@
 window.addEventListener('DOMContentLoaded', showStartButton);
 // Inicia el nivel tras la selección
 function initGameLevel() {
-  // Limpiar el carrusel si existe y preparar el game board
   clearGameDisplay();
   ensureGameUI();
   // Re-obtener referencias globales si el canvas fue recreado
   lienzo = document.getElementById('gameCanvas');
   ctx = lienzo ? lienzo.getContext('2d') : null;
-  // 1. Mostrar el lienzo (canvas)
   if (lienzo) lienzo.style.display = 'block';
-  var gameDisplayContainer = document.getElementById('game-board-display');
+  const gameDisplayContainer = document.getElementById('game-board-display');
   gameDisplayContainer.classList.add('canvas-active');
   gameDisplayContainer.classList.remove('bg-blocka');
   // Eliminar cualquier límite de altura para que el canvas no se corte
@@ -19,11 +17,11 @@ function initGameLevel() {
   gameDisplayContainer.style.overflow = 'visible';
   gameDisplayContainer.style.background = 'none';
   setSubdivisions(selectedSubdivisions);
-  // 2. Mostrar el número de nivel actual
+  // Mostrar el número de nivel actual
   if (etiquetaNivel) {
     etiquetaNivel.textContent = `Nivel: ${indiceNivelActual + 1}`;
   }
-  // 3. Cargar el nuevo nivel
+  // Solo cargar el nivel si el canvas y contexto existen
   if (lienzo && ctx) {
     cargarNivel(NIVELES[indiceNivelActual]);
   } else {
@@ -55,10 +53,8 @@ function startThumbnailSelection(subdivisions) {
   // Miniaturas
   const thumbnails = [];
   NIVELES = shuffleArray([...NIVELES_ORIGINALES]);
-  // Solo reiniciar el índice si es la primera vez que se selecciona subdivisión
-  if (typeof indiceNivelActual === 'undefined' || indiceNivelActual === null) {
-    indiceNivelActual = 0;
-  }
+  // Siempre arrancar en el nivel 1 (índice 0)
+  indiceNivelActual = 0;
   NIVELES.forEach((url, idx) => {
     const img = document.createElement('img');
     img.src = url;
@@ -164,6 +160,7 @@ function showStartButton() {
   gameDisplayContainer.appendChild(startBtn);
   console.log('Botón JUGAR insertado en game-board-display');
 }
+window.addEventListener('DOMContentLoaded', showStartButton);
 
 function ensureGameUI() {
     // Si ya existen, no crear de nuevo
@@ -240,39 +237,13 @@ function ensureGameUI() {
     btnSiguienteNivel.className = 'hidden';
     btnSiguienteNivel.textContent = 'Siguiente nivel';
     hud.appendChild(btnSiguienteNivel);
-    // Listener para siguiente nivel (debe estar después de crear el botón)
-    btnSiguienteNivel.addEventListener('click', () => {
-      btnSiguienteNivel.classList.add('hidden');
-      indiceNivelActual++;
-      if (indiceNivelActual < NIVELES.length) {
-        // 1. Ocultar el lienzo actual (canvas)
-        if (lienzo) lienzo.style.display = 'none';
-        // 2. Limpiar variables de tiempo/estado para el próximo juego
-        reiniciarVariablesJuego();
-        // 3. Iniciar la fase de selección de imagen (carrusel)
-        startThumbnailSelection(selectedSubdivisions);
-      } else {
-        // Si no hay más niveles, mostrar animación de victoria o mensaje final
-        mostrarAnimacionVictoria && mostrarAnimacionVictoria();
-      }
-    });
-  // Botón Volver al menú
-  btnVolverMenu = document.createElement('button');
-  btnVolverMenu.id = 'btn-volver-menu';
-  btnVolverMenu.className = 'btn-volver-menu';
-  btnVolverMenu.textContent = 'Volver al menú';
-  hud.appendChild(btnVolverMenu);
-  // Listener para volver al menú (debe estar después de crear el botón)
-  btnVolverMenu.addEventListener('click', () => {
-    window.location.href = '../blocka.html';
-  });
-  btnAyuda = document.createElement('button');
-  btnAyuda.className = 'btn-ayuda';
-  btnAyuda.id = 'btn-ayuda';
-  btnAyuda.innerHTML = '<img src="../assets/img/help-btn-1.png">';
-  hud.appendChild(btnAyuda);
-  gameDisplayContainer.appendChild(gameArea);
-  gameDisplayContainer.appendChild(hud);
+    btnAyuda = document.createElement('button');
+    btnAyuda.className = 'btn-ayuda';
+    btnAyuda.id = 'btn-ayuda';
+    btnAyuda.innerHTML = '<img src="../assets/img/help-btn-1.png">';
+    hud.appendChild(btnAyuda);
+    gameDisplayContainer.appendChild(gameArea);
+    gameDisplayContainer.appendChild(hud);
 }
 
 function enableCanvasContextMenu() {
@@ -282,7 +253,7 @@ function enableCanvasContextMenu() {
 }
 
 // Variables globales para elementos UI
-let lienzo, ctx, etiquetaNivel, estadoEl, temporizadorEl, btnControl, recordEl, btnSiguienteNivel, btnAyuda, btnVolverMenu;
+let lienzo, ctx, etiquetaNivel, estadoEl, temporizadorEl, btnControl, recordEl, btnSiguienteNivel, btnAyuda;
 
 'use strict';
 // Niveles (ajusta rutas en carpeta images)
@@ -446,6 +417,12 @@ if (btnControl) {
   });
 }
 
+// Listener para volver al menú
+if (btnVolverMenu) {
+  btnVolverMenu.addEventListener('click', () => {
+    window.location.href = '../blocka.html';
+  });
+}
 
 // CARGA Y PREPARACIÓN DE IMAGEN
 
@@ -694,16 +671,15 @@ function comprobarPiezaCorrecta(p) {
     }
   }
 
-
-// Reinicia variables internas del juego sin cargar el lienzo ni la imagen
-function reiniciarVariablesJuego() {
-  // Ejemplo de variables a limpiar, ajustar según tu lógica
-  estadoJuego = 'no_iniciado';
-  contadorCorrectas = 0;
-  piezas = [];
-  if (typeof temporizadorEl !== 'undefined' && temporizadorEl) temporizadorEl.textContent = '';
-  // ...agrega aquí cualquier otra variable de estado relevante...
-}
+btnSiguienteNivel.addEventListener('click', () => {
+  indiceNivelActual++;
+  if (indiceNivelActual < NIVELES.length) {
+    etiquetaNivel.textContent = `Nivel: ${indiceNivelActual + 1}`;
+    btnSiguienteNivel.classList.add('hidden');
+    startThumbnailSelection(selectedSubdivisions);
+    actualizarVisibilidadBotonAyuda();
+  }
+});
 
 function getFilter(pieceIndex) {
   const nivel = indiceNivelActual + 1;
