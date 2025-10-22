@@ -289,18 +289,6 @@ function ensureGameUI() {
     //accion ayudita
     if (typeof helpAction === 'function') helpAction();
   });
-  // Ocultar ayuda por defecto (se mostrará solo a partir de nivel 3)
-  btnAyuda.style.display = 'none';
-  // Mostrar u ocultar el botón de ayuda según el nivel
-  if (btnAyuda) {
-    if (indiceNivelActual >= 2) {
-      btnAyuda.style.display = '';
-      btnAyuda.disabled = false;
-      btnAyuda.classList.remove('pulse', 'usada');
-    } else {
-      btnAyuda.style.display = 'none';
-    }
-  }
   gameDisplayContainer.appendChild(gameArea);
   gameDisplayContainer.appendChild(hud);
 }
