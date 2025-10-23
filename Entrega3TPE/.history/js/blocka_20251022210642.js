@@ -240,14 +240,6 @@ function ensureGameUI() {
     btnControl.id = 'btn-control';
     btnControl.textContent = 'Comenzar';
     hud.appendChild(btnControl);
-    // Asignar event listener único para Comenzar/Reiniciar
-    btnControl.onclick = () => {
-      if (estadoJuego === 'no_iniciado') {
-        iniciarJuego();
-      } else if (estadoJuego === 'jugando' || estadoJuego === 'ganado' || estadoJuego === 'perdido') {
-        reiniciarJuego();
-      }
-    };
     recordEl = document.createElement('span');
     recordEl.id = 'record';
     hud.appendChild(recordEl);

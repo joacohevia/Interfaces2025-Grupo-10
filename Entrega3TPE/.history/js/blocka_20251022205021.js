@@ -2,10 +2,6 @@
 window.addEventListener('DOMContentLoaded', showStartButton);
 // Inicia el nivel tras la selección
 function initGameLevel() {
-  //scroll hacia abajo para mostrar el canvas
-  setTimeout(() => {
-    window.scrollTo({top:210, behavior: 'smooth'});
-  }, 200);
   // Limpiar el carrusel si existe y preparar el game board
   clearGameDisplay();
   ensureGameUI();
@@ -42,7 +38,10 @@ let selectedSubdivisions = 4; // valor por defecto
 function startThumbnailSelection(subdivisions) {
   // Scroll al top para ver el carrusel
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  
+  // Scroll al canvas para que el usuario lo vea directamente (hacia abajo)
+  if (lienzo){
+    lienzo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
     
   clearGameDisplay();
   const gameDisplayContainer = document.getElementById('game-board-display');
@@ -240,14 +239,6 @@ function ensureGameUI() {
     btnControl.id = 'btn-control';
     btnControl.textContent = 'Comenzar';
     hud.appendChild(btnControl);
-    // Asignar event listener único para Comenzar/Reiniciar
-    btnControl.onclick = () => {
-      if (estadoJuego === 'no_iniciado') {
-        iniciarJuego();
-      } else if (estadoJuego === 'jugando' || estadoJuego === 'ganado' || estadoJuego === 'perdido') {
-        reiniciarJuego();
-      }
-    };
     recordEl = document.createElement('span');
     recordEl.id = 'record';
     hud.appendChild(recordEl);
@@ -285,7 +276,7 @@ function ensureGameUI() {
   btnVolverMenu.className = 'btn-volver-menu';
   btnVolverMenu.textContent = 'Volver al menú';
   hud.appendChild(btnVolverMenu);
-  // Listener para volver al menú
+  // Listener para volver al menú (debe estar después de crear el botón)
   btnVolverMenu.addEventListener('click', () => {
     window.location.href = '../blocka.html';
   });
@@ -294,7 +285,7 @@ function ensureGameUI() {
   btnAyuda.id = 'btn-ayuda';
   btnAyuda.innerHTML = '<img src="../assets/img/help-btn-1.png">';
   hud.appendChild(btnAyuda);
-  // Listener para ayuda (
+  // Listener para ayuda (debe estar después de crear el botón)
   btnAyuda.addEventListener('click', (e) => {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
     if (btnAyuda.disabled) return; // ya usada en este nivel
@@ -475,14 +466,11 @@ function perderNivelPorTiempo() {
     const btnVolver = document.getElementById('volverMenuBtnDerrota');
     if (btnVolver) {
       btnVolver.onclick = () => {
-        // Elimina el overlay antes de redirigir
-        const overlay = document.getElementById('derrota-tiempo');
-        if (overlay) overlay.remove();
-        // Redirige usando location.replace para evitar problemas de historial
-        window.location.replace('../blocka.html');
+        window.location.href = '../blocka.html';
       };
+      btnVolver.focus();
     }
-  });
+  }, 0);
   // Oculta botones de control y siguiente nivel si están visibles
   if (btnGameControl) btnGameControl.style.display = 'none';
   if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');

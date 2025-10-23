@@ -240,14 +240,6 @@ function ensureGameUI() {
     btnControl.id = 'btn-control';
     btnControl.textContent = 'Comenzar';
     hud.appendChild(btnControl);
-    // Asignar event listener único para Comenzar/Reiniciar
-    btnControl.onclick = () => {
-      if (estadoJuego === 'no_iniciado') {
-        iniciarJuego();
-      } else if (estadoJuego === 'jugando' || estadoJuego === 'ganado' || estadoJuego === 'perdido') {
-        reiniciarJuego();
-      }
-    };
     recordEl = document.createElement('span');
     recordEl.id = 'record';
     hud.appendChild(recordEl);
@@ -474,13 +466,9 @@ function perderNivelPorTiempo() {
   setTimeout(() => {
     const btnVolver = document.getElementById('volverMenuBtnDerrota');
     if (btnVolver) {
-      btnVolver.onclick = () => {
-        // Elimina el overlay antes de redirigir
-        const overlay = document.getElementById('derrota-tiempo');
-        if (overlay) overlay.remove();
-        // Redirige usando location.replace para evitar problemas de historial
-        window.location.replace('../blocka.html');
-      };
+      if (hud && btnVolverMenu) {
+        hud.appendChild(btnVolverMenu);
+      }
     }
   });
   // Oculta botones de control y siguiente nivel si están visibles
