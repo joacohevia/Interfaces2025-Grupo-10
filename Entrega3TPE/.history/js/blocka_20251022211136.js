@@ -414,7 +414,7 @@ function iniciarTemporizador() {
   if (tiempoMaximo) {
     intervaloTiempoMaximo = setTimeout(() => {
       if (juegoEnCurso) {
-        perderPorTemporizador();
+        perderNivelPorTiempo();
       }
     }, tiempoMaximo * 1000);
   } else {
@@ -442,15 +442,44 @@ function actualizarTemporizador() {
     let restante = Math.max(0, tiempoMaximo - transcurrido);
     temporizadorEl.textContent = `Tiempo restante: ${formatearTiempo(restante)} / Máx: ${formatearTiempo(tiempoMaximo)}`;
     if (restante === 0 && juegoEnCurso) {
-      perderPorTemporizador();
+      perderNivelPorTiempo();
     }
   } else {
     temporizadorEl.textContent = `Tiempo: ${formatearTiempo(transcurrido)}`;
   }
 }
 
+// Mostrar mensaje de derrota por tiempo
+function perderNivelPorTiempo() {
+  // Overlay de derrota por tiempo agotado
+  const loseDiv = document.createElement('div');
+  loseDiv.id = 'derrota-tiempo';
+  loseDiv.style.position = 'fixed';
+  loseDiv.style.top = '0';
+  loseDiv.style.left = '0';
+  loseDiv.style.width = '100vw';
+  loseDiv.style.height = '100vh';
+  loseDiv.style.background = 'rgba(0,0,0,0.7)';
+  loseDiv.style.display = 'flex';
+  loseDiv.style.flexDirection = 'column';
+  loseDiv.style.justifyContent = 'center';
+  loseDiv.style.alignItems = 'center';
+  loseDiv.style.zIndex = '9999';
+  loseDiv.innerHTML = `
+    <h1 style=\"color: #fff; font-size: 2.5em; margin-bottom: 20px;\">¡Tiempo agotado!</h1>
+    <div style=\"color: #fff; font-size: 1.2em; margin-bottom: 30px;\">No lograste resolver el puzzle a tiempo.</div>
+  `;
+  document.body.appendChild(loseDiv);
+  // Oculta el botón de siguiente nivel si está visible
+  if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
+  // Asegura que los botones Volver al menú y Reiniciar estén visibles y habilitados
+  if (btnVolverMenu) btnVolverMenu.style.display = '';
+  if (btnControl) {
+    btnControl.style.display = '';
+    btnControl.disabled = false;
+  }
+}
 
-// Devuelve el tiempo transcurrido en segundos desde el inicio del nivel
 function tiempoTranscurrido() {
   return Math.floor((Date.now() - tiempoInicio) / 1000);
 }
@@ -467,27 +496,6 @@ function actualizarRecord(tiempoSegundos) {
     recordsPorNivel[nivel] = tiempoSegundos;
     recordEl.textContent = `Récord: ${formatearTiempo(tiempoSegundos)}`;
   }
-}
-
-// Lógica de derrota por temporizador
-function perderPorTemporizador() {
-  estadoJuego = 'perdido';
-  detenerTemporizador();
-  // Ocultar botón de siguiente nivel si existe
-  if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
-  // Mostrar cartel de derrota en el canvas (similar a showWin)
-  if (ctx) {
-    ctx.fillStyle = 'rgba(0,0,0,0.6)';
-    ctx.fillRect(0, ALTO_CANVAS / 2 - 40, ANCHO_CANVAS, 80);
-    ctx.fillStyle = '#ffd4d4';
-    ctx.font = '26px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText('¡Tiempo agotado!', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 - 6);
-    ctx.fillStyle = '#ffffff';
-    ctx.font = '14px Roboto';
-    ctx.fillText('Presiona reiniciar o volver al menú', ANCHO_CANVAS / 2, ALTO_CANVAS / 2 + 20);
-  }
-  actualizarBotonControl();
 }
 
 
@@ -1052,7 +1060,7 @@ function añadirSegundosTemporizador(segundos) {
     const restante = Math.max(0, tiempoMaximo - tiempoTranscurrido()); // ya considera el nuevo tiempoInicio
     intervaloTiempoMaximo = setTimeout(() => {
       if (juegoEnCurso) {
-        perderPorTemporizador();
+        perderNivelPorTiempo();
       }
     }, restante * 1000);
   }

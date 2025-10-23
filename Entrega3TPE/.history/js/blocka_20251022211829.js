@@ -414,7 +414,7 @@ function iniciarTemporizador() {
   if (tiempoMaximo) {
     intervaloTiempoMaximo = setTimeout(() => {
       if (juegoEnCurso) {
-        perderPorTemporizador();
+        perderNivelPorTiempo();
       }
     }, tiempoMaximo * 1000);
   } else {
@@ -442,7 +442,7 @@ function actualizarTemporizador() {
     let restante = Math.max(0, tiempoMaximo - transcurrido);
     temporizadorEl.textContent = `Tiempo restante: ${formatearTiempo(restante)} / Máx: ${formatearTiempo(tiempoMaximo)}`;
     if (restante === 0 && juegoEnCurso) {
-      perderPorTemporizador();
+      perderNivelPorTiempo();
     }
   } else {
     temporizadorEl.textContent = `Tiempo: ${formatearTiempo(transcurrido)}`;
@@ -1052,7 +1052,7 @@ function añadirSegundosTemporizador(segundos) {
     const restante = Math.max(0, tiempoMaximo - tiempoTranscurrido()); // ya considera el nuevo tiempoInicio
     intervaloTiempoMaximo = setTimeout(() => {
       if (juegoEnCurso) {
-        perderPorTemporizador();
+        perderNivelPorTiempo();
       }
     }, restante * 1000);
   }
