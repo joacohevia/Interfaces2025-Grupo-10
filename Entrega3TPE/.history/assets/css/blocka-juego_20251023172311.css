@@ -24,6 +24,15 @@
   color: inherit !important;
   box-shadow: none !important;
 }
+.game-overlay-buttons {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 101;
+}
 .hidden { 
   display:none; 
 }
@@ -161,6 +170,12 @@ button:active {
     border: 3px solid #ccc;
     box-shadow: 0 2px 16px rgba(0,0,0,0.12);
     transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+
+.rolling .thumbnail {
+  /* Elimina animación individual, se usará animación de desplazamiento en el contenedor */
+  animation: none;
 }
 
 

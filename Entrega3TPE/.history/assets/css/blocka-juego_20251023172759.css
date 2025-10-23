@@ -164,6 +164,12 @@ button:active {
 }
 
 
+.rolling .thumbnail {
+  /* Elimina animación individual, se usará animación de desplazamiento en el contenedor */
+  animation: none;
+}
+
+
 
 @keyframes slot-machine-move {
   0% { transform: translateX(0); }
