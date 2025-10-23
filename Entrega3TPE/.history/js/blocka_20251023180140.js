@@ -386,7 +386,6 @@ let imagenNivel = new Image();
 let piezas = [];
 let contadorCorrectas = 0;
 let tiempoInicio = 0;
-let tiempoFin = null;
 let intervaloTemporizador = null;
 let recordsPorNivel = {};
 let tiempoMaximo = null;

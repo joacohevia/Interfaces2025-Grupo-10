@@ -386,7 +386,6 @@ let imagenNivel = new Image();
 let piezas = [];
 let contadorCorrectas = 0;
 let tiempoInicio = 0;
-let tiempoFin = null;
 let intervaloTemporizador = null;
 let recordsPorNivel = {};
 let tiempoMaximo = null;
@@ -395,6 +394,7 @@ let juegoEnCurso = false;
 
 // Estados posibles: 'no_iniciado', 'jugando', 'ganado', 'perdido'
 let estadoJuego = 'no_iniciado';
+let juegoIniciado = false;
 
 // Temporizador
 function iniciarTemporizador() {
@@ -912,7 +912,8 @@ function actualizarBotonControl() {
 
 // Función para iniciar el juego
 function iniciarJuego() {
-  if (estadoJuego !== 'no_iniciado') return;
+  if (juegoIniciado) return;
+  juegoIniciado = true;
   estadoJuego = 'jugando';
   actualizarBotonControl();
   detenerTemporizador();
@@ -936,6 +937,7 @@ function reiniciarJuego() {
   if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
   // Cambiar texto del botón
   estadoJuego = 'no_iniciado';
+  juegoIniciado = false;
   actualizarBotonControl();
   resetBtnHelp();
   updateStatus();
