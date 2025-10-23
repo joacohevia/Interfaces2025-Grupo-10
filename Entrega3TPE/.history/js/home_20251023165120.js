@@ -542,6 +542,7 @@ function createGameCard(game) {
     `;
 
     // Agregar eventos de click según el tipo de juego
+    //console.log(`[GameCard] ${game.name} esPremium:`, game.esPremium);
     if (game.name === 'Blocka') {
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
@@ -578,7 +579,7 @@ function showPremiumPopup() {
             </div>
         `;
         document.body.appendChild(popup);
-        //Agrega el elemento popup 
+        //Agrega el elemento popup (con todo su contenido recién definido) al final del <body>
         console.log('Popup premium creado');
     }
     
@@ -705,7 +706,8 @@ function closeUserMenu() {
     userDropdown.classList.remove('show');
 }
 
-//CARRUSEL HERO
+//Carrusel de card pequeñas
+/*__________________CARRUSEL__________________*/
 document.addEventListener('DOMContentLoaded', function() {
     const track = document.getElementById("carouselTrack");
     const prevBtns = document.querySelectorAll(".prev-btn");

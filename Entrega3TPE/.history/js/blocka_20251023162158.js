@@ -932,6 +932,8 @@ function reiniciarJuego() {
   temporizadorEl.textContent = 'Tiempo: 00:00';
   // Ocultar elementos de siguiente nivel
   if (btnSiguienteNivel) btnSiguienteNivel.classList.add('hidden');
+  // Desbloquear tablero si estaba bloqueado
+  // (No hay lógica de bloqueo explícita, pero si la hubiera, desbloquear aquí)
   // Cambiar texto del botón
   estadoJuego = 'no_iniciado';
   actualizarBotonControl();
@@ -948,7 +950,7 @@ function reiniciarJuego() {
 }
 
 
-//Logica de la ayuda
+//Logica de la ayuda-------------------------------------------------------------------------------------
 function helpAction() {
   // Buscamos piezas que NO estén correctas (posición y rotación)
   const misplaced = piezas.filter(p => !(p.x === p.tx && p.y === p.ty && (p.rot % 360) === 0));
@@ -973,19 +975,32 @@ function helpAction() {
   const fromX = pieceToPlace.x;
   const fromY = pieceToPlace.y;
 
-// corregir rotación
+  // Si la pieza está en el slot correcto pero rotada --> solo corregimos rotación
   if (fromX === targetX && fromY === targetY) {
     pieceToPlace.rot = 0;
     comprobarPiezaCorrecta(pieceToPlace); // actualizar contador
     render();
     updateStatus();
-    añadirSegundosTemporizador(5); // sumar 5s cuando se usa la ayuda
+    añadirSegundosTemporizador(5); // sumar 5s cuando se usa la ayudita
     return;
   }
+
+  // Si hay otra pieza en el target, la movemos al origen (swap de posiciones)
+  if (pieceAtTarget && pieceAtTarget !== pieceToPlace) {
+    pieceAtTarget.x = fromX;
+    pieceAtTarget.y = fromY;
+    // opcional: mantener la rotación actual de la pieza movida al origen
+    comprobarPiezaCorrecta(pieceAtTarget);
+  }
+
+  // Mover la pieza seleccionada a su posición correcta y corregir rotación
+  pieceToPlace.x = targetX;
+  pieceToPlace.y = targetY;
   pieceToPlace.rot = 0;
 
-  //Pieza correcta para actualizar contador
+  // Comprobamos la(s) pieza(s) afectadas para actualizar contador
   comprobarPiezaCorrecta(pieceToPlace);
+  // (pieceAtTarget ya fue comprobada más arriba si existía)
 
   // Re-render y HUD
   render();
@@ -995,7 +1010,7 @@ function helpAction() {
   añadirSegundosTemporizador(5);
 }
 
-// AUXILIAR: añade segundos al temporizador en curso
+// FUNCION AUXILIAR: añade segundos al temporizador en curso (y reajusta timeout de tiempoMaximo)
 function añadirSegundosTemporizador(segundos) {
   if (!tiempoInicio) {
     // Si el temporizador no está iniciado, no hacemos nada
@@ -1005,7 +1020,7 @@ function añadirSegundosTemporizador(segundos) {
   // Reducimos tiempoInicio para que tiempoTranscurrido() disminuya => suma de tiempo visible
   tiempoInicio -= segundos * 1000;
 
-  // Si hay un límite máximo (tiempoMaximo) extender el timeout que provocaría perder por tiempo.
+  // Si hay un límite máximo (tiempoMaximo) debemos extender el timeout que provocaría perder por tiempo.
   if (typeof tiempoMaximo === 'number' && tiempoMaximo > 0) {
     // calculamos el nuevo restante y reprogramamos el timeout
     if (intervaloTiempoMaximo) clearTimeout(intervaloTiempoMaximo);
@@ -1030,7 +1045,7 @@ function resetBtnHelp() {
   btnAyuda.classList.remove('pulse');
 }
 
-// Función para controlar la visibilidad del botón de ayuda
+// Función para controlar la visibilidad del botón de ayuda--------------------------------
 function actualizarVisibilidadBotonAyuda() {
   if (btnAyuda) {
     // El botón aparece a partir del nivel 3 (indiceNivelActual >= 2)

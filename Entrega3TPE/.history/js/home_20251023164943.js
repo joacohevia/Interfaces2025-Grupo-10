@@ -370,6 +370,8 @@ function displayGames(games) {
                 return name !== 'Peg Solitaire' && name !== 'Blocka';
             })];
             // Limitar a 10 juegos
+            //console.log('LOGIC GAMES - primeros 5 objetos (detalle):', logicGamesFromAPI.slice(0,5));
+            //console.table(logicGamesFromAPI.slice(0,10), ['id','name','rating','background_image']);
             return logicGamesFromAPI.slice(0, 10);
         })(),
         suggestedGames: (() => {
@@ -411,6 +413,7 @@ function displayGames(games) {
                    description.includes('cooperative') ||
                    description.includes('team');
         }).slice(0, 10),
+        // Nuevas categorías
         accion: games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('action'))).slice(0, 10),
         aventura: games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('adventure'))).slice(0, 10),
         carreras: games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('racing'))).slice(0, 10),
@@ -489,7 +492,7 @@ function displayGames(games) {
 
     // Renderizar cada categoría
     Object.keys(categories).forEach(categoryId => {
-        // Usar el id "cards-<categoria>" si existe
+        // Para las categorías agregadas al final, usar el id "cards-<categoria>" si existe
         if (document.getElementById('cards-' + categoryId)) {
             renderGameCategory('cards-' + categoryId, categories[categoryId]);
         } else {
@@ -510,6 +513,10 @@ function renderGameCategory(categoryId, games) {
         container.innerHTML = '<p class="no-games">No hay juegos disponibles en esta categoría</p>';
         return;
     }
+
+    // Nuevos registros para depuración
+    //console.log(`Renderizando categoría: ${categoryId}`);
+    console.log(`Juegos en la categoría ${categoryId}:`, games);
 
     games.forEach(game => {
         const gameCard = createGameCard(game);
@@ -542,6 +549,7 @@ function createGameCard(game) {
     `;
 
     // Agregar eventos de click según el tipo de juego
+    //console.log(`[GameCard] ${game.name} esPremium:`, game.esPremium);
     if (game.name === 'Blocka') {
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
@@ -578,7 +586,7 @@ function showPremiumPopup() {
             </div>
         `;
         document.body.appendChild(popup);
-        //Agrega el elemento popup 
+        //Agrega el elemento popup (con todo su contenido recién definido) al final del <body>
         console.log('Popup premium creado');
     }
     
@@ -705,7 +713,8 @@ function closeUserMenu() {
     userDropdown.classList.remove('show');
 }
 
-//CARRUSEL HERO
+//Carrusel de card pequeñas
+/*__________________CARRUSEL__________________*/
 document.addEventListener('DOMContentLoaded', function() {
     const track = document.getElementById("carouselTrack");
     const prevBtns = document.querySelectorAll(".prev-btn");

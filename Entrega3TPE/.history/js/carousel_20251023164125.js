@@ -42,7 +42,7 @@ function initializeCarousel(wrapper) {
             const title = clone.querySelector('.game-title')?.textContent;
             if (premiumIcon) {
                 showPremiumPopup();
-            } else {
+            } else if (!premiumIcon) {
                 window.location.href = 'juego.html';
             }
         });
@@ -80,6 +80,8 @@ function initializeCarousel(wrapper) {
         e.preventDefault();
         console.log('Botón siguiente clickeado');
         if (gamesGrid.scrollLeft + gamesGrid.offsetWidth >= gamesGrid.scrollWidth) {
+          //scrollLesft= cantidad de px desplazados a la izq
+          //la suma representa el extremo derecho 
           //si el extremo derecho es mayor al final del contenido, estoy en el final
             gamesGrid.scrollLeft -= gamesGrid.scrollWidth / 3; //salto de nuevo al principio
         }
@@ -126,7 +128,7 @@ window.initializeCarousels = initializeCarousels;
 
 // Asegurarnos de que los carruseles se inicialicen después de que el contenido esté listo
 document.addEventListener('DOMContentLoaded', () => {
-    // Esperar a que los juegos se carguen
+    // Esperar un momento para que los juegos se carguen
     setTimeout(() => {
         console.log('Iniciando inicialización de carruseles...');
         initializeCarousels();

@@ -705,7 +705,7 @@ function closeUserMenu() {
     userDropdown.classList.remove('show');
 }
 
-//CARRUSEL HERO
+//ARRUSEL HERO
 document.addEventListener('DOMContentLoaded', function() {
     const track = document.getElementById("carouselTrack");
     const prevBtns = document.querySelectorAll(".prev-btn");
