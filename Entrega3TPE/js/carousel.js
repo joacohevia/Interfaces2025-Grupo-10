@@ -1,7 +1,3 @@
-// Función dummy para evitar error ReferenceError
-function updateButtonVisibility() {
-    // Aquí puedes agregar lógica para mostrar/ocultar botones si lo necesitas
-}
 
 function initializeCarousel(wrapper) {
     console.log('Inicializando carrusel para wrapper:', wrapper);
@@ -60,7 +56,7 @@ function initializeCarousel(wrapper) {
     });
 
     // Ajustar el scroll inicial para que esté en el centro de los elementos clonados
-    gamesGrid.scrollLeft = gamesGrid.scrollWidth / 3;//el ancho total de los elem
+    gamesGrid.scrollLeft = gamesGrid.scrollWidth / 3;
 
 
 
@@ -93,19 +89,16 @@ function initializeCarousel(wrapper) {
         });
     });
 
-    //cada vez que hace scrool llama a  
+    //cada vez que hace scrool llama a  updateButtonVisibility donde puedo poner una animacion
     gamesGrid.addEventListener('scroll', () => {
         requestAnimationFrame(updateButtonVisibility);
     });
 
-
-    // Actualiza la visivilidad si cambia el tamaño del contenido
-    const observer = new ResizeObserver(() => {
-        requestAnimationFrame(updateButtonVisibility);
-    });
-    observer.observe(gamesGrid);
+    function updateButtonVisibility() {
+    // vacía por ahora
+    }
 }
-
+//-----------FIN DE initializeCarousel-----------------------------------------------------------------------------------------------
 // Función para inicializar todos los carruseles
     function initializeCarousels() {
         if (window.screen.width > 768 && window.screen.height > 695) {    
@@ -130,7 +123,7 @@ window.initializeCarousels = initializeCarousels;
 
 // Asegurarnos de que los carruseles se inicialicen después de que el contenido esté listo
 document.addEventListener('DOMContentLoaded', () => {
-    // Esperar un momento para que los juegos se carguen
+    // después de 1 segundo inicia la funcion
     setTimeout(() => {
         console.log('Iniciando inicialización de carruseles...');
         initializeCarousels();

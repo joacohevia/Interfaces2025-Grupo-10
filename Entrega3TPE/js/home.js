@@ -737,14 +737,9 @@ Al cargarse el DOM (DOMContentLoaded), el script captura los elementos principal
          similar, al clickear un indicador se pausa el autoplay, se actualiza el 
          slide activo y se reanuda después de 5 segundos. Además, al pasar el 
          mouse sobre el carrusel (mouseenter) se pausa el autoplay y al salir 
-         (mouseleave) se reanuda. Los flags isTransitioning y isPaused son 
-         fundamentales para controlar la fluidez: el primero evita que varias a
-         nimaciones se solapen y el segundo que el autoplay avance mientras el 
-         usuario interactúa. En resumen, cada cambio de slide, ya sea por botones, 
-         indicadores o autoplay, actualiza currentIndex, mueve el contenedor principal, 
-         activa las clases correspondientes en slides e indicadores y respeta las pausas
-          y transiciones definidas, creando un flujo suave y controlado del carrusel.
-
+         (mouseleave) se reanuda. Los flags son fundamentales para controlar la fluidez:
+          isTransitioning evita que varias animaciones se solapen y isPaused 
+          que el autoplay avance mientras el usuario interactúa.
 /*__________________CARRUSEL__________________*/
 document.addEventListener('DOMContentLoaded', function() {
     const track = document.getElementById("carouselTrack");
@@ -765,6 +760,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         isTransitioning = true;
         const newTransform = -currentIndex * 100 + '%';
+        //-1*100% = -100%, -2*100% = -200% calcula cuanto mover el track segun el index actual
         track.style.transform = `translateX(${newTransform})`;
         
         // Actualizar indicadores
@@ -789,6 +785,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         isPaused = true;
         currentIndex = (currentIndex + 1) % totalItems;
+        // 1+1=2%5=2
         updateCarousel();
         
         // Reanudar después de 5 segundos
@@ -804,6 +801,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         isPaused = true;
         currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+        //1-1+5=5%5=0, 0-1+5=4%5=4
         updateCarousel();
         
         // Reanudar después de 5 segundos
@@ -822,7 +820,7 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.addEventListener("click", nextSlide);
     });
 
-    // Event listeners para los indicadores
+    // Event listeners para los indicadores 
     indicators.forEach((indicator, index) => {
         indicator.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -833,10 +831,10 @@ document.addEventListener('DOMContentLoaded', function() {
             updateCarousel();
             
             // Reanudar después de 5 segundos
-            clearTimeout(window.resumeTimeout);
-            window.resumeTimeout = setTimeout(() => {
+            clearTimeout(window.resumeTimeout);//cancela cualquier tempo previo
+            window.resumeTimeout = setTimeout(() => {//crea un nuevo temporizador
                 isPaused = false;
-            }, 5000);
+            }, 5000);// despues de 5 segundos paused debe ser false
         });
     });
 
@@ -860,7 +858,7 @@ document.addEventListener('DOMContentLoaded', function() {
         isPaused = true;
         stopAutoplay();
     });
-
+    // Reanudar auto-play al salir del hover
     carouselContainer.addEventListener("mouseleave", () => {
         isPaused = false;
         startAutoplay();
@@ -870,7 +868,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCarousel();
     startAutoplay();
 });
-
+//--------FIN DE CAROUSEL-------------------------------------------------------------------------------------
 // Función para buscar juegos
 function searchGames(query) {
     const allGames = document.querySelectorAll('.card-image-container'); 
