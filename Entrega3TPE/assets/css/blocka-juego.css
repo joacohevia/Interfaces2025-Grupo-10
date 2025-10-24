@@ -1,4 +1,9 @@
-
+.slot-highlight {
+  border-color: #2196f3;
+  box-shadow: 0 0 24px 4px #2196f3;
+  transform: scale(1.08);
+  z-index: 1;
+}
 .game-board-display { min-height: 100vh; 
   display:flex; 
   align-items:center; 
@@ -12,6 +17,12 @@
   display:flex; 
   flex-direction:column; 
   align-items:center; 
+}
+/* Quitar fondo naranja del botón hamburguesa solo en blocka */
+#burgerMenu {
+  background: none !important;
+  color: inherit !important;
+  box-shadow: none !important;
 }
 .hidden { 
   display:none; 
@@ -146,4 +157,126 @@ button:active {
   }
 .hud span { 
   font-weight:600; 
+}
+
+/* --- Animación y estilos para el flujo de selección de nivel --- */
+
+#game-board-display {
+    position: relative;
+    overflow: hidden;
+    background: rgba(255,255,255,0.1);
+    border-radius: 32px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+    transition: background 0.3s;
+    margin: 2rem 0;
+    padding: 1.5rem 1rem;
+    width: 100%;
+    min-height: 18rem;
+    height: 18rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+#game-board-display.canvas-active {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+
+#selection-carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+  margin: 2.5rem 0;
+  transition: transform 0.4s;
+}
+
+
+.thumbnail {
+  width: 160px;
+  height: 160px;
+    object-fit: cover;
+    border-radius: 24px;
+    border: 3px solid #ccc;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+
+
+@keyframes slot-machine-move {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-80%); }
+}
+
+#selection-carousel.rolling {
+  animation: slot-machine-move 4s cubic-bezier(.5,0,.5,1);
+}
+
+
+.selected-winner {
+  border-color: #ff9800;
+  box-shadow: 0 0 32px 8px #ff9800;
+  z-index: 2;
+  transform: scale(1.12);
+}
+
+
+.btn-jugar {
+    background: #ff8c29;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: background 0.2s;
+    font-size: 0.rem;
+    padding: 0.35rem 0.8rem;
+    margin: 0.3rem auto;
+    display: block;
+}
+.btn-jugar:hover {
+    background: #e67e22;
+}
+.btn-subdivision {
+    background: #ff8c29;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: background 0.2s;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.7rem;
+    margin: 0 0.3rem;
+}
+.btn-subdivision:hover {
+    background: #e67e22;
+}
+
+#game-board-display.bg-blocka {
+    background-image: url("../img/fondoBlocka.png");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    background-color: transparent !important;
+}
+#game-board-display.bg-blocka::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,rgba(0,0,0,0.98) 0%,rgba(0,0,0,0.85) 100%);
+    backdrop-filter: blur(10px);
+    z-index: 0;
+    border-radius: 32px;
+}
+#game-board-display > * {
+    position: relative;
+    z-index: 1;
 }

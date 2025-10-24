@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     setupEventListeners();
     setupBurgerMenuNavigation();
     
-    // Cargamos los juegos y esperamos a que terminen de cargarse
+    // Carga los juegos y espera a que terminen de cargarse
     try {
         await loadGames();
         // Inicializar los carruseles después de que los juegos se hayan cargado
@@ -91,7 +91,7 @@ function setupEventListeners() {
 function setupBurgerMenuNavigation() {
     const burgerItems = document.querySelectorAll('.dropdown-item');
     
-    // Mapeo actualizado: cada ítem del menú scrollea al carrousel/categoría correspondiente
+    // Mapeo: cada ítem del menú scrollea al carrousel/categoría correspondiente
     const categoryMap = {
         'Acción': 'section-accion',
         'Aventura': 'section-aventura',
@@ -147,12 +147,12 @@ function setupBurgerMenuNavigation() {
 
 // Función para hacer scroll a una categoría específica
 function scrollToCategory(targetId) {
-    // El id recibido ya es el de la sección (ej: section-guerra)
+    // El id recibido ya es el de la sección 
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
         const header = document.querySelector('.header');
         const headerHeight = header ? header.getBoundingClientRect().height : 0;
-        // getBoundingClientRect().top da la posición relativa al viewport
+        // getBoundingClientRect().top da la posición
         const sectionTop = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight - 10;
         window.scrollTo({
             top: sectionTop,
@@ -370,8 +370,6 @@ function displayGames(games) {
                 return name !== 'Peg Solitaire' && name !== 'Blocka';
             })];
             // Limitar a 10 juegos
-            //console.log('LOGIC GAMES - primeros 5 objetos (detalle):', logicGamesFromAPI.slice(0,5));
-            //console.table(logicGamesFromAPI.slice(0,10), ['id','name','rating','background_image']);
             return logicGamesFromAPI.slice(0, 10);
         })(),
         suggestedGames: (() => {
@@ -413,7 +411,6 @@ function displayGames(games) {
                    description.includes('cooperative') ||
                    description.includes('team');
         }).slice(0, 10),
-        // Nuevas categorías
         accion: games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('action'))).slice(0, 10),
         aventura: games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('adventure'))).slice(0, 10),
         carreras: games.filter(game => game.genres && game.genres.some(g => g.name.toLowerCase().includes('racing'))).slice(0, 10),
@@ -492,7 +489,7 @@ function displayGames(games) {
 
     // Renderizar cada categoría
     Object.keys(categories).forEach(categoryId => {
-        // Para las categorías agregadas al final, usar el id "cards-<categoria>" si existe
+        // Usar el id "cards-<categoria>" si existe
         if (document.getElementById('cards-' + categoryId)) {
             renderGameCategory('cards-' + categoryId, categories[categoryId]);
         } else {
@@ -513,10 +510,6 @@ function renderGameCategory(categoryId, games) {
         container.innerHTML = '<p class="no-games">No hay juegos disponibles en esta categoría</p>';
         return;
     }
-
-    // Nuevos registros para depuración
-    //console.log(`Renderizando categoría: ${categoryId}`);
-    console.log(`Juegos en la categoría ${categoryId}:`, games);
 
     games.forEach(game => {
         const gameCard = createGameCard(game);
@@ -549,7 +542,6 @@ function createGameCard(game) {
     `;
 
     // Agregar eventos de click según el tipo de juego
-    //console.log(`[GameCard] ${game.name} esPremium:`, game.esPremium);
     if (game.name === 'Blocka') {
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
@@ -586,7 +578,7 @@ function showPremiumPopup() {
             </div>
         `;
         document.body.appendChild(popup);
-        //Agrega el elemento popup (con todo su contenido recién definido) al final del <body>
+        //Agrega el elemento popup 
         console.log('Popup premium creado');
     }
     
@@ -741,6 +733,7 @@ Al cargarse el DOM (DOMContentLoaded), el script captura los elementos principal
           isTransitioning evita que varias animaciones se solapen y isPaused 
           que el autoplay avance mientras el usuario interactúa.
 /*__________________CARRUSEL__________________*/
+//CARRUSEL HERO
 document.addEventListener('DOMContentLoaded', function() {
     const track = document.getElementById("carouselTrack");
     const prevBtns = document.querySelectorAll(".prev-btn");
@@ -877,10 +870,16 @@ function searchGames(query) {
     // Variable para almacenar el primer juego encontrado
     // Solo buscar si hay texto
     if (query.trim() === '') {
-        allGames.forEach(gameContainer => {
-            if (gameContainer.parentElement) {
-                gameContainer.parentElement.style.display = 'block';
-            }
+        // Cuando el input está vacío, recargar todas las categorías y juegos
+        if (window.currentGamesData) {
+            displayGames(window.currentGamesData);
+        } else {
+            displayGames(getFallbackGames());
+        }
+        // Asegurarse de mostrar todas las categorías
+        const categorySections = document.querySelectorAll('.category-section');
+        categorySections.forEach(section => {
+            section.style.display = 'block';
         });
         return;
     }
@@ -907,18 +906,20 @@ function searchGames(query) {
         }
     });
 
-    // Ocultar categorías que no tengan juegos visibles
-    const categorySections = document.querySelectorAll('.category-section');
-    categorySections.forEach(section => {
-        const visibleGames = section.querySelectorAll('.card-image-container');
-        let hasVisible = false;
-        visibleGames.forEach(card => {
-            if (card.parentElement.style.display !== 'none') {
-                hasVisible = true;
-            }
+    // Ocultar categorías solo si hay texto en el input
+    if (query.trim() !== '') {
+        const categorySections = document.querySelectorAll('.category-section');
+        categorySections.forEach(section => {
+            const visibleGames = section.querySelectorAll('.card-image-container');
+            let hasVisible = false;
+            visibleGames.forEach(card => {
+                if (card.parentElement.style.display !== 'none') {
+                    hasVisible = true;
+                }
+            });
+            section.style.display = hasVisible ? 'block' : 'none';
         });
-        section.style.display = hasVisible ? 'block' : 'none';
-    });
+    }
 
     // Deslizar hacia el primer juego encontrado solo si hay una búsqueda activa
     if (firstMatch && query.trim() !== '') {

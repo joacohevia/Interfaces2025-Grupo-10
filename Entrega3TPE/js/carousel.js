@@ -1,4 +1,6 @@
+'use strict';
 
+//carrousel home
 function initializeCarousel(wrapper) {
     console.log('Inicializando carrusel para wrapper:', wrapper);
 
@@ -25,22 +27,22 @@ function initializeCarousel(wrapper) {
     const scrollAmount = Math.max(gamesGrid.offsetWidth * 0.3, 100);
     //obtiene el ancho y calcula el 30% de este, si es menor a 100, toma 100 como valor 
 
-    // Clonar elementos para crear el efecto de bucle
-    const items = Array.from(gamesGrid.children);
-    //convierte los hijos del grid en un array
+    // Clonar elementos para crear el efecto de bucle, excepto Blocka y Peg Solitaire
+    const items = Array.from(gamesGrid.children).filter(item => {
+        const title = item.querySelector('.game-title')?.textContent;
+        return title !== 'Blocka' && title !== 'Peg Solitaire';
+    });
 
-    // Helper para copiar listeners de click del original al clon
+    // Copiar listeners de click del original al clon
     function copyClickListeners(original, clone) {
         // Solo copia el click principal de la card
         clone.addEventListener('click', function(e) {
             // Busca el tipo de juego por el contenido
             const premiumIcon = clone.querySelector('.premium-icon');
             const title = clone.querySelector('.game-title')?.textContent;
-            if (title === 'Blocka') {
-                window.location.href = 'blocka.html';
-            } else if (premiumIcon) {
+            if (premiumIcon) {
                 showPremiumPopup();
-            } else if (title === 'Peg Solitaire' || !premiumIcon) {
+            } else {
                 window.location.href = 'juego.html';
             }
         });
@@ -78,8 +80,6 @@ function initializeCarousel(wrapper) {
         e.preventDefault();
         console.log('Botón siguiente clickeado');
         if (gamesGrid.scrollLeft + gamesGrid.offsetWidth >= gamesGrid.scrollWidth) {
-          //scrollLesft= cantidad de px desplazados a la izq
-          //la suma representa el extremo derecho 
           //si el extremo derecho es mayor al final del contenido, estoy en el final
             gamesGrid.scrollLeft -= gamesGrid.scrollWidth / 3; //salto de nuevo al principio
         }
@@ -124,6 +124,7 @@ window.initializeCarousels = initializeCarousels;
 // Asegurarnos de que los carruseles se inicialicen después de que el contenido esté listo
 document.addEventListener('DOMContentLoaded', () => {
     // después de 1 segundo inicia la funcion
+    // Esperar a que los juegos se carguen
     setTimeout(() => {
         console.log('Iniciando inicialización de carruseles...');
         initializeCarousels();
