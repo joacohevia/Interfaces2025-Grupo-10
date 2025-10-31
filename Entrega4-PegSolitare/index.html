@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MV C Canvas - Tablero con ficha</title>
+  <link rel="stylesheet" href="./View/estilos.css">
+</head>
+<body>
+  
+  <h1>Tablero MVC con Canvas</h1>
+  
+  <main class="grid-contenedor">
+
+    <!-- HUD (controles e indicadores) -->
+    <aside class="hud" aria-label="Controles del juego">
+      <div class="hud-seccion">
+        <button id="btn-reiniciar">Reiniciar</button>
+      </div>
+      <div class="hud-seccion">
+        <label>Tiempo:</label>
+        <div id="timer" class="timer">00:00</div>
+      </div>
+    </aside>
+       <!-- Mensaje de derrota (inicialmente oculto) -->
+      <div id="mensaje-derrota" class="mensaje-derrota" style="display:none"></div>
+  
+    <!-- Area del canvas -->
+    <section class="area-juego" aria-label="Área del tablero">
+      <div class="area-canvas">
+        <canvas id="tablero-canvas" width="520" height="520" aria-label="Tablero del juego">
+        </canvas>
+      </div>
+      <div id="bloqueo-tablero" class="bloqueo-tablero"></div>
+    </section>
+
+    <p>Haz clic en una celda para mover la ficha.</p>
+  </main>
+
+  <script type="module" src="./Controller/main.js"></script>
+</body>
+</html>
