@@ -183,24 +183,4 @@ export class Tablero {
     return false;
   }
 
-
-  //OBTENER MOVIMIENTOS POSIBLES PARA HINT---------------------------------------------
-  
-  obtenerMovimientosPosibles(fila, columna) {
-    const movimientos = [];
-    // Definir las direcciones: arriba, abajo, izquierda, derecha
-    const direcciones = [
-        [-2, 0], [2, 0], [0, -2], [0, 2]
-    ];
-    for (const [df, dc] of direcciones) {
-        const nf = fila + df;
-        const nc = columna + dc;
-        // Verifica si el movimiento es válido usando tu lógica existente
-        if (this.movimientoValido(fila, columna, nf, nc)) {
-            movimientos.push({ fila: nf, columna: nc });
-        }
-    }
-    return movimientos;
-}
-
 }

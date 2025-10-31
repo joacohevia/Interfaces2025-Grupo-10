@@ -106,22 +106,16 @@ body {
 */
 
 .cnt-opc-fichas {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 9999;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(80, 80, 80, 0.281);
-  backdrop-filter: blur(8px);
-}
-
-.cnt-opc-fichas {
   /*position: fixed;*/
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 2rem;
+  z-index: 9999;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(80, 80, 80, 0.281);
+  backdrop-filter: blur(8px);
 }
 
 .cnt-opc-fichas button {
@@ -135,11 +129,4 @@ body {
   width: 100%;
   height: 100%;
   object-fit: fill;
-}
-
-/* Estilos para celdas destacadas */
-.destacada {
-    box-shadow: 0 0 10px 3px #ffd700;
-    border: 2px solid #ffd700;
-    z-index: 2;
 }

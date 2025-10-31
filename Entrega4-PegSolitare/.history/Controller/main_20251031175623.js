@@ -65,7 +65,6 @@ vista.onDragStart = (ficha) => {
   if (tableroBloqueado) return;
   // Opcional: resaltar ficha, mostrar posibles movimientos, etc.
   const posibles = tablero.movimientosPosiblesDesde(ficha.x, ficha.y);
-  onFichaSeleccionada(ficha.x, ficha.y); //para hint
   actualizarVistaConSeleccion({ x: ficha.x, y: ficha.y, id: ficha.id }, posibles);
 };
 
@@ -93,9 +92,9 @@ vista.onDragEnd = (ficha, targetCell) => {
       primerMovimiento = false;
       console.log('Cronómetro iniciado');
     }
-    perderPorFaltaDeMovimientos(); //para perder por falta de movs
-    verificarDerrotaPorFichas(); //para perder por tiempo
-    verificarVictoria(); //para ganar
+    perderPorFaltaDeMovimientos();
+    verificarDerrotaPorFichas();
+    verificarVictoria();
   }
     actualizarVistaConSeleccion(null, []);
   } else {
@@ -140,13 +139,14 @@ function manejarClickEnCelda(x, y) {
       primerMovimiento = false;
       console.log('Cronómetro iniciado');
     }
+
+    
     seleccionado = null;
-    onFichaSeleccionada(x, y); //para hint
     actualizarVistaConSeleccion(null, []);
-    verificarDerrotaPorFichas(); //para perder por tiempo
-    perderPorFaltaDeMovimientos(); // para perder por falta de movs
-    verificarVictoria(); //para ganar
-    return; 
+    verificarDerrotaPorFichas();
+    perderPorFaltaDeMovimientos();
+    verificarVictoria()
+    return;
   }  
   // si no válido, deseleccionar
   seleccionado = null;
@@ -245,7 +245,7 @@ function verificarVictoria() {
 
 //RESALTAR MOVIMIENTOS POSIBLES---------------------------------------------
 function onFichaSeleccionada(fila, columna) {
-    vista.limpiarDestacados();
+    tableroView.limpiarDestacados();
     const posibles = tablero.obtenerMovimientosPosibles(fila, columna);
-    vista.destacarCeldas(posibles);
+    tableroView.destacarCeldas(posibles);
 }

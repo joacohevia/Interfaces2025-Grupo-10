@@ -182,9 +182,6 @@ export class Tablero {
     }
     return false;
   }
-
-
-  //OBTENER MOVIMIENTOS POSIBLES PARA HINT---------------------------------------------
   
   obtenerMovimientosPosibles(fila, columna) {
     const movimientos = [];

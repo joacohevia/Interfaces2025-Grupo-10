@@ -245,7 +245,7 @@ function verificarVictoria() {
 
 //RESALTAR MOVIMIENTOS POSIBLES---------------------------------------------
 function onFichaSeleccionada(fila, columna) {
-    vista.limpiarDestacados();
+    tableroView.limpiarDestacados();
     const posibles = tablero.obtenerMovimientosPosibles(fila, columna);
-    vista.destacarCeldas(posibles);
+    tableroView.destacarCeldas(posibles);
 }

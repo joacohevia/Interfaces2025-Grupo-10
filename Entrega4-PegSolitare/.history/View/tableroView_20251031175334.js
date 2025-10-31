@@ -341,19 +341,6 @@ export class VistaTableroCanvas {
   }
 
   //RESALTAR MOVIMIENTOS POSIBLES---------------------------------------------
-  destacarCeldas(celdas) {
-      celdas.forEach(({ fila, columna }) => {
-          const celda = document.querySelector(`[data-fila='${fila}'][data-columna='${columna}']`);
-          if (celda) {
-              celda.classList.add('destacada');
-          }
-      });
-  }
 
-  limpiarDestacados() {
-      document.querySelectorAll('.destacada').forEach(celda => {
-          celda.classList.remove('destacada');
-      });
-  }
 }
 
