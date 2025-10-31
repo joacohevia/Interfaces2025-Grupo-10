@@ -4,6 +4,57 @@ import { Ficha } from '../Model/ficha.js';
 import { Tablero } from '../Model/tablero.js';
 import { VistaTableroCanvas } from '../View/tableroView.js';
 
+
+//POPUP SELECCIÓN DE FICHA--------------------------------------------
+const popupElegirFicha = document.querySelector('.cntr-elegir-ficha');
+let juegoIniciado = false;
+
+// Mostrar popup al cargar la página
+window.addEventListener('DOMContentLoaded', () => {
+  mostrarPopupFicha();
+});
+
+function mostrarPopupFicha() {
+  popupElegirFicha.classList.remove('oculto');
+  popupElegirFicha.classList.add('active');
+}
+
+function ocultarPopupFicha() {
+  popupElegirFicha.classList.remove('active');
+  popupElegirFicha.classList.add('oculto');
+}
+
+//CARGA DE IMAGEN EN LA FICHA--------------------------------------------
+let sharedImg = new Image();
+
+let btnOpc1 = document.getElementById('opc1');
+let btnOpc2 = document.getElementById('opc2');
+let btnOpc3 = document.getElementById('opc3');
+
+btnOpc1.addEventListener('click', () => seleccionarOpcion(1));
+btnOpc2.addEventListener('click', () => seleccionarOpcion(2));
+btnOpc3.addEventListener('click', () => seleccionarOpcion(3));
+
+function seleccionarOpcion(opcion) {
+    switch (opcion) {
+        case 1:
+            sharedImg.src = 'assets/img/test6.jpg';
+            break;
+        case 2:
+            sharedImg.src = 'assets/img/test7.jpg';
+            break;
+        case 3:
+            sharedImg.src = 'assets/img/test8.jpg';
+            break;
+    };
+    
+    sharedImg.onload = () => {
+      ocultarPopupFicha(); // Ocultar primero
+      llenarTablero(); // Llenar tablero después
+      vista.ajustarYRender();
+    };
+}
+
 const canvas = document.getElementById('tablero-canvas');
 if (!canvas) {
   throw new Error('No se encontró el canvas con id "tablero-canvas" en el HTML.');
@@ -24,18 +75,10 @@ const vista = new VistaTableroCanvas(canvas);
 const tablero = new Tablero(7, 7);
 let seleccionado = null;
 
-//CARGA DE IMAGEN EN LA FICHA--------------------------------------------
-// shared image (una sola carga)
-const sharedImg = new Image();
-let ruta = '../assets/img/test8.jpg';
-sharedImg.src = ruta;
-//console.log('encontro img'+sharedImg.src);
-sharedImg.onload = () => {
-  vista.ajustarYRender(); // cuando la img carga llamamos a...
-};
 
 // llenar todas las casillas válidas con ficha excepto el centro
 function llenarTablero(){
+  ocultarPopupFicha();
   let id = 0;
   for (let y = 0; y < tablero.filas; y++) {
     for (let x = 0; x < tablero.columnas; x++) {
@@ -65,14 +108,11 @@ vista.onDragStart = (ficha) => {
   if (tableroBloqueado) return;
   // Opcional: resaltar ficha, mostrar posibles movimientos, etc.
   const posibles = tablero.movimientosPosiblesDesde(ficha.x, ficha.y);
-  onFichaSeleccionada(ficha.x, ficha.y); //para hint
   actualizarVistaConSeleccion({ x: ficha.x, y: ficha.y, id: ficha.id }, posibles);
 };
 
 vista.onDragMove = (clientX, clientY, targetCell) => {
   if (tableroBloqueado) return;
-  // Opcional: feedback visual, resaltar celda destino, etc.
-  // Puedes guardar targetCell si quieres resaltar en la vista.
 };
 
 
@@ -80,13 +120,13 @@ vista.onDragEnd = (ficha, targetCell) => {
   if (tableroBloqueado) return;
   if (!targetCell) {
     // Soltó fuera del tablero, cancelar selección
+    vista.limpiarDestacados();
     actualizarVistaConSeleccion(null, []);
     return;
   }
   // Intenta mover la ficha usando el modelo
   const moved = tablero.moverConFicha(ficha.id, targetCell.x, targetCell.y);
   if (moved) {
-    if (moved) {
     // Iniciar cronómetro en el PRIMER movimiento exitoso
     if (primerMovimiento) {
       iniciarCronometro();
@@ -96,7 +136,7 @@ vista.onDragEnd = (ficha, targetCell) => {
     perderPorFaltaDeMovimientos(); //para perder por falta de movs
     verificarDerrotaPorFichas(); //para perder por tiempo
     verificarVictoria(); //para ganar
-  }
+    vista.limpiarDestacados(); //limpio destacados
     actualizarVistaConSeleccion(null, []);
   } else {
     // Movimiento inválido, mantener selección
@@ -141,7 +181,6 @@ function manejarClickEnCelda(x, y) {
       console.log('Cronómetro iniciado');
     }
     seleccionado = null;
-    onFichaSeleccionada(x, y); //para hint
     actualizarVistaConSeleccion(null, []);
     verificarDerrotaPorFichas(); //para perder por tiempo
     perderPorFaltaDeMovimientos(); // para perder por falta de movs
@@ -150,6 +189,7 @@ function manejarClickEnCelda(x, y) {
   }  
   // si no válido, deseleccionar
   seleccionado = null;
+  vista.limpiarDestacados();
   actualizarVistaConSeleccion(null, []);
 }
 //ESTADO: es el estado del juego un object que tiene las filas,columnas,ect
@@ -160,8 +200,11 @@ function actualizarVistaConSeleccion(seleccionado = null, posibles = []) {
   if (seleccionado) //si pasaron un seleccionado entonces actualizo el estado
     estado.selected = { x: seleccionado.x, y: seleccionado.y };
     //console.log(seleccionado);
-  if (posibles && posibles.length) //si hay mov posibles los guarda en el estado
-    estado.posiblesMovimientos = posibles;
+   if (posibles && posibles.length) {
+    estado.celdasDestacadas = posibles.map(p => ({ fila: p.y, columna: p.x }));
+    } else {
+    estado.celdasDestacadas = [];
+    }
   vista.setEstado(estado);
   vista.render();
 }
@@ -173,11 +216,13 @@ btnReinicio.addEventListener('click', reiniciar);
 function reiniciar() {
   detenerCronometro();
   vista.reiniciarJuego();
+  vista.limpiarDestacados();
   primerMovimiento = true;
   tableroBloqueado = false;
   llenarTablero();
   vista.setEstado(tablero.obtenerEstado());
   vista.render();
+  mostrarPopupFicha();
 }
 
 // CRONOMETRO-------------------------------------------------------------- 
@@ -241,11 +286,4 @@ function verificarVictoria() {
     vista.bloquear();
     vista.mostrarMensaje('¡Ganaste! Solo queda una ficha.');
   }
-}
-
-//RESALTAR MOVIMIENTOS POSIBLES---------------------------------------------
-function onFichaSeleccionada(fila, columna) {
-    vista.limpiarDestacados();
-    const posibles = tablero.obtenerMovimientosPosibles(fila, columna);
-    vista.destacarCeldas(posibles);
 }

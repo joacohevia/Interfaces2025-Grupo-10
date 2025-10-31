@@ -58,15 +58,20 @@ export class VistaTableroCanvas {
   }
 
   _moverArrastre(ev) {
-    if (!this._drag) 
-      return;
-    const dx = ev.clientX - this._drag.startX;
-    const dy = ev.clientY - this._drag.startY;
-    this._drag.active = true;
-    if (typeof this.onDragStart === 'function') this.onDragStart(this._drag.ficha);
-    
-    this._drag.clientX = ev.clientX;
-    this._drag.clientY = ev.clientY;
+    if (!this._drag) return;
+    // Solo ase activa si se movió suficiente
+    if (!this._drag.active) {
+      const dx = Math.abs(ev.clientX - this._drag.startX);
+      const dy = Math.abs(ev.clientY - this._drag.startY);
+      if (dx > 5 || dy > 5) {
+        this._drag.active = true;
+        if (typeof this.onDragStart === 'function') {
+          this.onDragStart(this._drag.ficha);
+        }
+      }
+    }
+    this._drag.actualX = ev.clientX;
+    this._drag.actualY = ev.clientY;
     const targetCell = this._coordenadasACelda(ev.clientX, ev.clientY);
     if (this._drag.active && typeof this.onDragMove === 'function') {
       this.onDragMove(ev.clientX, ev.clientY, targetCell);
@@ -159,8 +164,9 @@ export class VistaTableroCanvas {
     if(!matriz)
       console.warn('estado matriz no definido')
     // fondo
-    ctx.fillStyle = '#f8f8fb';
-    ctx.fillRect(0, 0, w, h);
+    this.fondoImg = new Image();
+    this.fondoImg.src = 'assets/img/fondo_tablero_2.png';
+    ctx.drawImage(this.fondoImg, 0, 0, w, h);
 
     // dibujar cada celda según matriz (-1/0/1)
     const dibujarCelda = Math.min(celdaW, celdaH) * 0.28;
@@ -174,13 +180,19 @@ export class VistaTableroCanvas {
         //calculo el centro de la celda
 
         if (valido === -1) {//fuera
-            ctx.fillStyle = 'rgba(0,0,0,0.06)';
+            ctx.fillStyle = 'rgba(143, 53, 53, 0.06)';
             ctx.fillRect(x * celdaW, y * celdaH, celdaW, celdaH);
         } else {
+          //fondo "cruz"
+          ctx.save();
+          ctx.globalAlpha = 0.35; // Ajusta la opacidad
+          ctx.fillStyle = '#a3a1a1ff';
+          ctx.fillRect(x * celdaW, y * celdaH, celdaW, celdaH);
+          ctx.restore();
           // celda válida: dibujar "agujero" base
           // sombra del hoyo
           ctx.beginPath();
-          ctx.fillStyle = 'rgba(0,0,0,0.08)';
+          ctx.fillStyle = 'rgba(172, 12, 12, 0.08)';
           ctx.arc(centroCx, centroCy +dibujarCelda * 0.15,dibujarCelda * 1.05, 0, Math.PI * 2);
           ctx.fill();
 
@@ -198,7 +210,89 @@ export class VistaTableroCanvas {
       }
     }
 
-
+    //DESTACADOS MOVIMIENTOS POSUBLES (hint)
+  if (this.estado.celdasDestacadas && this.estado.celdasDestacadas.length > 0) {
+  // Usar timestamp para animación fluida
+  const time = Date.now() / 1000;
+  
+  for (const celda of this.estado.celdasDestacadas) {
+    const x = celda.columna;
+    const y = celda.fila;
+    
+    if (matriz?.[y]?.[x] === 0) { // solo si está vacía
+      const cx = x * celdaW + celdaW / 2;
+      const cy = y * celdaH + celdaH / 2;
+      
+      ctx.save();
+      
+      // Animación de pulsación (escala entre 0.9 y 1.1)
+      const pulseScale = 1 + Math.sin(time * 3) * 0.1;
+      const baseRadius = dibujarCelda * 0.65;
+      const radius = baseRadius * pulseScale;
+      
+      // Animación de opacidad para el resplandor
+      const glowOpacity = 0.6 + Math.sin(time * 2.5) * 0.3;
+      
+      // Onda expansiva externa (se expande y desvanece)
+      const waveProgress = (time * 2) % 1;
+      const waveRadius = baseRadius + (baseRadius * waveProgress * 0.8);
+      const waveOpacity = (1 - waveProgress) * 0.4;
+      
+      ctx.beginPath();
+      ctx.strokeStyle = `rgba(34, 197, 94, ${waveOpacity})`;
+      ctx.lineWidth = 3;
+      ctx.arc(cx, cy, waveRadius, 0, Math.PI * 2);
+      ctx.stroke();
+      
+      // Resplandor principal animado
+      ctx.shadowColor = `rgba(34, 197, 94, ${glowOpacity})`;
+      ctx.shadowBlur = 30;
+      
+      // Círculo principal con gradiente
+      const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+      gradient.addColorStop(0, 'rgba(134, 239, 172, 0.4)');
+      gradient.addColorStop(0.6, 'rgba(34, 197, 94, 0.25)');
+      gradient.addColorStop(1, 'rgba(34, 197, 94, 0)');
+      
+      ctx.beginPath();
+      ctx.fillStyle = gradient;
+      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Anillo brillante exterior
+      ctx.shadowBlur = 20;
+      ctx.beginPath();
+      ctx.strokeStyle = '#4ade80';
+      ctx.lineWidth = 3;
+      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+      ctx.stroke();
+      
+      // Punto central brillante
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = 'rgba(134, 239, 172, 0.9)';
+      ctx.beginPath();
+      ctx.fillStyle = '#86efac';
+      ctx.arc(cx, cy, 4 * pulseScale, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Partículas orbitando (opcional, 4 puntos)
+      ctx.shadowBlur = 10;
+      for (let i = 0; i < 4; i++) {
+        const angle = (time * 2 + (i * Math.PI / 2)) % (Math.PI * 2);
+        const orbitRadius = radius * 0.7;
+        const px = cx + Math.cos(angle) * orbitRadius;
+        const py = cy + Math.sin(angle) * orbitRadius;
+        
+        ctx.beginPath();
+        ctx.fillStyle = '#86efac';
+        ctx.arc(px, py, 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      
+      ctx.restore();
+    }
+  }
+}
     // dibuja las fichas(si coincide con mat[1])
     for (const f of this.estado.fichas) {
       // si por alguna razón matriz dice inválida, saltar
@@ -254,7 +348,7 @@ export class VistaTableroCanvas {
       ctx.strokeStyle = 'rgba(255,255,255,0.6)';
       ctx.stroke();
     }
-
+    
     // Dibuja ficha fantasma si arrastrando
     if (this._drag && this._drag.active) {
       const ctx = this.ctx;
@@ -265,8 +359,8 @@ export class VistaTableroCanvas {
       const celdaH = rect.height / filas;
       const radio = Math.min(celdaW, celdaH) * 0.35;
       // Convertir clientX/clientY a coords canvas
-      const x = this._drag.clientX - rect.left;
-      const y = this._drag.clientY - rect.top;
+      const x = this._drag.actualX - rect.left;
+      const y = this._drag.actualY - rect.top;
       // Sombra
       ctx.save();
       ctx.globalAlpha = 0.7;
@@ -274,34 +368,58 @@ export class VistaTableroCanvas {
       ctx.fillStyle = 'rgba(0,0,0,0.18)';
       ctx.arc(x, y + 2, radio * 1.05, 0, Math.PI * 2);
       ctx.fill();
-      // Ficha
-      ctx.beginPath();
-      ctx.fillStyle = this._drag.ficha.color || '#d32f2f';
-      ctx.arc(x, y, radio, 0, Math.PI * 2);
-      ctx.fill();
+      // Ficha con img
+      if (this._drag.ficha.img && this._drag.ficha.img.complete && this._drag.ficha.img.naturalWidth) {
+        // Recortar a círculo y dibujar la imagen
+        ctx.globalAlpha = 0.8;
+        ctx.beginPath();
+        ctx.arc(x, y, radio, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.clip();
+        
+        const iw = this._drag.ficha.img.naturalWidth;
+        const ih = this._drag.ficha.img.naturalHeight;
+        let sx = 0, sy = 0, sw = iw, sh = ih;
+        const aspectImg = iw / ih;
+        
+        // Crop centrado para "cover" en un cuadrado
+        if (aspectImg > 1) {
+          sw = Math.round(ih * 1);
+          sx = Math.round((iw - sw) / 2);
+        } else if (aspectImg < 1) {
+          sh = Math.round(iw / 1);
+          sy = Math.round((ih - sh) / 2);
+        }
+        
+        ctx.drawImage(this._drag.ficha.img, sx, sy, sw, sh, x - radio, y - radio, radio * 2, radio * 2);
+      } else {
+        // Fallback: color sólido
+        ctx.beginPath();
+        ctx.fillStyle = this._drag.ficha.color || '#d32f2f';
+        ctx.arc(x, y, radio, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      
+      // Borde
       ctx.lineWidth = 2;
       ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+      ctx.beginPath();
+      ctx.arc(x, y, radio, 0, Math.PI * 2);
       ctx.stroke();
+      
       ctx.restore();
     }
-  }
-
-  /*
-  // Llamar para limpiar listeners si se destruye la vista
-  destruir() {
-    this.canvas.removeEventListener('click', this._clickHandler);
-    this.canvas.removeEventListener('pointerdown', this._pointerDownHandler);
-  }*/
+  } 
  
   //UTIL PARA RENDERIZAR LA IMG EN LA FICHA----------------------------
   ajustarYRender() {
   // se asegura que el canvas tenga el tamaño del backing store correcto
   // y despues llamar al render para dibujar con la escala y dimencion correcta
-  if (typeof this._ajustarBufferSegunDPR === 'function') {
-    //el typeof asegura que exista ese met/fun, y q sea una function
-    this._ajustarBufferSegunDPR();
-    this.render();
-  }
+    if (typeof this._ajustarBufferSegunDPR === 'function') {
+      //el typeof asegura que exista ese met/fun, y q sea una function
+      this._ajustarBufferSegunDPR();
+      this.render();
+    }
   }
 
   //BLOQUEAR----------------------------------------------------------
@@ -315,14 +433,14 @@ export class VistaTableroCanvas {
   if (overlay) overlay.style.display = 'none';
   }
 
-  //
+  //MENSAJE DERROTA------------------------------------------------------
 
   mostrarMensaje(msg) {
   const mensaje = document.getElementById('mensaje-derrota');
-  if (mensaje) {
-    mensaje.textContent = msg;
-    mensaje.style.display = 'block';
-  }
+    if (mensaje) {
+      mensaje.textContent = msg;
+      mensaje.style.display = 'block';
+    }
   }
 
   ocultarMensaje() {
@@ -342,18 +460,15 @@ export class VistaTableroCanvas {
 
   //RESALTAR MOVIMIENTOS POSIBLES---------------------------------------------
   destacarCeldas(celdas) {
-      celdas.forEach(({ fila, columna }) => {
-          const celda = document.querySelector(`[data-fila='${fila}'][data-columna='${columna}']`);
-          if (celda) {
-              celda.classList.add('destacada');
-          }
-      });
-  }
+    if (!this.estado) return;
+    this.estado.celdasDestacadas = celdas || [];
+    this.render();
+}
 
   limpiarDestacados() {
-      document.querySelectorAll('.destacada').forEach(celda => {
-          celda.classList.remove('destacada');
-      });
-  }
+    if (!this.estado) return;
+    this.estado.celdasDestacadas = [];
+    this.render();
+}
 }
 

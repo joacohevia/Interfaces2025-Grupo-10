@@ -164,8 +164,8 @@ export class Tablero {
   for (const d of deltas) {
     const nx = sx + d.dx;
     const ny = sy + d.dy;
-    if (this.esMovimientoValido(sx, sy, nx, ny)) {
-      posibles.push({ x: nx, y: ny });
+    if (this.esMovimientoValido(sx, sy, nx, ny)) { 
+       posibles.push({ x: nx, y: ny }); 
     }
   }
   return posibles;
@@ -182,25 +182,8 @@ export class Tablero {
     }
     return false;
   }
-
-
-  //OBTENER MOVIMIENTOS POSIBLES PARA HINT---------------------------------------------
-  
-  obtenerMovimientosPosibles(fila, columna) {
-    const movimientos = [];
-    // Definir las direcciones: arriba, abajo, izquierda, derecha
-    const direcciones = [
-        [-2, 0], [2, 0], [0, -2], [0, 2]
-    ];
-    for (const [df, dc] of direcciones) {
-        const nf = fila + df;
-        const nc = columna + dc;
-        // Verifica si el movimiento es válido usando tu lógica existente
-        if (this.movimientoValido(fila, columna, nf, nc)) {
-            movimientos.push({ fila: nf, columna: nc });
-        }
-    }
-    return movimientos;
+  limpiarFichas() {
+    this.fichas.clear();
 }
 
 }

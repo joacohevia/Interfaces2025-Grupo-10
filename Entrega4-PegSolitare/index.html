@@ -9,16 +9,7 @@
 <body>
   
 
-  <div class="cnt-elegir-ficha">
-    <h2>Elegí el tipo de ficha que mas te guste</h2>
-    <div class="cnt-opc-fichas">  
-      <button name="opc1"><img src="./assets/img/fichaironman2.jpg" alt=""></button>
-      <button name="opc2"><img src="./assets/img/pegAdaptado.jpg" alt=""></button>
-      <button name="opc3"><img src="./assets/img/perfilUser.jpg" alt=""></button>
-    </div>
-  </div>
-
-  <h1>Tablero MVC con Canvas</h1>
+   <h1>Tablero MVC con Canvas</h1>
   
   <main class="grid-contenedor">
 
@@ -34,13 +25,29 @@
     </aside>
        <!-- Mensaje de derrota (inicialmente oculto) -->
       <div id="mensaje-derrota" class="mensaje-derrota" style="display:none"></div>
-  
-    <!-- Area del canvas -->
+      
+
+      
+    
+      <!-- Area del canvas -->
     <section class="area-juego" aria-label="Área del tablero">
       <div class="area-canvas">
+
+        <!-- Pop up elegir ficha -->
+        <div class="cntr-elegir-ficha">
+          <h2>Elegí el tipo de ficha que mas te guste</h2>
+          <div class="cntr-opc-fichas">  
+            <button id="opc1"><img src="./assets/img/img6BTN.png" alt=""></button>
+            <button id="opc2"><img src="./assets/img/img7BTN.png" alt=""></button>
+            <button id="opc3"><img src="./assets/img/img8BTN.png" alt=""></button>
+          </div>
+        </div>
+
         <canvas id="tablero-canvas" width="520" height="520" aria-label="Tablero del juego">
         </canvas>
+
       </div>
+
       <div id="bloqueo-tablero" class="bloqueo-tablero"></div>
     </section>
 
