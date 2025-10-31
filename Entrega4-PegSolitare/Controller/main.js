@@ -14,7 +14,7 @@ let timerInterval = null;
 let timerStart = null;
 let timerRunning = false;
 const timerDisplay = document.getElementById('timer');
-const TIEMPO_LIMITE_MS = 5000; // 2:30 en ms
+const TIEMPO_LIMITE_MS = 150000; // 2:30 en ms
 let tableroBloqueado = false;
 let primerMovimiento = true;
 
@@ -27,7 +27,8 @@ let seleccionado = null;
 //CARGA DE IMAGEN EN LA FICHA--------------------------------------------
 // shared image (una sola carga)
 const sharedImg = new Image();
-sharedImg.src = 'perfilUser.jpg';
+let ruta = '../assets/img/test8.jpg';
+sharedImg.src = ruta;
 //console.log('encontro img'+sharedImg.src);
 sharedImg.onload = () => {
   vista.ajustarYRender(); // cuando la img carga llamamos a...
@@ -51,11 +52,12 @@ function llenarTablero(){
 llenarTablero();
 
 /*
-✅Obligatorio: Tiene que haber hints ANIMADOS indicando de donde puedo largar la ficha
+✅Obligatorio: Tiene que haber hints ANIMADOS indicando de donde 
+puedo largar la ficha
 */
 
 
-
+//MOVER FICHAS CON CLICK Y DRAG&DROP----------------------------
 // inicializar estado y dibujar
 vista.setEstado(tablero.obtenerEstado());
 vista.render();
@@ -95,6 +97,9 @@ vista.onDragEnd = (ficha, targetCell) => {
       primerMovimiento = false;
       console.log('Cronómetro iniciado');
     }
+    perderPorFaltaDeMovimientos();
+    verificarDerrotaPorFichas();
+    verificarVictoria();
   }
     actualizarVistaConSeleccion(null, []);
   } else {
@@ -142,6 +147,8 @@ function manejarClickEnCelda(x, y) {
     seleccionado = null;
     actualizarVistaConSeleccion(null, []);
     verificarDerrotaPorFichas();
+    perderPorFaltaDeMovimientos();
+    verificarVictoria()
     return;
   }  
   // si no válido, deseleccionar
@@ -170,11 +177,13 @@ function reiniciar() {
   detenerCronometro();
   vista.reiniciarJuego();
   primerMovimiento = true;
+  tableroBloqueado = false;
   llenarTablero();
   vista.setEstado(tablero.obtenerEstado());
   vista.render();
 }
 
+// CRONOMETRO-------------------------------------------------------------- 
 function iniciarCronometro() {
   if (timerRunning) return;
   timerRunning = true;
@@ -198,6 +207,8 @@ function actualizarCronometro() {
   }
 }
 
+
+//PERDIDA POR TIEMPO--------------------------------------------------------
 function perderPorTiempo() {
   detenerCronometro();
   tableroBloqueado = true;
@@ -212,5 +223,25 @@ function verificarDerrotaPorFichas() {
     if (transcurrido >= TIEMPO_LIMITE_MS) {
       perderPorTiempo();
     }
+  }
+}
+
+//PERDIDA POR FALTA DE MOVIMIENTOS--------------------------------------------------------
+function perderPorFaltaDeMovimientos() {
+  if(!tablero.hayMovimientosPosibles()) {
+    detenerCronometro();
+    tableroBloqueado = true;
+    vista.bloquear();
+    vista.mostrarMensaje('¡Perdiste! No quedan movimientos posibles.');
+  }
+}
+
+//VERIFICAR VICTORIA--------------------------------------------------------
+function verificarVictoria() {
+  if (tablero.getFichas().length === 1) {
+    detenerCronometro();
+    tableroBloqueado = true;
+    vista.bloquear();
+    vista.mostrarMensaje('¡Ganaste! Solo queda una ficha.');
   }
 }

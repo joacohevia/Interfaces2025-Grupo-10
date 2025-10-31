@@ -173,4 +173,14 @@ export class Tablero {
   tieneFichasRestantes() {
     return this.getFichas().length > 1;
   }
+
+  hayMovimientosPosibles() {
+    for (const ficha of this.getFichas()) {
+      if (this.movimientosPosiblesDesde(ficha.x, ficha.y).length > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 }

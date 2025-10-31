@@ -104,3 +104,29 @@ body {
   //El tamaño y posición se ajustan por JS
 }
 */
+
+.cnt-elegir-ficha {
+  /*position: fixed;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  z-index: 9999;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(80, 80, 80, 0.281);
+  backdrop-filter: blur(8px);
+}
+
+.cnt-elegir-ficha button {
+  width: 5%;
+  height: 10%;
+  overflow: hidden;
+  border-radius: 100%;
+}
+
+.cnt-elegir-ficha button img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}

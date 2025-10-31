@@ -228,11 +228,12 @@ export class VistaTableroCanvas {
         ctx.closePath();
         ctx.clip();
 
+        
         const iw = f.img.naturalWidth;
         const ih = f.img.naturalHeight;
         let sx = 0, sy = 0, sw = iw, sh = ih;
         const aspectImg = iw / ih;
-
+        
         // crop centrado para "cover" en un cuadrado (circle)
         if (aspectImg > 1) {
           // imagen más ancha: recortar lados
@@ -314,6 +315,8 @@ export class VistaTableroCanvas {
   if (overlay) overlay.style.display = 'none';
   }
 
+  //
+
   mostrarMensaje(msg) {
   const mensaje = document.getElementById('mensaje-derrota');
   if (mensaje) {
@@ -328,6 +331,8 @@ export class VistaTableroCanvas {
   }
 
 
+    
+  //REINICIAR JUEGO------------------------------------------------------
   reiniciarJuego(){
   let timer = document.getElementById('timer');
   this.desbloquear();
