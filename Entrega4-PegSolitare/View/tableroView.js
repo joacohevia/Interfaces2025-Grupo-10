@@ -212,14 +212,14 @@ export class VistaTableroCanvas {
       ctx.fillStyle = 'rgba(0,0,0,0.12)';
       ctx.arc(cx, cy + 2, radio * 1.05, 0, Math.PI * 2);
       ctx.fill();
-
+      /*
       // cuerpo de la ficha
       ctx.beginPath();
       ctx.fillStyle = f.color || '#d32f2f';
       ctx.arc(cx, cy, radio, 0, Math.PI * 2);
       ctx.fill();
-
-      /*
+      */
+      //IMG EN LA FICHA--------------------------------
       if (f.img && f.img.complete && f.img.naturalWidth) {
         // recortar a círculo y dibujar la imagen (cover)
         ctx.save();
@@ -246,15 +246,13 @@ export class VistaTableroCanvas {
 
         ctx.drawImage(f.img, sx, sy, sw, sh, cx - radio, cy - radio, radio * 2, radio * 2);
         ctx.restore();
-      */
-
+      
+      }
       // borde
       ctx.lineWidth = 2;
       ctx.strokeStyle = 'rgba(255,255,255,0.6)';
       ctx.stroke();
     }
-
-
 
     // Dibuja ficha fantasma si arrastrando
     if (this._drag && this._drag.active) {
@@ -294,37 +292,48 @@ export class VistaTableroCanvas {
     this.canvas.removeEventListener('pointerdown', this._pointerDownHandler);
   }*/
  
+  //UTIL PARA RENDERIZAR LA IMG EN LA FICHA----------------------------
+  ajustarYRender() {
+  // se asegura que el canvas tenga el tamaño del backing store correcto
+  // y despues llamar al render para dibujar con la escala y dimencion correcta
+  if (typeof this._ajustarBufferSegunDPR === 'function') {
+    //el typeof asegura que exista ese met/fun, y q sea una function
+    this._ajustarBufferSegunDPR();
+    this.render();
+  }
+  }
 
-bloquear() {
+  //BLOQUEAR----------------------------------------------------------
+  bloquear() {
   let overlay = document.getElementById('bloqueo-tablero');
   document.body.appendChild(overlay);  
-}
+  }
 
-desbloquear() {
+  desbloquear() {
   const overlay = document.getElementById('bloqueo-tablero');
   if (overlay) overlay.style.display = 'none';
-}
+  }
 
-mostrarMensaje(msg) {
+  mostrarMensaje(msg) {
   const mensaje = document.getElementById('mensaje-derrota');
   if (mensaje) {
     mensaje.textContent = msg;
     mensaje.style.display = 'block';
   }
-}
+  }
 
-ocultarMensaje() {
+  ocultarMensaje() {
   const mensaje = document.getElementById('mensaje-derrota');
   if (mensaje) mensaje.style.display = 'none';
-}
+  }
 
 
-reiniciarJuego(){
+  reiniciarJuego(){
   let timer = document.getElementById('timer');
   this.desbloquear();
   this.ocultarMensaje();
   timer.innerHTML = '00:00';
-}
+  }
 
 }
 

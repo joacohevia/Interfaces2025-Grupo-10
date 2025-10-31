@@ -24,6 +24,14 @@ const vista = new VistaTableroCanvas(canvas);
 const tablero = new Tablero(7, 7);
 let seleccionado = null;
 
+//CARGA DE IMAGEN EN LA FICHA--------------------------------------------
+// shared image (una sola carga)
+const sharedImg = new Image();
+sharedImg.src = 'perfilUser.jpg';
+//console.log('encontro img'+sharedImg.src);
+sharedImg.onload = () => {
+  vista.ajustarYRender(); // cuando la img carga llamamos a...
+};
 
 // llenar todas las casillas válidas con ficha excepto el centro
 function llenarTablero(){
@@ -34,7 +42,7 @@ function llenarTablero(){
         if (x === tablero.centroX && y === tablero.centroY) continue; // centro vacío
         const ficha = new Ficha(`p${id++}`, x, y, {tipo: 'ficha', color: '#1e88e5' });
          //aca hay q modificar para q la ficha tenga una img
-         //ficha.img = sharedImg; // asignar la Image ya cargada/reutilizable
+        ficha.setImage(sharedImg) // asignar la imagen cargada
         tablero.agregarFicha(ficha);
       }
     }
@@ -43,13 +51,8 @@ function llenarTablero(){
 llenarTablero();
 
 /*
-// shared image (una sola carga)
-const sharedImg = new Image();
-sharedImg.crossOrigin = 'anonymous'; // opcional si vas a exportar canvas
-sharedImg.src = 'perfilUser.jpg';
-sharedImg.onload = () => {
-  vista.ajustarYRender(); // redraw cuando la imagen esté lista
-};*/
+✅Obligatorio: Tiene que haber hints ANIMADOS indicando de donde puedo largar la ficha
+*/
 
 
 
@@ -159,7 +162,7 @@ function actualizarVistaConSeleccion(seleccionado = null, posibles = []) {
   vista.render();
 }
 
-
+/*FUNCION DE REINICIAR------------------------------------------------------------------ */
 let btnReinicio = document.getElementById('btn-reiniciar');
 btnReinicio.addEventListener('click', reiniciar);
 

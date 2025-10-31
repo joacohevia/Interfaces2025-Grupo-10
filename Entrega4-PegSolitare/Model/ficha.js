@@ -6,12 +6,16 @@ export class Ficha {
     this.y = y;
     this.tipo = tipo;
     this.color = color;
-    //this.img = null;
-    //if (src) this.loadImage(src);
+    this.img = null;
   }
 
   moverA(x, y) {
     this.x = x;
     this.y = y;
   }
+   // Asignar una Image ya precargada (HTMLImageElement)
+  setImage(img) {
+    this.img = img;
+  }
+
 }

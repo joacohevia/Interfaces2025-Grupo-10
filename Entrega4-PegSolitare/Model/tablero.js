@@ -81,7 +81,14 @@ export class Tablero {
       centroX: this.centroX,
       centroY: this.centroY,
       matriz, // matriz con -1/0/1
-      fichas: this.getFichas().map(f => ({ id: f.id, x: f.x, y: f.y, color: f.color, tipo: f.tipo }))
+      fichas: this.getFichas().map(f => ({ 
+        id: f.id, 
+        x: f.x, 
+        y: f.y, 
+        color: f.color, 
+        tipo: f.tipo, 
+        img: f.img//img
+      }))
     };
   }
 
@@ -105,8 +112,8 @@ export class Tablero {
   f.moverA(dx, dy);
 
   return true;
-}
-quitarFichaEn(x, y) {
+  }
+  quitarFichaEn(x, y) {
   for (const [id, f] of this.fichas.entries()) {
     if (f.x === x && f.y === y) {
       this.fichas.delete(id);
@@ -114,8 +121,8 @@ quitarFichaEn(x, y) {
     }
   }
   return false;
-}
-esMovimientoValido(sx, sy, dx, dy) {
+    }
+  esMovimientoValido(sx, sy, dx, dy) {
   if (!this.esDentro(sx, sy) || !this.esDentro(dx, dy)) return false;
   if (!this.esCasillaValida(sx, sy) || !this.esCasillaValida(dx, dy)) return false;
   if (sx === dx && sy === dy) return false;
@@ -142,9 +149,9 @@ esMovimientoValido(sx, sy, dx, dy) {
   if (!medio) return false;
 
   return true;
-}
+  }
 
-movimientosPosiblesDesde(sx, sy) {
+  movimientosPosiblesDesde(sx, sy) {
   const posibles = [];
   const origen = this.getFichaEn(sx, sy);
   if (!origen) return posibles;
@@ -162,8 +169,8 @@ movimientosPosiblesDesde(sx, sy) {
     }
   }
   return posibles;
-}
-tieneFichasRestantes() {
+  }
+  tieneFichasRestantes() {
     return this.getFichas().length > 1;
-}
+  }
 }
