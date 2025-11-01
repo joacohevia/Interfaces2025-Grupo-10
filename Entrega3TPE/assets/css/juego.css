@@ -67,9 +67,7 @@
     margin-top: 0rem;
 }
 
-.game-display {
-    margin-bottom: 2rem;
-}
+
 /*
 .game-board-display {
     display: flex;
@@ -90,7 +88,7 @@
 
 /*simulador juego*/
 .board-simulation {
-    height: 420px;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -99,46 +97,190 @@
     margin-left: 2.5rem;
     margin-right: 2.5rem;
     margin-top: 0.5rem;
-    background-image: url('../img/portadaBlocka.png');
-    background-size: cover;
-    background-position: center;
     position: relative;
     overflow: hidden;
 }
 
-.board-simulation::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.8); /* negro más opaco */
-    backdrop-filter: blur(8px); /* blur más suave */
-    z-index: 1;
-    border-radius: 32px;
-}
-.board-simulation > * {
-    position: relative;
-    z-index: 2;
+/*ESTILOS DEL PEG-SOLITARE,CANVAS---------------------------------------------------*/
+/*contenedor de todo el juego */
+.grid-contenedor {
+  display: grid;
+  grid-template-columns: 260px auto; /* HUD a la izquierda, canvas al centro */
+  grid-template-rows: auto 1fr;
+  gap: 18px;
+  grid-template-areas:
+    "hud canvas"
+    "hud canvas";
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  column-gap: 3rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  align-items: start;
 }
 
-.board-simulation > img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 32px;
-    box-shadow: 0 0 15px #576c95;
+/* HUD  botones del juego*/
+.hud {
+  grid-area: hud;
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgb(1, 29, 82);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  position: sticky;
+  top: 0; /* se queda visible en scroll pero respeta el grid */
+  align-self: start; /* asegura que se alinee al inicio del grid */
+  background-image: url('../imgPeg/fondo_tablero_2.png');
+  background-size: cover;       /* que cubra toda el área */
+  background-position: center;  /* centrada */
 }
+/* líneas internas */
+.hud-seccion{ 
+  display:flex; 
+  flex-direction:column; 
+  gap:6px; 
+}
+
+.hud button{ 
+  padding:8px 12px; 
+  border-radius:6px; 
+  background:#ff8c29; 
+  cursor:pointer 
+}
+.hud button:active{
+   transform: translateY(1px) 
+  }
+
+.timer{ 
+  font-weight:700; 
+  font-size:1.2rem; 
+  color:#1e88e5 
+}
+#contador-fichas{ 
+  font-weight:700; 
+  font-size:1.1rem 
+}
+/* Canvas juego */
+.area-juego { 
+  grid-area: canvas; 
+  display:flex; 
+  align-items:start; 
+  justify-content:flex-start; 
+  align-self: start; /* asegura que se alinee al inicio del grid */
+  width: 520px;
+  height: 520px;
+}
+
+.area-canvas {
+  background: #fff;
+  /*padding: 12px;*/
+  border-radius: 100px;
+  box-shadow: 0 6px 20px rgba(23,28,35,1);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width: 520px;
+  height: 520px;
+}
+
+#tablero-canvas {
+  border-radius: 20px;
+  width: 520px;
+  height: 520px;
+  overflow: hidden; /* importante para que recorte el contenido */
+}
+/*blurr derrota*/
+.overlay-derrota {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  z-index: 999;
+  display: none;
+  width:63%;
+  left: 37%;
+  right: 10%;
+  top:3%;
+  bottom: 3%;
+  
+}
+
+/* Mensaje centrado con fondo negro */
+.mensaje-derrota {
+  position: absolute;
+  top: 50%;
+  left: 67%;
+  transform: translate(-50%, -50%);
+  background: #000;
+  
+  padding: 1rem 1rem;
+  border-radius: 20px;
+  
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+  
+  font-size: 1rem;
+  color: #fff;
+  text-align: center;
+  
+  z-index: 1000;
+  display: none;
+  
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+/*FIN NUEVO INTENTO*/
+
+.cntr-elegir-ficha {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  height: 520px;
+  width: 520px;
+  background-color: rgba(80, 80, 80, 0.400);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  overflow: hidden; /* importante para que recorte el contenido */
+}
+
+
+.cntr-opc-fichas {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.cntr-opc-fichas button {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.cntr-opc-fichas button img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+
+.cntr-elegir-ficha.oculto {
+  display: none;
+}
+/*FIN DE ESTILOS DEL CONTENEDOR JUEGO-----------------------------------------------------*/
+
 /*ubicacion btn share y btn expandir*/
 .game-overlay-buttons {
     position: absolute;
-    bottom: 20px;
+    bottom: 10px;
     left: 20px;
     right: 20px;
     display: flex;
     justify-content: space-between;
-    z-index: 10;
+    z-index: 1;
+
 }
 
 .overlay-btn {
@@ -768,3 +910,6 @@
         width: 100%;
     }
 }
+
+
+

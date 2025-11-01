@@ -772,6 +772,13 @@ body.loaded #loader {
     background-position: center;
     position: relative;
 }
+.board-simulation > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 32px;
+    box-shadow: 0 0 15px #576c95;
+}
 .board-simulation::before {
     content: "";
     position: absolute;
@@ -782,9 +789,10 @@ body.loaded #loader {
     background: rgba(0,0,0,0.5); /* negro semitransparente */
     backdrop-filter: blur(6px); /* blur */
     z-index: 1;
+    border-radius: 32px;
+
 }
 .board-simulation > * {
     position: relative;
     z-index: 2;
 }
-
