@@ -1,11 +1,14 @@
 'use strict';
 // Iniciar el flujo de pantallas automáticamente al cargar la página
 window.addEventListener('DOMContentLoaded', showStartButton);
+
+window.addEventListener('DOMContentLoaded', () => {window.scrollTo({ top: 110, behavior: 'smooth' });});
+
 // Inicia el nivel tras la selección
 function initGameLevel() {
   //scroll hacia abajo para mostrar el canvas
   setTimeout(() => {
-    window.scrollTo({top:210, behavior: 'smooth'});
+    window.scrollTo({ top: 180, behavior: 'smooth' });
   }, 200);
   // Limpiar el carrusel si existe y preparar el game board
   clearGameDisplay();
@@ -42,7 +45,6 @@ function initGameLevel() {
 let selectedSubdivisions = 4; // valor por defecto
 function startThumbnailSelection(subdivisions) {
   // Scroll al top para ver el carrusel
-  window.scrollTo({ top: 0, behavior: 'smooth' });
   clearGameDisplay();
   const gameDisplayContainer = document.getElementById('game-board-display');
   gameDisplayContainer.classList.remove('canvas-active');
@@ -172,21 +174,21 @@ function showStartButton() {
   console.log('Botón JUGAR insertado en game-board-display');
 }
 
-function ensureGameUI() {
-    // Si ya existen, no crear de nuevo
-    if (document.getElementById('gameCanvas')) return;
-    const gameDisplayContainer = document.getElementById('game-board-display');
-    // Crear área de juego
-    const gameArea = document.createElement('div');
-    gameArea.className = 'game-area';
-    gameArea.style.width = '500px';
-    gameArea.style.height = '500px';
-    // Canvas
-    lienzo = document.createElement('canvas');
-    lienzo.id = 'gameCanvas';
-    lienzo.width = 500;
-    lienzo.height = 500;
-    lienzo.tabIndex = 0;
+function ensureGameUI() { 
+  // Si ya existen, no crear de nuevo
+  if (document.getElementById('gameCanvas')) return;
+  const gameDisplayContainer = document.getElementById('game-board-display');
+  // Crear área de juego
+  const gameArea = document.createElement('div');
+  gameArea.className = 'game-area';
+  gameArea.style.width = '500px';
+  gameArea.style.height = '500px';
+  // Canvas
+  lienzo = document.createElement('canvas');
+  lienzo.id = 'gameCanvas';
+  lienzo.width = 500;
+  lienzo.height = 500;
+  lienzo.tabIndex = 0;
   gameArea.appendChild(lienzo);
   ctx = lienzo.getContext('2d');
   // Registrar eventos de mouse para rotar piezas
@@ -218,66 +220,67 @@ function ensureGameUI() {
       render();
     }
   });
+
   // Permitir el uso de botón derecho en el canvas
   lienzo.addEventListener('contextmenu', e => e.preventDefault());
-    // HUD
-    const hud = document.createElement('div');
-    hud.className = 'hud';
-    etiquetaNivel = document.createElement('span');
-    etiquetaNivel.id = 'levelLabel';
-    etiquetaNivel.textContent = 'Nivel: —';
-    hud.appendChild(etiquetaNivel);
-    estadoEl = document.createElement('span');
-    estadoEl.id = 'status';
-    estadoEl.textContent = 'Piezas correctas: 0 / 4';
-    hud.appendChild(estadoEl);
-    temporizadorEl = document.createElement('span');
-    temporizadorEl.id = 'timer';
-    temporizadorEl.textContent = 'Tiempo: 00:00';
-    hud.appendChild(temporizadorEl);
-    btnControl = document.createElement('button');
-    btnControl.id = 'btn-control';
-    btnControl.textContent = 'Comenzar';
-    hud.appendChild(btnControl);
-    // Asignar event listener único para Comenzar/Reiniciar
-    btnControl.onclick = () => {
-      if (estadoJuego === 'no_iniciado') {
-        iniciarJuego();
-      } else if (estadoJuego === 'jugando' || estadoJuego === 'ganado' || estadoJuego === 'perdido') {
-        reiniciarJuego();
-      }
-    };
-    recordEl = document.createElement('span');
-    recordEl.id = 'record';
-    hud.appendChild(recordEl);
-    // Si ya existe el botón, reutilizarlo y limpiar listeners previos
-    let oldBtn = document.getElementById('nextLevel');
-    if (oldBtn) {
-      let newBtn = oldBtn.cloneNode(true);
-      oldBtn.parentNode.replaceChild(newBtn, oldBtn);
-      btnSiguienteNivel = newBtn;
-    } else {
-      btnSiguienteNivel = document.createElement('button');
-      btnSiguienteNivel.id = 'nextLevel';
-      btnSiguienteNivel.className = 'hidden';
-      btnSiguienteNivel.textContent = 'Siguiente nivel';
-      hud.appendChild(btnSiguienteNivel);
+  // HUD
+  const hud = document.createElement('div');
+  hud.className = 'hud';
+  etiquetaNivel = document.createElement('span');
+  etiquetaNivel.id = 'levelLabel';
+  etiquetaNivel.textContent = 'Nivel: —';
+  hud.appendChild(etiquetaNivel);
+  estadoEl = document.createElement('span');
+  estadoEl.id = 'status';
+  estadoEl.textContent = 'Piezas correctas: 0 / 4';
+  hud.appendChild(estadoEl);
+  temporizadorEl = document.createElement('span');
+  temporizadorEl.id = 'timer';
+  temporizadorEl.textContent = 'Tiempo: 00:00';
+  hud.appendChild(temporizadorEl);
+  btnControl = document.createElement('button');
+  btnControl.id = 'btn-control';
+  btnControl.textContent = 'Comenzar';
+  hud.appendChild(btnControl);
+  // Asignar event listener único para Comenzar/Reiniciar
+  btnControl.onclick = () => {
+    if (estadoJuego === 'no_iniciado') {
+      iniciarJuego();
+    } else if (estadoJuego === 'jugando' || estadoJuego === 'ganado' || estadoJuego === 'perdido') {
+      reiniciarJuego();
     }
-    btnSiguienteNivel.addEventListener('click', () => {
-      btnSiguienteNivel.classList.add('hidden');
-      indiceNivelActual++;
-      if (indiceNivelActual < NIVELES.length) {
-        // 1. Ocultar el lienzo actual (canvas)
-        if (lienzo) lienzo.style.display = 'none';
-        // 2. Limpiar variables de tiempo/estado para el próximo juego
-        reiniciarVariablesJuego();
-        // 3. Iniciar la fase de selección de imagen (carrusel)
-        startThumbnailSelection(selectedSubdivisions);
-      } else {
-        // Si no hay más niveles, mostrar animación de victoria o mensaje final
-        mostrarAnimacionVictoria && mostrarAnimacionVictoria();
-      }
-    });
+  };
+  recordEl = document.createElement('span');
+  recordEl.id = 'record';
+  hud.appendChild(recordEl);
+  // Si ya existe el botón, reutilizarlo y limpiar listeners previos
+  let oldBtn = document.getElementById('nextLevel');
+  if (oldBtn) {
+    let newBtn = oldBtn.cloneNode(true);
+    oldBtn.parentNode.replaceChild(newBtn, oldBtn);
+    btnSiguienteNivel = newBtn;
+  } else {
+    btnSiguienteNivel = document.createElement('button');
+    btnSiguienteNivel.id = 'nextLevel';
+    btnSiguienteNivel.className = 'hidden';
+    btnSiguienteNivel.textContent = 'Siguiente nivel';
+    hud.appendChild(btnSiguienteNivel);
+  }
+  btnSiguienteNivel.addEventListener('click', () => {
+    btnSiguienteNivel.classList.add('hidden');
+    indiceNivelActual++;
+    if (indiceNivelActual < NIVELES.length) {
+      // 1. Ocultar el lienzo actual (canvas)
+      if (lienzo) lienzo.style.display = 'none';
+      // 2. Limpiar variables de tiempo/estado para el próximo juego
+      reiniciarVariablesJuego();
+      // 3. Iniciar la fase de selección de imagen (carrusel)
+      startThumbnailSelection(selectedSubdivisions);
+    } else {
+      // Si no hay más niveles, mostrar animación de victoria o mensaje final
+      mostrarAnimacionVictoria && mostrarAnimacionVictoria();
+    }
+  });
   // Botón Volver al menú
   btnVolverMenu = document.createElement('button');
   btnVolverMenu.id = 'btn-volver-menu';
@@ -286,7 +289,7 @@ function ensureGameUI() {
   hud.appendChild(btnVolverMenu);
   // Listener para volver al menú
   btnVolverMenu.addEventListener('click', () => {
-    window.location.href = '../blocka.html';
+    window.location.reload();
   });
   btnAyuda = document.createElement('button');
   btnAyuda.className = 'btn-ayuda';
@@ -322,9 +325,9 @@ function ensureGameUI() {
 
 // Deshabilita el menú contextual (clic derecho) en el canvas del juego
 function enableCanvasContextMenu() {
-    if (lienzo) {
-        lienzo.addEventListener('contextmenu', e => e.preventDefault());
-    }
+  if (lienzo) {
+    lienzo.addEventListener('contextmenu', e => e.preventDefault());
+  }
 }
 
 // Variables globales para elementos UI
@@ -514,7 +517,7 @@ function cargarNivel(src) {
   orig.onload = () => {
     console.log('[Blocka] Imagen cargada correctamente:', src);
     const adaptada = prepararImagenParaCanvas(orig);
-    adaptada.onload = function() {
+    adaptada.onload = function () {
       imagenNivel = adaptada;
       crearPiezas();
       mezclarPiezas();
@@ -661,56 +664,56 @@ function comprobarPiezaCorrecta(p) {
   }
 }
 
-  // Animación de victoria final
-  function mostrarAnimacionVictoria() {
-    const winDiv = document.createElement('div');
-    winDiv.id = 'victoria-final';
-    winDiv.style.position = 'fixed';
-    winDiv.style.top = '0';
-    winDiv.style.left = '0';
-    winDiv.style.width = '100vw';
-    winDiv.style.height = '100vh';
-    winDiv.style.background = 'rgba(0,0,0,0.7)';
-    winDiv.style.display = 'flex';
-    winDiv.style.flexDirection = 'column';
-    winDiv.style.justifyContent = 'center';
-    winDiv.style.alignItems = 'center';
-    winDiv.style.zIndex = '9999';
-    winDiv.innerHTML = `
+// Animación de victoria final
+function mostrarAnimacionVictoria() {
+  const winDiv = document.createElement('div');
+  winDiv.id = 'victoria-final';
+  winDiv.style.position = 'fixed';
+  winDiv.style.top = '0';
+  winDiv.style.left = '0';
+  winDiv.style.width = '100vw';
+  winDiv.style.height = '100vh';
+  winDiv.style.background = 'rgba(0,0,0,0.7)';
+  winDiv.style.display = 'flex';
+  winDiv.style.flexDirection = 'column';
+  winDiv.style.justifyContent = 'center';
+  winDiv.style.alignItems = 'center';
+  winDiv.style.zIndex = '9999';
+  winDiv.innerHTML = `
       <h1 style="color: #fff; font-size: 3em; margin-bottom: 20px;">¡Ganaste Blocka!</h1>
       <div id="confetti" style="width:100vw;height:40vh;position:relative;z-index:1;"></div>
       <button id="volverMenuBtn" style="font-size:1.5em;padding:10px 30px;margin-top:30px;position:absolute;top:60%;left:50%;transform:translate(-50%,0);z-index:2;">Volver al menú</button>
     `;
-    document.body.appendChild(winDiv);
-    lanzarConfetti();
-    const btnVolver = document.getElementById('volverMenuBtn');
-    btnVolver.onclick = () => {
-      window.location.href = '../blocka.html';
-    };
-    btnVolver.focus();
-  }
+  document.body.appendChild(winDiv);
+  lanzarConfetti();
+  const btnVolver = document.getElementById('volverMenuBtn');
+  btnVolver.onclick = () => {
+    window.location.reload();
+  };
+  btnVolver.focus();
+}
 
-  // Animación confetti victoria
-  function lanzarConfetti() {
-    const confettiDiv = document.getElementById('confetti');
-    for (let i = 0; i < 120; i++) {
-      const c = document.createElement('div');
-      c.style.position = 'absolute';
-      c.style.width = '10px';
-      c.style.height = '20px';
-      c.style.background = `hsl(${Math.random()*360},100%,60%)`;
-      c.style.left = Math.random()*window.innerWidth + 'px';
-      c.style.top = Math.random()*window.innerHeight/2 + 'px';
-      c.style.opacity = '0.8';
-      c.style.borderRadius = '3px';
-      c.style.transform = `rotate(${Math.random()*360}deg)`;
-      confettiDiv.appendChild(c);
-      setTimeout(() => {
-        c.style.transition = 'top 2s';
-        c.style.top = (window.innerHeight/2 + Math.random()*window.innerHeight/2) + 'px';
-      }, 100);
-    }
+// Animación confetti victoria
+function lanzarConfetti() {
+  const confettiDiv = document.getElementById('confetti');
+  for (let i = 0; i < 120; i++) {
+    const c = document.createElement('div');
+    c.style.position = 'absolute';
+    c.style.width = '10px';
+    c.style.height = '20px';
+    c.style.background = `hsl(${Math.random() * 360},100%,60%)`;
+    c.style.left = Math.random() * window.innerWidth + 'px';
+    c.style.top = Math.random() * window.innerHeight / 2 + 'px';
+    c.style.opacity = '0.8';
+    c.style.borderRadius = '3px';
+    c.style.transform = `rotate(${Math.random() * 360}deg)`;
+    confettiDiv.appendChild(c);
+    setTimeout(() => {
+      c.style.transition = 'top 2s';
+      c.style.top = (window.innerHeight / 2 + Math.random() * window.innerHeight / 2) + 'px';
+    }, 100);
   }
+}
 
 
 // Reinicia variables internas del juego sin cargar el lienzo ni la imagen
@@ -830,8 +833,8 @@ function showWin() {
 
 
 // Inicialización automática para blocka-juego.html
-document.addEventListener('DOMContentLoaded', function() {
-   // Lógica de redirección hamburguesa igual a juego.js
+document.addEventListener('DOMContentLoaded', function () {
+  // Lógica de redirección hamburguesa igual a juego.js
   const burgerItems = document.querySelectorAll('.dropdown-item');
   const categoryMap = {
     'Acción': 'section-accion',
@@ -851,15 +854,15 @@ document.addEventListener('DOMContentLoaded', function() {
     'Terror': 'section-terror'
   };
   burgerItems.forEach(item => {
-    item.addEventListener('click', function(e) {
+    item.addEventListener('click', function (e) {
       e.preventDefault();
       const categoryText = this.querySelector('span').textContent.trim();
       const targetId = categoryMap[categoryText];
       if (targetId) {
         // Si estamos en otra página, ir al home primero
-        if (window.location.pathname.includes('blocka.html') || 
-            window.location.pathname.includes('login.html') || 
-            window.location.pathname.includes('registro.html')) {
+        if (window.location.pathname.includes('blocka.html') ||
+          window.location.pathname.includes('login.html') ||
+          window.location.pathname.includes('registro.html')) {
           sessionStorage.setItem('scrollTarget', targetId);
           window.location.href = './index.html';
           return;
@@ -975,7 +978,7 @@ function helpAction() {
   const fromX = pieceToPlace.x;
   const fromY = pieceToPlace.y;
 
-// corregir rotación
+  // corregir rotación
   if (fromX === targetX && fromY === targetY) {
     pieceToPlace.rot = 0;
     comprobarPiezaCorrecta(pieceToPlace); // actualizar contador
