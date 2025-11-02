@@ -4,54 +4,8 @@
     font-family: 'Roboto', helvetica, arial, sans-serif;
 }
 
-/* --- Blocka pantalla inicial estilos --- */
-.blocka-inicio-bg {
-    height: 420px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-}
-.blocka-inicio-card {
-    background: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-width: 340px;
-    min-height: 260px;
-}
-.blocka-inicio-title {
-    color: #ffffff;
-    font-size: 2.2rem;
-    margin-bottom: 10px;
-    letter-spacing: 1px;
-    text-shadow: 0 2px 8px #1a2233cc;
-}
-.blocka-inicio-desc {
-    color: #fff;
-    font-size: 1.15rem;
-    margin-bottom: 28px;
-    text-align: center;
-    max-width: 320px;
-}
-.blocka-inicio-btn {
-    background: #ff8c29;
-    color: #fff;
-    border: none;
-    padding: 12px 28px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 1.1rem;
-    box-shadow: 0 2px 12px #ff8c2940;
-    transition: background 0.2s, color 0.2s;
-    letter-spacing: 0.5px;
-}
-.blocka-inicio-btn:hover {
-    background: #e67e22;
-    color: #fff;
-}
+
+
 /* Estilos pagina juego */
 .game-content {
     min-height: 100vh;
@@ -67,15 +21,6 @@
     margin-top: 0rem;
 }
 
-
-/*
-.game-board-display {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    width: 100%;
-}*/
 
 .game-title {
     font-size: 2rem;
@@ -280,7 +225,7 @@
     display: flex;
     justify-content: space-between;
     z-index: 1;
-
+    margin-bottom: 8px;
 }
 
 .overlay-btn {
@@ -372,6 +317,7 @@
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
+
 /*efectos para el btn share*/
 .share-container {
     position: relative;

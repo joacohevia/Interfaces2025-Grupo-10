@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Configurar carousel de screenshots
     setupScreenshotCarousel();
+
+    window.scrollTo({ top: 110, behavior: 'smooth' });
 });
 
 function setupPreviewInteractions() {
