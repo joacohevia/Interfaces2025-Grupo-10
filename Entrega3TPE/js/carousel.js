@@ -30,7 +30,7 @@ function initializeCarousel(wrapper) {
     // Clonar elementos para crear el efecto de bucle, excepto Blocka y Peg Solitaire
     const items = Array.from(gamesGrid.children).filter(item => {
         const title = item.querySelector('.game-title')?.textContent;
-        return title !== 'Blocka' && title !== 'Peg Solitaire';
+        return title !== 'Blocka' && title !== 'Peg Solitaire' && title !== 'Flappy Bird';
     });
 
     // Copiar listeners de click del original al clon

@@ -348,6 +348,15 @@ function displayGames(games) {
         esPremium: false,
         released: '2024-01-01'
     };
+    const flappyBird = {
+        id: 3,
+        name: 'Flappy Bird',
+        background_image: 'assets/img/portadaPeg.png',
+        rating: 4.9,
+        genres: [{ name: 'Puzzle' }],
+        esPremium: false, // Juego gratuito
+        released: '2024-01-01'
+    };
     
     // Categorías para carrousels y nuevas secciones
     const categories = {
@@ -365,16 +374,16 @@ function displayGames(games) {
                 });
             });
             // Asegurar que Blocka y PegSolitaire estén siempre al principio
-            logicGamesFromAPI = [pegSolitaireGame, blockaGame, ...logicGamesFromAPI.filter(game => {
+            logicGamesFromAPI = [pegSolitaireGame, blockaGame,flappyBird, ...logicGamesFromAPI.filter(game => {
                 const name = game.name ? game.name.toLowerCase() : '';
-                return name !== 'Peg Solitaire' && name !== 'Blocka';
+                return name !== 'Peg Solitaire' && name !== 'Blocka' && name !== 'Flappy Bird';
             })];
             // Limitar a 10 juegos
             return logicGamesFromAPI.slice(0, 10);
         })(),
         suggestedGames: (() => {
             const suggested = games.filter(game => game.rating && game.rating >= 4.0).sort((a, b) => b.rating - a.rating).slice(0, 8);
-            return [pegSolitaireGame, blockaGame, ...suggested];
+            return [pegSolitaireGame, blockaGame,flappyBird, ...suggested];
         })(),
         classicGames: games.filter(game => {
             if (!game.released) return false;
@@ -547,7 +556,14 @@ function createGameCard(game) {
         gameCard.addEventListener('click', function() {
             window.location.href = 'blocka.html';
         });
-    } else if (game.esPremium === true) {
+    
+    }else if (game.name === 'Flappy Bird'){
+        gameCard.style.cursor = 'pointer';
+        gameCard.addEventListener('click', function() {
+            window.location.href = 'flappyBird.html';
+        });
+    } 
+    else if (game.esPremium === true) {
         gameCard.style.cursor = 'pointer';
         gameCard.addEventListener('click', function() {
             showPremiumPopup();
@@ -557,7 +573,7 @@ function createGameCard(game) {
         gameCard.addEventListener('click', function() {
             window.location.href = 'juego.html';
         });
-    }
+    } 
 
     return gameCard;
 }
