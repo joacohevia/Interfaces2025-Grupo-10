@@ -765,3 +765,18 @@
 
 
 
+/* SPRITESHEET ASTRONAUTA SALTANDO*/
+
+.astronauta {
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    background: url("../imgAstronauta/idle_jump\(64\,64\)_vec.png") repeat-x;
+    animation: jump 1.7s steps(8) infinite;
+    bottom: 10%;
+}
+
+@keyframes jump {
+    0%{background-position: 0px;}
+    100% {background-position: -512px;}
+}
