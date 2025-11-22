@@ -725,15 +725,20 @@
     width: 64px;
     height: 64px;
     position: absolute;
-    background: url("../imgAstronauta/astronauta_default(64,64).png") repeat-x;
     z-index: 9999;
+    top: 50%;              
+    transform: translateY(-50%); 
 }
 
 /* ANIMACIONES ASTRONAUTA */
 
+.astronauta-quieto {
+    background: url("../imgAstronauta/astronauta_default(64,64).png") repeat-x;
+}
+
 .astronauta-on-shift {
-    background: url("../imgAstronauta/idle_jump(64,64)_vec.png") repeat-x;
-    animation: jump 1.7s steps(8) normal;    
+    background: url("../imgAstronauta/idle_jump(64,64)_vec.png");
+    animation: jump 0.12s steps(8) normal;    
 }
 
 @keyframes jump {
@@ -744,12 +749,12 @@
 
 .astronauta-on-hurt {
     background: url("../imgAstronauta/idle_hurt(64,64)_vec.png") repeat-x;
-    animation: hurt 1.7s steps(8) normal;
+    animation: hurt 0.5s steps(4) normal;
 }
 
 @keyframes hurt {
     0%{background-position: 0px;}
-    100% {background-position: -512px;}
+    100% {background-position: -256px;}
 }
 
 
