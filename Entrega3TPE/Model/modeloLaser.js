@@ -3,7 +3,7 @@ class modeloLaser {
         this.lasers = []; 
         this.velocidad = 3; 
         this.anchoLaser = 2; 
-        this.hueco = 200;
+        this.hueco = 100;
          this.intervaloAparicion = 1800;
         this.intervaloMinimo = 600;
         this.reduccionIntervalo = 50;
@@ -14,7 +14,7 @@ class modeloLaser {
 
     crearParLasers() {
     // Hueco variable entre 150 y 250
-    const huecoAleatorio = Math.floor(Math.random() * (250 - 150 + 1)) + 150;
+    const huecoAleatorio = Math.floor(Math.random() * (130 - 60 + 1)) + 130;
     
     // Altura variable del láser superior
     const minAltura = 60;
@@ -69,6 +69,7 @@ class modeloLaser {
         }
         return false;
     }
+    
     verificarPunto(astronautaX) {
     this.lasers.forEach(laser => {
         // Si el astronauta pasó el láser y aún no contamos el punto
@@ -87,3 +88,4 @@ class modeloLaser {
     }
 }
 export { modeloLaser };
+

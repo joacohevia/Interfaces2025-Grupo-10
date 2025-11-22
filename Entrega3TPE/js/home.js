@@ -351,7 +351,7 @@ function displayGames(games) {
     const flappyBird = {
         id: 3,
         name: 'Flappy Bird',
-        background_image: 'assets/img/portadaPeg.png',
+        background_image: 'assets/img/portadaFlappy.jpeg',
         rating: 4.9,
         genres: [{ name: 'Puzzle' }],
         esPremium: false, // Juego gratuito

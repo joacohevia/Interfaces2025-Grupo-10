@@ -1,5 +1,3 @@
-
-
 class VistaLaser {
    constructor() {
         this.canvas = document.getElementById('gameCanvas');
@@ -15,6 +13,14 @@ class VistaLaser {
         }
 
         this.ctx = this.canvas.getContext('2d');
+        this.canvas.width = this.canvas.clientWidth;
+        this.canvas.height = this.canvas.clientHeight;
+
+        if (this.canvas.parentElement) {
+            this.canvas.parentElement.style.overflow = 'hidden';
+            this.canvas.parentElement.style.position = 'relative'; 
+        }
+        
     }
 
     get ancho() { 
@@ -75,7 +81,7 @@ class VistaLaser {
             this.ctx.strokeRect(par.x, par.abajo.y, ancho, par.abajo.alto);
             
             this.ctx.fillStyle = '#db621cff';
-            this.ctx.fillRect(par.x + ancho/3, 0, ancho/3, par.arriba.alto);
+            this.ctx.fillRect(par.x + ancho/3, par.abajo.y, ancho/3, par.abajo.alto);
             
             this.ctx.restore();
         });
@@ -109,5 +115,27 @@ class VistaLaser {
             this.btn.innerText = texto;
         }
     }
+
+    jump() {
+        const astronauta = document.getElementById("astronauta");
+        if (!astronauta) return; // Protección por si no existe
+
+        astronauta.classList.add("astronauta-on-shift");
+        astronauta.addEventListener("animationend", function handler() {
+            astronauta.classList.remove("astronauta-on-shift");
+            astronauta.removeEventListener("animationend", handler);
+        });
+    }
+
+
+    animarColision(){
+        let astronautaHtml = document.getElementById("astronauta");
+        astronautaHtml.classList.add("astronauta-on-hurt");
+        astronauta.addEventListener("animationend", function handler() {
+            astronauta.classList.remove("astronauta-on-hurt");
+            astronauta.removeEventListener("animationend", handler);
+        });
+    }
 };
 export { VistaLaser };
+

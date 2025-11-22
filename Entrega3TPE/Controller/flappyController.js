@@ -1,5 +1,5 @@
+import { modeloLaser } from "../Model/modeloLaser.js";
 import { VistaLaser } from "../View/vistaLaser.js";
-import {modeloLaser} from "../Model/modeloLaser.js";
 
 class FlappyController {
 
@@ -44,21 +44,12 @@ class FlappyController {
         switch (key) {
             case "Space":
                 e.preventDefault();
-                this.jump(); 
+                this.vista.jump(); 
                 break;
         }
     }
 
-    jump() {
-        const astronauta = document.getElementById("astronauta");
-        if (!astronauta) return; // Protección por si no existe
-
-        astronauta.classList.add("astronauta-on-shift");
-        astronauta.addEventListener("animationend", function handler() {
-            astronauta.classList.remove("astronauta-on-shift");
-            astronauta.removeEventListener("animationend", handler);
-        });
-    }
+    
 
     iniciar() {
         if (this.juegoActivo) return;
@@ -113,6 +104,7 @@ class FlappyController {
         //3. Obtener posicion del astronauta
          const astronauta = document.getElementById("astronauta");
         if (astronauta) {
+
         const rect = astronauta.getBoundingClientRect();
         const canvasRect = this.vista.canvas.getBoundingClientRect();
         
@@ -135,6 +127,7 @@ class FlappyController {
         );
 
         if (colision) {
+            this.vista.animarColision();
             this.perder(astronautaData);
             return;
         }
@@ -146,6 +139,7 @@ class FlappyController {
         requestAnimationFrame(this.loop);
     }
     }
+
 
     perder() {
         this.juegoActivo = false;

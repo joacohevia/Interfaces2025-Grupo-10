@@ -1,4 +1,3 @@
-/* Fuente global para todo Blocka */
 .blocka-inicio-bg, .blocka-inicio-card, .blocka-inicio-title, .blocka-inicio-desc, .blocka-inicio-btn,
 .game-content, .game-main, .game-display, .game-board-display, .game-title, .game-header, .hud, .board-simulation, .game-area, .screenshot, .game-screenshots, .game-description, .carousel-nav, .comment, .comment-header, .comment-content, .comment-username, .comment-form, .form-title, .form-subtitle, .form-actions, .publish-btn, .cancel-btn {
     font-family: 'Roboto', helvetica, arial, sans-serif;
@@ -51,7 +50,7 @@
     right: 20px;
     display: flex;
     justify-content: space-between;
-    z-index: 1;
+    z-index: 2;
     margin-bottom: 8px;
 }
 
@@ -711,25 +710,29 @@
     z-index: 100; /*encima de parallax*/
 }
 #gameCanvas {
-    position: relative;
-    z-index: 100;
+    position: absolute;
+    z-index: 2;
     display: block;
-    width: 100%;
+    top: 0;
+    left: 0;
+    width: 900px; 
+    height: 480px;;
+    background-color: transparent; 
+    pointer-events: none;
 }
 
 #astronauta {
     width: 64px;
     height: 64px;
     position: absolute;
-    bottom: 10%;
-    background: url("../imgAstronauta/idle_jump\(64\,64\)_vec.png") repeat-x;
+    background: url("../imgAstronauta/astronauta_default(64,64).png") repeat-x;
     z-index: 999;
-    
 }
 
-/* SPRITESHEET ASTRONAUTA SALTANDO*/
+/* ANIMACIONES ASTRONAUTA */
 
 .astronauta-on-shift {
+    background: url("../imgAstronauta/idle_jump(64,64).png") repeat-x;
     animation: jump 1.7s steps(8) normal;    
 }
 
@@ -739,7 +742,17 @@
 }
 
 
-/*LO DE JOACO --- UNIR CON LO DEMAS*/
+.astronauta-on-hurt {
+    background: url("../imgAstronauta/idle_hurt\(64,64)_vec.png") repeat-x;
+    animation: hurt 1.7s steps(8) normal;
+}
+
+@keyframes hurt {
+    0%{background-position: 0px;}
+    100% {background-position: -512px;}
+}
+
+
 .grid-contenedor {
   display: flex;
   padding-top: 1rem;
@@ -749,7 +762,6 @@
   margin: 10px;
   position: relative;
   width: 100%;
-  
 }
 
 @keyframes scroll {
@@ -775,6 +787,9 @@
     position: relative;
     overflow: hidden;
     z-index: 1;
+    border-radius: 32px;
+     margin-left: auto;
+    margin-right: auto;   /* centra horizontalmente */
 }
 
 .layer-9{
@@ -798,4 +813,31 @@
 .layer-5{
     background-image: url('../parallax/upscaled_0.png');
     animation: scroll 5s infinite linear;
+}
+
+/* Estilo y posición del botón JUGAR */
+.btn-jugar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Esto asegura que esté perfectamente centrado */
+    z-index: 20; /* Muy alto para que esté encima de todo */
+    
+    /* Estética del botón */
+    padding: 15px 40px;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    background: #db621c; /* Naranja parecido a tus láseres */
+    border: 2px solid white;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 0 15px #db621c; /* Un poco de brillo neón */
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-jugar:hover {
+    transform: translate(-50%, -50%) scale(1.1); /* Efecto de crecer al pasar el mouse */
+    box-shadow: 0 0 25px #ff8c00;
+    background: #ff8c00;
 }
