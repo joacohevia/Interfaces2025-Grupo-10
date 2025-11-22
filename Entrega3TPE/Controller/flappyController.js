@@ -154,6 +154,11 @@ class FlappyController {
             console.log("Lluvia de meteoritos activada");
             this.modeloMeteorito.activar();
         }
+         if (this.modelo.puntos >= 5 && !this.modeloEstrella.aparecen) {
+            console.log("Estrellas activadas");
+            this.modeloEstrella.activar();
+        }
+
 
         //3. Obtener posicion del astronauta
          const astronauta = document.getElementById("astronauta");

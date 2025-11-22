@@ -3,7 +3,8 @@ export class estrellaModel {
     constructor(anchoJuego, altoJuego) {
         this.imgEstrella = this.cargarImagen();
         this.estrellas = [];                 // Lista de estrellas activas
-        this.tamaño = 40;                    // Tamaño estándar de la estrella
+        this.tamaño = 40;    
+        this.velocidad = 3;                // Tamaño estándar de la estrella
         
         this.intervaloAparicion = 2500;      // Tiempo entre estrellas
         this.limiteAncho = anchoJuego;
@@ -15,8 +16,12 @@ export class estrellaModel {
         img.src = "./assets/imgFlappy/estrella.png";
         return img;
     }
+    activar() {
+        this.aparecen = true;
+    }
 
     crearEstrella() {
+        if (!this.aparecen) return;
         // Evitar que se acumulen demasiado juntas
         if (this.estrellas.length > 0) {
             const ultima = this.estrellas[this.estrellas.length - 1];
@@ -58,17 +63,23 @@ export class estrellaModel {
 
             if (this._colisiona(estrella, astroX, astroY, astroAncho, astroAlto)) {
                 estrella.recogida = true;
-                console.log("⭐ ¡Estrella recogida!");
+                console.log("¡Estrella recogida!");
                 return true;
             }
         }
         return false;
     }
+     actualizarEstrellas() {
+        this.estrellas.forEach(m => {
+            m.x -= this.velocidad;
+        });
 
-    actualizarEstrellas() {
-        // No se mueven, solo se eliminan cuando están recogidas
-        this.estrellas = this.estrellas.filter(e => !e.recogida);
+        // Eliminar los que salieron de pantalla
+        if (this.estrellas.length > 0 && this.estrellas[0].x + this.ancho < 0) {
+            this.estrellas.shift();
+        }
     }
+    
 
     obtenerEstrellas() {
         return this.estrellas;
