@@ -85,11 +85,11 @@ class modeloLaser {
     }
     verificarPunto(astronautaX) {
     this.lasers.forEach(laser => {
-        // Si el astronauta pasó el láser y aún no contamos el punto
+        // Si el astronauta pasó el láser y aún no contó el punto
         if (!laser.pasado && astronautaX > laser.x + this.anchoLaser) {
             laser.pasado = true;
             this.puntos++;
-            console.log("¡Punto! Total:", this.puntos);
+            console.log("Punto! Total:", this.puntos);
             return true;
         }
     });

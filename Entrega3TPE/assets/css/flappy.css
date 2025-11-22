@@ -871,7 +871,7 @@
 }
 
 /* Estilo del botón de reiniciar */
-#btnReiniciarMini {
+#btnReiniciarMini, #btnGanarMini{
     pointer-events: auto; 
     cursor: pointer;
     background: #db621c;
@@ -887,7 +887,48 @@
     transition: transform 0.2s;
 }
 
-#btnReiniciarMini:hover {
+#btnReiniciarMini:hover{
     transform: scale(1.1) rotate(90deg); /* Efecto de girar al pasar el mouse */
     background: #ff8c00;
+}
+#btnGanarMini {
+    background: #FFD700; /* Dorado */
+    color: black;        /* Texto negro para contraste */
+    border-color: #FFFFE0;
+    margin-left: 10px;   /* Un poquito de separación extra */
+}
+/* Contenedor del mensaje de victoria */
+.mensaje-victoria {
+    position: absolute;
+    top: 40%; /* Un poco más arriba del centro */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 100;
+    pointer-events: none; /* Que no bloquee clicks */
+}
+
+/* El texto principal */
+.titulo-ganador {
+    font-family: 'Arial Black', sans-serif;
+    font-size: 40px;
+    /* Sombra brillante */
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+    /* Animación */
+    animation: latido 1.5s infinite ease-in-out;
+}
+
+/* Animación de latido (Scaling) */
+@keyframes latido {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); filter: drop-shadow(0 0 20px rgba(255, 215, 0, 1)); }
+    100% { transform: scale(1); }
+}
+
+/* Subtítulo */
+.subtitulo-ganador {
+    color: white;
+    font-size: 24px;
+    margin-top: 10px;
+    text-shadow: 2px 2px 4px black;
 }

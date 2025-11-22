@@ -2,6 +2,7 @@ export class VistaLaser {
    constructor() {
         this.canvas = document.getElementById('gameCanvas');
         this.btn = document.getElementById('btnIniciar');
+        this.btnGanar = document.getElementById('btnGanarMini');
 
 
         this.astronauta = document.getElementById("astronauta");
@@ -49,7 +50,7 @@ export class VistaLaser {
             // LÁSER DE ARRIBA
             this.ctx.save();
             
-            // Efecto neón rosa intenso
+            // Efecto neón
             this.ctx.shadowBlur = 25;
             this.ctx.shadowColor = '#b64605ff';
             this.ctx.fillStyle = '#b64605ff';
@@ -61,7 +62,7 @@ export class VistaLaser {
             this.ctx.lineWidth = 1;
             this.ctx.strokeRect(par.x, 0, ancho, par.arriba.alto);
             
-            // Núcleo brillante central
+            // Centro brillante
             this.ctx.fillStyle = '#db621cff';
             this.ctx.fillRect(par.x + ancho/3, 0, ancho/3, par.arriba.alto);
             
@@ -145,8 +146,32 @@ export class VistaLaser {
             this.astronauta.classList.remove("astronauta-on-hurt");
             this.astronauta.removeEventListener("animationend", handler);
         }.bind(this));
-        //Porque dentro de un event listener, this pasa a ser el elemento del 
-        // DOM que disparó el evento (astronauta), NO tu clase
+    }
+
+    mostrarVictoria() {
+        // 1. Crear el contenedor del mensaje
+        const divVictoria = document.createElement('div');
+        divVictoria.className = 'mensaje-victoria';
+        divVictoria.id = 'msgVictoria';
+        // 2. El contenido HTML
+        divVictoria.innerHTML = `
+            <div class="titulo-ganador">¡MISIÓN CUMPLIDA!</div>
+            <div class="subtitulo-ganador">Llegaste sano y salvo.</div>
+        `;
+        // 3. Agregarlo al padre del canvas
+        if (this.canvas.parentElement) {
+            this.canvas.parentElement.appendChild(divVictoria);
+        }
+        // 4. Mostrar el botón para jugar de nuevo
+        this.mostrarBoton('JUGAR OTRA VEZ');
+    }
+
+    // Modificamos limpiar para que borre el mensaje de victoria si existe
+    limpiarMensajes() {
+        const msg = document.getElementById('msgVictoria');
+        if (msg) msg.remove();
+        
+        this.ocultarBoton();
     }
 };
 
