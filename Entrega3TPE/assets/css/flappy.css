@@ -711,12 +711,12 @@
 }
 #gameCanvas {
     position: absolute;
-    z-index: 2;
+    z-index: 5;
     display: block;
     top: 0;
     left: 0;
     width: 900px; 
-    height: 480px;;
+    height: 480px;
     background-color: transparent; 
     pointer-events: none;
 }
@@ -726,13 +726,13 @@
     height: 64px;
     position: absolute;
     background: url("../imgAstronauta/astronauta_default(64,64).png") repeat-x;
-    z-index: 999;
+    z-index: 9999;
 }
 
 /* ANIMACIONES ASTRONAUTA */
 
 .astronauta-on-shift {
-    background: url("../imgAstronauta/idle_jump(64,64).png") repeat-x;
+    background: url("../imgAstronauta/idle_jump\(64\,64\)_vec.png") repeat-x;
     animation: jump 1.7s steps(8) normal;    
 }
 
@@ -783,7 +783,7 @@
 }
 .parallax{
     width: 900px;
-    height: 480px;
+    height: 48opx;
     position: relative;
     overflow: hidden;
     z-index: 1;
@@ -839,5 +839,55 @@
 .btn-jugar:hover {
     transform: translate(-50%, -50%) scale(1.1); /* Efecto de crecer al pasar el mouse */
     box-shadow: 0 0 25px #ff8c00;
+    background: #ff8c00;
+}
+
+/* Contenedor de la barra inferior */
+.hud-inferior {
+    position: absolute;
+    bottom: 15px;   
+    left: 50%;
+    transform: translateX(-50%);
+    
+    display: flex;   
+    align-items: center;
+    gap: 20px;        
+    
+    z-index: 20;       /* Por encima de todo */
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente opcional para leer mejor */
+    padding: 8px 20px;
+    border-radius: 20px;
+
+    pointer-events: none;
+}
+
+/* Estilo del texto de puntos */
+#puntuacion {
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+/* Estilo del botón de reiniciar */
+#btnReiniciarMini {
+    pointer-events: auto; 
+    cursor: pointer;
+    background: #db621c;
+    border: 2px solid white;
+    color: white;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+#btnReiniciarMini:hover {
+    transform: scale(1.1) rotate(90deg); /* Efecto de girar al pasar el mouse */
     background: #ff8c00;
 }

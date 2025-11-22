@@ -5,7 +5,7 @@ class modeloLaser {
         this.anchoLaser = 2; 
         this.hueco = 100;
          this.intervaloAparicion = 1800;
-        this.intervaloMinimo = 600;
+        this.intervaloMinimo = 1200;
         this.reduccionIntervalo = 50;
         this.limiteAncho = anchoJuego;
         this.limiteAlto = altoJuego;
@@ -13,6 +13,20 @@ class modeloLaser {
     }
 
     crearParLasers() {
+
+    // Si ya hay láseres, mira el último que se creó
+    if (this.lasers.length > 0) {
+        const ultimoLaser = this.lasers[this.lasers.length - 1];
+        
+        // Distancia desde el borde derecho (donde nace el nuevo) hasta el último
+        const distancia = this.limiteAncho - ultimoLaser.x;
+        
+        // Si el último láser no se ha alejado al menos 250px no crea el nuevo
+        if (distancia < 250) { 
+            console.log("Esperando espacio... distancia actual:", distancia);
+            return;
+        }
+    }
     // Hueco variable entre 150 y 250
     const huecoAleatorio = Math.floor(Math.random() * (130 - 60 + 1)) + 130;
     
@@ -69,7 +83,6 @@ class modeloLaser {
         }
         return false;
     }
-    
     verificarPunto(astronautaX) {
     this.lasers.forEach(laser => {
         // Si el astronauta pasó el láser y aún no contamos el punto

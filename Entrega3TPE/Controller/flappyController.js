@@ -21,6 +21,16 @@ class FlappyController {
             this.vista.btn.addEventListener('click', () => this.iniciar());
         }
 
+        if (this.vista.btnReiniciar) {
+            this.vista.btnReiniciar.addEventListener('click', (e) => {
+                // Evita que el click se propague y haga saltar al astronauta
+                e.stopPropagation(); 
+                this.forzarReinicio();
+            });
+        }
+
+        this.readKey = this.readKey.bind(this);
+
         // Configurar controles de teclado
         this.configurarControles();
         
@@ -34,7 +44,7 @@ class FlappyController {
             gameScreen.focus();
             
             // Bind correcto para mantener 'this'
-            gameScreen.addEventListener("keydown", (e) => this.readKey(e));
+            gameScreen.addEventListener("keydown", this.readKey);
         }
     }
 
@@ -62,6 +72,9 @@ class FlappyController {
         
         // Reiniciar modelo
         this.modelo.reiniciar();
+
+        
+        this.vista.mostrarPuntos(0);
         
         // Crear obstáculos
         this.crearGeneradorLasers();
@@ -116,7 +129,11 @@ class FlappyController {
         };
 
         //4. Verificar puntos
-         this.modelo.verificarPunto(astronautaData.x);
+         const sumoPunto = this.modelo.verificarPunto(astronautaData.x);
+         if (sumoPunto) {
+        // SOLO si sumó punto, actualiza la vista HTML
+        this.vista.mostrarPuntos(this.modelo.puntos);
+    }
 
         //5. Verificar colision
         const colision = this.modelo.verificarColision(
@@ -134,10 +151,23 @@ class FlappyController {
 
         // 4. Renderizar
         this.vista.renderizar(this.modelo.obtenerLasers());
-        this.vista.mostrarPuntos(this.modelo.puntos);
         // 5. Siguiente frame
         requestAnimationFrame(this.loop);
     }
+    }
+    forzarReinicio() {
+        console.log("Reiniciando partida...");
+        
+        // 1. Detener la generación de obstáculos actual
+        if (this.intervaloCreacion) {
+            clearInterval(this.intervaloCreacion);
+        }
+        
+        // 2. Resetear estado interno
+        this.juegoActivo = false; 
+        
+        // 3. Llamar a iniciar (que se encarga de limpiar modelo y vista)
+        this.iniciar();
     }
 
 

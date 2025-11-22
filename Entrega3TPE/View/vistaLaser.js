@@ -1,8 +1,13 @@
-class VistaLaser {
+export class VistaLaser {
    constructor() {
         this.canvas = document.getElementById('gameCanvas');
         this.btn = document.getElementById('btnIniciar');
-        
+
+
+        this.astronauta = document.getElementById("astronauta");
+        console.log("Astronauta cargado:", this.astronauta);
+    
+
         if (!this.canvas) {
             console.error("Error: No se encontró el canvas con id 'gameCanvas'");
             return;
@@ -20,6 +25,7 @@ class VistaLaser {
             this.canvas.parentElement.style.overflow = 'hidden';
             this.canvas.parentElement.style.position = 'relative'; 
         }
+        this.btnReiniciar = document.getElementById('btnReiniciarMini');
         
     }
 
@@ -30,13 +36,7 @@ class VistaLaser {
     get alto() { 
         return this.canvas.height; 
     }
-     get ancho() { 
-        return this.canvas.width; 
-    }
     
-    get alto() { 
-        return this.canvas.height; 
-    }
 
     limpiar() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -86,12 +86,7 @@ class VistaLaser {
             this.ctx.restore();
         });
     }
-    mostrarPuntos(puntos) {
-    this.ctx.fillStyle = 'white';
-    this.ctx.font = 'bold 30px Arial';
-    this.ctx.textAlign = 'center';
-    this.ctx.fillText(`Puntos: ${puntos}`, this.canvas.width / 2, 50);
-}
+
     limpiar() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
@@ -108,6 +103,12 @@ class VistaLaser {
             this.btn.style.display = 'none';
         }
     }
+    mostrarPuntos(puntos) {
+        const divPuntos = document.getElementById('puntuacion');
+        if (divPuntos) {
+            divPuntos.innerText = `Puntos: ${puntos}`;
+        }
+    }
 
     mostrarBoton(texto = 'JUGAR') {
         if (this.btn) {
@@ -116,26 +117,36 @@ class VistaLaser {
         }
     }
 
+    
     jump() {
-        const astronauta = document.getElementById("astronauta");
-        if (!astronauta) return; // Protección por si no existe
+        console.log("Entró a jump()");
 
-        astronauta.classList.add("astronauta-on-shift");
-        astronauta.addEventListener("animationend", function handler() {
-            astronauta.classList.remove("astronauta-on-shift");
-            astronauta.removeEventListener("animationend", handler);
-        });
+        if (!this.astronauta) {
+            console.warn("Astronauta NO encontrado en jump()");
+            return;
+        }
+        
+        this.astronauta.classList.add("astronauta-on-shift");
+
+        this.astronauta.addEventListener("animationend", function handler() {
+            this.astronauta.classList.remove("astronauta-on-shift");
+            this.astronauta.removeEventListener("animationend", handler);
+        }.bind(this));
     }
 
-
-    animarColision(){
-        let astronautaHtml = document.getElementById("astronauta");
-        astronautaHtml.classList.add("astronauta-on-hurt");
-        astronauta.addEventListener("animationend", function handler() {
-            astronauta.classList.remove("astronauta-on-hurt");
-            astronauta.removeEventListener("animationend", handler);
-        });
+    animarColision() {
+        console.log("Entró a animarColision()");
+        if (!this.astronauta) {
+            console.warn("Astronauta NO encontrado en animarColision()");
+            return;
+        }
+        this.astronauta.classList.add("astronauta-on-hurt");
+        this.astronauta.addEventListener("animationend", function handler() {
+            this.astronauta.classList.remove("astronauta-on-hurt");
+            this.astronauta.removeEventListener("animationend", handler);
+        }.bind(this));
+        //Porque dentro de un event listener, this pasa a ser el elemento del 
+        // DOM que disparó el evento (astronauta), NO tu clase
     }
 };
-export { VistaLaser };
 
