@@ -9,6 +9,7 @@ class modeloLaser {
         this.reduccionIntervalo = 50;
         this.limiteAncho = anchoJuego;
         this.limiteAlto = altoJuego;
+        this.puntos= 0;
     }
 
     crearParLasers() {
@@ -23,7 +24,8 @@ class modeloLaser {
     const nuevoPar = {
         x: this.limiteAncho, 
         arriba: { y: 0, alto: alturaArriba },
-        abajo: { y: alturaArriba + huecoAleatorio, alto: this.limiteAlto - (alturaArriba + huecoAleatorio) }
+        abajo: { y: alturaArriba + huecoAleatorio, alto: this.limiteAlto - (alturaArriba + huecoAleatorio) },
+        pasado: false,
     };
 
     this.lasers.push(nuevoPar);
@@ -67,9 +69,21 @@ class modeloLaser {
         }
         return false;
     }
-
+    verificarPunto(astronautaX) {
+    this.lasers.forEach(laser => {
+        // Si el astronauta pasó el láser y aún no contamos el punto
+        if (!laser.pasado && astronautaX > laser.x + this.anchoLaser) {
+            laser.pasado = true;
+            this.puntos++;
+            console.log("¡Punto! Total:", this.puntos);
+            return true;
+        }
+    });
+    return false;
+}
     reiniciar() {
         this.lasers = [];
+         this.puntos = 0;
     }
 }
 export { modeloLaser };

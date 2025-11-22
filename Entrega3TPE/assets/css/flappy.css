@@ -3,84 +3,6 @@
 .game-content, .game-main, .game-display, .game-board-display, .game-title, .game-header, .hud, .board-simulation, .game-area, .screenshot, .game-screenshots, .game-description, .carousel-nav, .comment, .comment-header, .comment-content, .comment-username, .comment-form, .form-title, .form-subtitle, .form-actions, .publish-btn, .cancel-btn {
     font-family: 'Roboto', helvetica, arial, sans-serif;
 }
-/*ESTILOS DE FLAPPY---------------------------------------------*/
-.grid-contenedor {
-  display: grid;
-  position:relative;
-  grid-template-columns: auto; /* HUD a la izquierda, canvas al centro */
-  grid-template-rows: auto;
-  gap: 18px;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  column-gap: 3rem;
-  max-width: 1000px;
-  align-items: start;
-  margin: 20px;
-}
-
-.parallax{
-    width: 1000px;
-    height: 400px;
-     z-index: 1;
-}
-@keyframes scroll {
-    0%   { background-position-x: 0; }
-    100% { background-position-x: -1920px; } /* recorre exactamente el ancho del tile (escala por altura) */
-}
-
-
-
-/*el efecto de poner uno al lado del otro lo hace el repeat en x*/
-.layer{
-    position: absolute;
-    min-height: 500px;             
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* si usamos img no estiramos la imagen desproporcionadamente */
-    background-repeat: repeat-x; /* repite en X para que el scroll sea infinito */
-    background-size: cover;  /* encaja alto, conserva proporciones, repite en X */
-     z-index: 1;
-    /*
-    animation-name: scroll;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;*/
-}
-/* es el fondo más lejano: se mueve más lento */
-.layer-10 {
-    /* Reemplaza la URL por el archivo de cielo/nubes (el más lejano) */
-    background-image: url('../parallax/5.png');
-    animation: scroll 30s infinite linear; /* más lento */
-    
-}
-
-/* capa más cercana: se mueve más rápido para dar parallax */
-.layer-9{
-    /* Reemplaza la URL por el archivo de bosque/colinas/hongos (el más cercano) */
-    background-image: url('../parallax/4.png');
-    animation: scroll 25s infinite linear;
-}
-.layer-8{
-    /* Reemplaza la URL por el archivo de bosque/colinas/hongos (el más cercano) */
-    background-image: url('../parallax/3.png');
-    animation: scroll 20s infinite linear;
-}
-.layer-7{
-    /* Reemplaza la URL por el archivo de bosque/colinas/hongos (el más cercano) */
-    background-image: url('../parallax/2.png');
-    animation: scroll 15s infinite linear;
-}
-.layer-6{
-    /* Reemplaza la URL por el archivo de bosque/colinas/hongos (el más cercano) */
-    background-image: url('../parallax/1.png');
-    animation: scroll 10s infinite linear;
-}
-
-
-
-
-
 /*ESTILOS PREDEFINIDOS----------------------------------------*/
 /*ubicacion btn share y btn expandir*/
 .game-content {
@@ -765,7 +687,7 @@
 .btn-start {
     position: absolute;
     top: 50%;
-    left: 50%;
+    right: 320px;
     transform: translate(-50%, -50%); /* Centrar */
     padding: 15px 40px;
     font-size: 24px;
@@ -795,19 +717,13 @@
     width: 100%;
 }
 
-
-
-
-
-
-
-
 #astronauta {
     width: 64px;
     height: 64px;
     position: absolute;
     bottom: 10%;
     background: url("../imgAstronauta/idle_jump\(64\,64\)_vec.png") repeat-x;
+    z-index: 999;
     
 }
 
@@ -820,4 +736,66 @@
 @keyframes jump {
     0%{background-position: 0px;}
     100% {background-position: -512px;}
+}
+
+
+/*LO DE JOACO --- UNIR CON LO DEMAS*/
+.grid-contenedor {
+  display: flex;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  max-width: 1000px;
+  height: 510px;
+  margin: 10px;
+  position: relative;
+  width: 100%;
+  
+}
+
+@keyframes scroll {
+    0% { background-position-x: 0; }
+    100% { background-position-x: -900px; }
+}
+
+.layer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background-repeat: repeat-x;
+    background-size: cover; 
+    z-index: 1;
+
+}
+.parallax{
+    width: 900px;
+    height: 480px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.layer-9{
+    background-image: url('../parallax/img4.png');
+    animation: scroll 25s infinite linear;
+}
+.layer-8{
+    background-image: url('../parallax/img3.png');
+    animation: scroll 20s infinite linear;
+}
+.layer-7{
+    background-image: url('../parallax/img2.png');
+    animation: scroll 15s infinite linear;
+}
+
+.layer-6{
+    background-image: url('../parallax/img1.png');
+    animation: scroll 10s infinite linear;
+}
+
+.layer-5{
+    background-image: url('../parallax/img0.png');
+    animation: scroll 5s infinite linear;
 }

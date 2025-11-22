@@ -1,3 +1,5 @@
+
+
 class VistaLaser {
    constructor() {
         this.canvas = document.getElementById('gameCanvas');
@@ -78,7 +80,12 @@ class VistaLaser {
             this.ctx.restore();
         });
     }
-
+    mostrarPuntos(puntos) {
+    this.ctx.fillStyle = 'white';
+    this.ctx.font = 'bold 30px Arial';
+    this.ctx.textAlign = 'center';
+    this.ctx.fillText(`Puntos: ${puntos}`, this.canvas.width / 2, 50);
+}
     limpiar() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
