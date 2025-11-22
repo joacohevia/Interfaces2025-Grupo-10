@@ -161,19 +161,17 @@
                                         <div class="layer layer-8"></div>
                                         <div class="layer layer-7"></div>
                                         <div class="layer layer-6"></div>
-                                        
-                                        <div id="astronauta" ></div>
                                     </div>
+
+                               <button id="btnIniciar" class="btn-start">JUGAR</button>
 
                                 <!-- CANVAS DEL JUEGO (Vista N°2) -->
                                 <div class="game-container">
                                     <canvas id="gameCanvas" width="480" height="640"></canvas>
-                                    <button id="btnIniciar" class="btn-start">JUGAR</button>
                                 </div>
                                 
                             </main>   
 
-                            <!--AQUI INSERTAMOS EL NUEVO JUEGO ^-->
                             <!--INSERTA EL NUEVO JUEGO ^-->
                             <div class="game-overlay-buttons">
                                 <div class="share-container">
@@ -432,7 +430,7 @@
     </div>
 
     <script src="js/juego.js"></script>
-    <script src="./Controller/flappyController.js"></script>
+    <script type="module" src="./Controller/flappyController.js"></script>
 
 </body>
 </html>

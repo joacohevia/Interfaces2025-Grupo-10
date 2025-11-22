@@ -1,0 +1,68 @@
+class modeloLaser {
+        constructor(anchoJuego, altoJuego) {
+        this.lasers = []; 
+        this.velocidad = 3; 
+        this.anchoLaser = 2; 
+        this.hueco = 200;
+        this.intervaloAparicion = 2000;
+        
+        this.limiteAncho = anchoJuego;
+        this.limiteAlto = altoJuego;
+    }
+
+    crearParLasers() {
+    // Hueco variable entre 150 y 250
+    const huecoAleatorio = Math.floor(Math.random() * (250 - 150 + 1)) + 150;
+    
+    // Altura variable del láser superior
+    const minAltura = 60;
+    const maxAltura = this.limiteAlto - huecoAleatorio - minAltura - 60;
+    const alturaArriba = Math.floor(Math.random() * (maxAltura - minAltura + 1)) + minAltura;
+
+    const nuevoPar = {
+        x: this.limiteAncho, 
+        arriba: { y: 0, alto: alturaArriba },
+        abajo: { y: alturaArriba + huecoAleatorio, alto: this.limiteAlto - (alturaArriba + huecoAleatorio) }
+    };
+
+    this.lasers.push(nuevoPar);
+    }
+
+    actualizarLasers() {
+        this.lasers.forEach(laser => {
+            laser.x -= this.velocidad;
+        });
+
+        if (this.lasers.length > 0 && this.lasers[0].x + this.anchoLaser < 0) {
+            this.lasers.shift();
+        }
+    }
+
+    obtenerLasers() {
+        return {
+            lasers: this.lasers,
+            ancho: this.anchoLaser
+        };
+    }
+
+    verificarColision(astroX, astroY, astroAncho, astroAlto) {
+        const padding = 8; 
+
+        for (let i = 0; i < this.lasers.length; i++) {
+            let p = this.lasers[i];
+
+            if (astroX + astroAncho - padding > p.x && 
+                astroX + padding < p.x + this.anchoLaser) {
+                
+                if (astroY + padding < p.arriba.alto) return true;
+                if (astroY + astroAlto - padding > p.abajo.y) return true;
+            }
+        }
+        return false;
+    }
+
+    reiniciar() {
+        this.lasers = [];
+    }
+}
+export { modeloLaser };

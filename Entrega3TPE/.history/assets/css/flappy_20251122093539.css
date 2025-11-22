@@ -21,7 +21,6 @@
 .parallax{
     width: 1000px;
     height: 400px;
-     z-index: 1;
 }
 @keyframes scroll {
     0%   { background-position-x: 0; }
@@ -41,7 +40,7 @@
     /* si usamos img no estiramos la imagen desproporcionadamente */
     background-repeat: repeat-x; /* repite en X para que el scroll sea infinito */
     background-size: cover;  /* encaja alto, conserva proporciones, repite en X */
-     z-index: 1;
+
     /*
     animation-name: scroll;
     animation-timing-function: linear;
@@ -788,36 +787,8 @@
     position: relative;
     z-index: 100; /*encima de parallax*/
 }
-#gameCanvas {
-    position: relative;
-    z-index: 100;
-    display: block;
-    width: 100%;
-}
 
 
 
 
 
-
-
-
-#astronauta {
-    width: 64px;
-    height: 64px;
-    position: absolute;
-    bottom: 10%;
-    background: url("../imgAstronauta/idle_jump\(64\,64\)_vec.png") repeat-x;
-    
-}
-
-/* SPRITESHEET ASTRONAUTA SALTANDO*/
-
-.astronauta-on-shift {
-    animation: jump 1.7s steps(8) normal;    
-}
-
-@keyframes jump {
-    0%{background-position: 0px;}
-    100% {background-position: -512px;}
-}
