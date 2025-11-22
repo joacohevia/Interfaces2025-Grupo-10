@@ -24,7 +24,7 @@ class FlappyController {
     iniciar() {
         if (this.juegoActivo) return;
         
-        console.log("Juego iniciado");
+        console.log("🚀 Juego iniciado");
         this.juegoActivo = true;
         
         // Ocultar botón
@@ -41,26 +41,16 @@ class FlappyController {
     }
 
     crearGeneradorLasers() {
-    // Primer láser inmediato
-    this.modelo.crearParLasers();
+        // Primer láser inmediato
+        this.modelo.crearParLasers();
 
-    // Función para recrear el intervalo con nueva velocidad
-    const crearIntervalo = () => {
-        if (this.intervaloCreacion) {
-            clearInterval(this.intervaloCreacion);
-        }
-        
+        // Crear láseres periódicamente
         this.intervaloCreacion = setInterval(() => {
             if (this.juegoActivo) {
                 this.modelo.crearParLasers();
-                this.modelo.aumentarDificultad(); //Aumenta dificultad cada láser
-                crearIntervalo(); //Reinicia intervalo con nuevo tiempo
             }
         }, this.modelo.intervaloAparicion);
-    };
-    
-    crearIntervalo();
-}
+    }
 
     loop() {
         if (!this.juegoActivo) return;
@@ -71,12 +61,8 @@ class FlappyController {
         // 2. Actualizar lógica
         this.modelo.actualizarLasers();
 
-        /*// 3. Verificar colisión ------------------------HAY QUE HACERLO CUANDO TENGA EL ASTRONAUTA
-        const colision = this.modelo.verificarColision(
-            this.astronauta.x, 
-            this.astronauta.y, 
-            this.astronauta.ancho, 
-            this.astronauta.alto
+        /*const colision = this.modelo.verificarColision(
+            //HAY QUE HACER ESTO PARA VER SI COLISIONA CON EL ASTRONAUTA
         );
 
         if (colision) {

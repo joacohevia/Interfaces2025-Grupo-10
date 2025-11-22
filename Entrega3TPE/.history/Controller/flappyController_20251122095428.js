@@ -53,8 +53,8 @@ class FlappyController {
         this.intervaloCreacion = setInterval(() => {
             if (this.juegoActivo) {
                 this.modelo.crearParLasers();
-                this.modelo.aumentarDificultad(); //Aumenta dificultad cada láser
-                crearIntervalo(); //Reinicia intervalo con nuevo tiempo
+                this.modelo.aumentarDificultad(); // ← Aumenta dificultad cada láser
+                crearIntervalo(); // ← Reinicia intervalo con nuevo tiempo
             }
         }, this.modelo.intervaloAparicion);
     };

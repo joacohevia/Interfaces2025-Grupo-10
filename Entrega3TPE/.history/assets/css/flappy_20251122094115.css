@@ -792,7 +792,10 @@
     position: relative;
     z-index: 100;
     display: block;
-    width: 100%;
+    width: 480px;  /* Asegúrate que coincida con el width del HTML */
+    height: 640px; 
+    border: 2px solid rgba(255, 0, 85, 0.3); /* Para ver los límites */
+}
 }
 
 

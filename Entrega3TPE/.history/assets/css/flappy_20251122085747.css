@@ -7,6 +7,7 @@
 .grid-contenedor {
   display: grid;
   position:relative;
+  
   grid-template-columns: auto; /* HUD a la izquierda, canvas al centro */
   grid-template-rows: auto;
   gap: 18px;
@@ -21,7 +22,6 @@
 .parallax{
     width: 1000px;
     height: 400px;
-     z-index: 1;
 }
 @keyframes scroll {
     0%   { background-position-x: 0; }
@@ -41,7 +41,7 @@
     /* si usamos img no estiramos la imagen desproporcionadamente */
     background-repeat: repeat-x; /* repite en X para que el scroll sea infinito */
     background-size: cover;  /* encaja alto, conserva proporciones, repite en X */
-     z-index: 1;
+
     /*
     animation-name: scroll;
     animation-timing-function: linear;
@@ -766,7 +766,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Centrar */
+    transform: translate(-50%, -50%); /* Centrar exacto */
     padding: 15px 40px;
     font-size: 24px;
     background-color: #ff8c29;
@@ -783,20 +783,6 @@
     background-color: #ff6b1a;
     transform: translate(-50%, -50%) scale(1.1);
 }
-
-.game-container {
-    position: relative;
-    z-index: 100; /*encima de parallax*/
-}
-#gameCanvas {
-    position: relative;
-    z-index: 100;
-    display: block;
-    width: 100%;
-}
-
-
-
 
 
 

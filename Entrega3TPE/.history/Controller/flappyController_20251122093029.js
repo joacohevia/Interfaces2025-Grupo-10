@@ -41,26 +41,16 @@ class FlappyController {
     }
 
     crearGeneradorLasers() {
-    // Primer láser inmediato
-    this.modelo.crearParLasers();
+        // Primer láser inmediato
+        this.modelo.crearParLasers();
 
-    // Función para recrear el intervalo con nueva velocidad
-    const crearIntervalo = () => {
-        if (this.intervaloCreacion) {
-            clearInterval(this.intervaloCreacion);
-        }
-        
+        // Crear láseres periódicamente
         this.intervaloCreacion = setInterval(() => {
             if (this.juegoActivo) {
                 this.modelo.crearParLasers();
-                this.modelo.aumentarDificultad(); //Aumenta dificultad cada láser
-                crearIntervalo(); //Reinicia intervalo con nuevo tiempo
             }
         }, this.modelo.intervaloAparicion);
-    };
-    
-    crearIntervalo();
-}
+    }
 
     loop() {
         if (!this.juegoActivo) return;
